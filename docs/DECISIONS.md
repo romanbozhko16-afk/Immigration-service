@@ -91,3 +91,15 @@ Format: date — decision — why. Newest last. Owner = the product owner.
   producing a form with a missing or wrong field.
 - **2026-10-17 — `attorney_decisions_made` flag (default False)** decides whether Part 3 items
   1-2 and Parts 4-5 are filled; lawyer mode will set it after the attorney decides.
+- **2026-10-17 — Help text is the verbatim English official text, not a translation.** A
+  translation or paraphrase could change the meaning; the RAG step may later explain in the
+  user's language, with citations.
+- **2026-10-17 — Dates only in the announced format per language** (RU/UK day-first, EN
+  US month-first) or ISO; ambiguous dates are rejected rather than guessed.
+- **2026-10-17 — Names and U.S. addresses must be typed in Latin letters** as in documents;
+  places, countries and statuses may be typed in Cyrillic and wait for a confirmed
+  translation before they can reach the form.
+- **2026-10-17 — "No A-Number" is stored as "N/A"** (explicit instruction, p.18); other
+  "(if any)" fields stay empty until a lawyer says otherwise.
+- **2026-10-17 — The interview never asks attorney-decision items** (Part 3 items 1-2,
+  Parts 4-5) or the attorney's G-28 box.

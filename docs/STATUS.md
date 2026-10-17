@@ -1,6 +1,6 @@
 # Project status
 
-*Last updated: 2026-10-17, after step 5 (awaiting owner approval).*
+*Last updated: 2026-10-17, after step 6 (awaiting owner approval).*
 
 ## Where we stopped
 
@@ -11,17 +11,49 @@
   map `forms/i765/mappings/08-21-25.json`.
 - **Step 3 is done and approved** (validation in `src/uscis_assistant/validation/`).
 - **Step 4 is done and approved** (encrypted storage in `src/uscis_assistant/storage/`).
-- **Step 5 is done and awaiting the owner's approval** (485 tests pass): PDF filling in
-  `src/uscis_assistant/forms/i765/filler.py` (`fill_i765`, `read_pdf_values`).
+- **Step 5 is done and approved** (PDF filling, `forms/i765/filler.py`).
+- **Step 6 is done and awaiting the owner's approval** (845 tests pass): interview in
+  `src/uscis_assistant/interview/` and the question bank `forms/i765/interview/08-21-25.json`.
 - The owner works from a phone and may continue in Codex or Claude Code. This file is the
   handoff: read it, then continue with "Next action".
 
 ## Next action
 
-1. Wait for the owner to approve step 5.
-2. Then step 6: interview engine, RU/UK/EN texts (recommended: Opus 5.5, effort high). The
-   question flow is data, not the model. The model must not decide what to ask, and the
-   category is only ever the user's own answer.
+1. Wait for the owner to approve step 6.
+2. Then step 7: LLM layer (recommended: Opus 5.5, effort xhigh): translate answers that are
+   `translation_method="pending"` (user confirms the translation -> "machine" + confirmed),
+   detect advice requests during the interview and decline them (offer attorney review),
+   optionally parse free-form answers. Adversarial test phrases in RU/UK/EN. Read the
+   claude-api skill before writing the code; model from `LLM_MODEL`.
+
+## Step 6 summary
+
+- Question bank (81 questions, data) with conditions: `equals`, `not_equals`, `category_in`
+  (category compared case/space-insensitively). Repeating groups are expanded in the data:
+  up to 6 other names, up to 4 citizenships (more than the form holds go to Part 6).
+- Not asked (attorney decision / attorney-only / automatic): Part 3 items 1-2, Parts 4-5,
+  the G-28 box, Part 6. A test checks that no attorney-decision path is asked.
+- Help ("?") shows the VERBATIM English instruction or tooltip text plus page and link;
+  never a paraphrase. A test checks every quote against the PDF, on the stated page.
+- Parsing (no model): dates only in the announced format (RU/UK DD.MM.YYYY, EN MM/DD/YYYY)
+  or ISO; ambiguous input is rejected, never guessed. Names and U.S. addresses must be in
+  Latin letters. Places of birth, citizenship, statuses may be typed in Cyrillic: the answer
+  is stored with `translation_method="pending"`, English None, and blocks the application
+  until translated (step 7).
+- "No A-Number" is recorded as "N/A" (instructions p.18). Other "(if any)" answers are left
+  empty when the user has none.
+- The category is the user's text exactly, or "I don't know" -> None -> attorney review.
+  The bot offers no list of categories.
+- Answers go through `CaseStore` (original, language, English, method), so the audit trail
+  has every version. Answers to questions that no longer apply are ignored when building.
+- `InterviewSession`: `current()`, `prompt()`, `submit(raw)` ("?" = help), `answer()` to
+  change an earlier answer, `build()` -> `BuildResult(application, missing,
+  pending_translation)`.
+- RU and UK texts were written by the AI assistant: a native speaker should review them
+  before real users see them.
+- Mutation check: 5 corruptions of the bank (changed quote, wrong page, removed condition,
+  advice wording, asking an attorney-decision item) all fail tests; the removed-condition
+  case needed a new test (same address -> no physical address questions).
 
 ## Step 5 summary
 
@@ -156,6 +188,9 @@
   2026-10-17 (see `DECISIONS.md`). If USCIS publishes or starts accepting another edition,
   add it to `forms/i765/editions.json`, generate its field list, and write a new map.
 - **Lawyer questions (owner will ask their attorney):**
+  - Whether "(if any)" questions the person has no answer for should print "N/A" (the
+    instructions' general rule, p.17) or stay empty (current behavior, except the A-Number,
+    where the instructions say "N/A" explicitly).
   - Whether USCIS accepts a copy filled as plain AcroForm (XFA removed, usage-rights signature
     removed, barcodes unchanged) or requires a form filled in Adobe's XFA layer.
   - Whether/how to complete Interpreter and Preparer sections when the interview is done by
@@ -178,8 +213,8 @@ not a rule from any documentation.
 | 2 | Pydantic schema + mapping to PDF fields | Opus 5.5 | high | done |
 | 3 | Validation + flags | Opus 5.5 | high | done |
 | 4 | Storage: field encryption, audit log, case deletion | Opus 5.5 | high | done |
-| 5 | PDF filling + round-trip test | Sonnet 5.5 | high | done, awaiting owner approval |
-| 6 | Interview engine (no LLM decides questions), RU/UK/EN texts | Opus 5.5 | high | todo |
+| 5 | PDF filling + round-trip test | Sonnet 5.5 | high | done |
+| 6 | Interview engine (no LLM decides questions), RU/UK/EN texts | Opus 5.5 | high | done, awaiting owner approval |
 | 7 | LLM layer: parse answers, translate, advice-request refusal, adversarial test phrases | Opus 5.5 | xhigh | todo |
 | 8 | RAG over official docs + Citations API; reference chat | Opus 5.5 | high | todo |
 | 9 | Lawyer mode: English summary, flags, audit log export | Sonnet 5.5 | high | todo |

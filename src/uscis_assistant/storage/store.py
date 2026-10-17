@@ -61,8 +61,9 @@ class AnswerRecord(BaseModel):
     original_language: str | None  # "ru" | "uk" | "en"
     english: Any  # JSON value that goes onto the form
     # How `english` was produced: "same" (already English or not text), "user" (typed by
-    # the user), "machine" (translated by the model; shown to the user and lawyer to check)
-    translation_method: Literal["same", "user", "machine"]
+    # the user), "machine" (translated by the model; shown to the user and lawyer to check),
+    # "pending" (not translated yet: `english` is None and the answer cannot reach the form)
+    translation_method: Literal["same", "user", "machine", "pending"]
     updated_at: datetime
 
 
@@ -233,7 +234,7 @@ class CaseStore:
         original: str | None,
         original_language: str | None,
         english: Any,
-        translation_method: Literal["same", "user", "machine"],
+        translation_method: Literal["same", "user", "machine", "pending"],
         actor: ActorRole,
     ) -> None:
         key = self._key_for_active_case(case_id)

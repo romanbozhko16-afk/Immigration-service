@@ -111,7 +111,7 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
   a missing test for swapping ciphertext between fields of one case, which was added and
   catches field-binding removal. 407 tests in total.
 
-## Step 5 — PDF filling (see `git log` for the hash)
+## Step 5 — `c1bac9d` PDF filling
 
 - Owner approved step 4. Probed the PDF: comb text boxes (A-Number, SSN print only digits;
   "A-" is printed), no length limits, no signature fields, an Adobe usage-rights signature
@@ -123,3 +123,16 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
   are not empty (they hold form id, edition, page) and a read-back cannot detect logic
   errors, only writer failures (logic errors are covered by the hand-written expectations).
   Corrupting the map in 4 ways fails tests. Rendered and viewed pages 1, 4, 5. 485 tests.
+
+## Step 6 — Interview engine (see `git log` for the hash)
+
+- Owner approved step 5. Located all 30 help quotes verbatim in the instructions (one page
+  each) before writing them into the bank; SSN help uses the PDF tooltip (no instruction
+  text for item 13).
+- `interview/bank.py` (models, conditions), `interview/parse.py` (deterministic parsing),
+  `interview/texts.py` (RU/UK/EN interface texts), `interview/engine.py` (flow, session,
+  building `I765Application`). Bank registered in `forms/i765/editions.json`.
+- Storage: `translation_method` gained "pending".
+- Tests: bank completeness, verbatim quotes on stated pages, no advice wording in 3
+  languages, no attorney-decision item asked, parsing, full RU interview -> validation ->
+  filled PDF. 845 tests in total.

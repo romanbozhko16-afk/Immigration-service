@@ -20,7 +20,8 @@
         "pdf_created": "2026-05-12"
       },
       "fields_json": "forms/i765/fields/08-21-25.json",
-      "field_map": "forms/i765/mappings/08-21-25.json"
+      "field_map": "forms/i765/mappings/08-21-25.json",
+      "interview": "forms/i765/interview/08-21-25.json"
     }
   }
 }

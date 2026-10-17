@@ -36,6 +36,7 @@ class FormEdition(BaseModel):
     instructions_pdf: PinnedFile
     fields_json: str
     field_map: str
+    interview: str
 
 
 class FormRegistry(BaseModel):

@@ -15,7 +15,7 @@ Audiences:
 - **Individuals (B2C):** self-preparation of the form, with optional paid review by a
   partner attorney.
 
-**Status:** under construction. Steps 0-5 of 11 are done (skeleton; form edition registry and PDF field list; data schema and PDF field map; validation; encrypted storage; PDF filling).
+**Status:** under construction. Steps 0-6 of 11 are done (skeleton; form edition registry and PDF field list; data schema and PDF field map; validation; encrypted storage; PDF filling; interview).
 
 ---
 
@@ -132,6 +132,10 @@ Implemented so far:
 - `forms/i765/filler.py`: fills the official PDF from the collected answers, then reads it
   back and compares every field. It writes only what the user answered, never leaves a
   signature filled, and skips items reserved for an attorney's decision until one decides.
+- `interview/`: the interview in Russian, Ukrainian and English. Questions, their order and
+  conditions are data, not decisions of the AI model. Help shows the verbatim official
+  USCIS text with page and link. The eligibility category is only ever the applicant's
+  own answer; "I don't know" sends the case to an attorney.
 - `storage/`: encrypted case store, separate key store, audit log, deletion on request.
 - `validation/`: formal checks that only raise flags (missing, inconsistent, format,
   attorney review, attorney decision, Part 6 overflow). Each rule cites the official

@@ -1,0 +1,2131 @@
+{
+ "form": "I-765",
+ "edition": "08/21/25",
+ "not_asked": {
+  "reason": "Attorney decision (owner's rule 7), attorney-only box, or filled automatically.",
+  "paths": [
+   "statement.statement",
+   "statement.interpreter_language",
+   "statement.prepared_by_preparer",
+   "statement.preparer_name",
+   "interpreter",
+   "preparer",
+   "attorney",
+   "additional_info"
+  ]
+ },
+ "questions": [
+  {
+   "id": "reason",
+   "path": "reason_for_applying",
+   "item": "1.1",
+   "kind": "choice",
+   "prompt": {
+    "ru": "Почему вы подаёте форму I-765? Выберите один вариант.",
+    "uk": "Чому ви подаєте форму I-765? Оберіть один варіант.",
+    "en": "Why are you filing Form I-765? Choose one option."
+   },
+   "help": {
+    "quote": "You must select one Item Number that best describes your reason for applying",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 1. Reason for Applying"
+    }
+   },
+   "choices": [
+    {
+     "value": "initial",
+     "labels": {
+      "ru": "Впервые прошу разрешение на работу",
+      "uk": "Уперше прошу дозвіл на роботу",
+      "en": "Initial permission to accept employment"
+     }
+    },
+    {
+     "value": "replacement",
+     "labels": {
+      "ru": "Замена потерянной, украденной или повреждённой карточки EAD или исправление ошибки, которая НЕ была ошибкой USCIS",
+      "uk": "Заміна втраченої, вкраденої чи пошкодженої картки EAD або виправлення помилки, яка НЕ була помилкою USCIS",
+      "en": "Replacement of a lost, stolen, or damaged EAD, or correction NOT due to USCIS error"
+     }
+    },
+    {
+     "value": "renewal",
+     "labels": {
+      "ru": "Продление разрешения на работу",
+      "uk": "Продовження дозволу на роботу",
+      "en": "Renewal of my permission to accept employment"
+     }
+    }
+   ]
+  },
+  {
+   "id": "family_name",
+   "path": "applicant.name.family_name",
+   "item": "2.1.A",
+   "kind": "text",
+   "prompt": {
+    "ru": "Ваша фамилия латиницей, точно как в документах.",
+    "uk": "Ваше прізвище латиницею, точно як у документах.",
+    "en": "Your family name (last name), exactly as in your documents."
+   },
+   "help": {
+    "quote": "Provide your full legal name as shown on your birth certificate or legal change of name document in the spaces provided.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 1.a.-1.c."
+    }
+   },
+   "script": "latin"
+  },
+  {
+   "id": "given_name",
+   "path": "applicant.name.given_name",
+   "item": "2.1.B",
+   "kind": "text",
+   "prompt": {
+    "ru": "Ваше имя латиницей, точно как в документах.",
+    "uk": "Ваше ім'я латиницею, точно як у документах.",
+    "en": "Your given name (first name), exactly as in your documents."
+   },
+   "help": {
+    "quote": "Provide your full legal name as shown on your birth certificate or legal change of name document in the spaces provided.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 1.a.-1.c."
+    }
+   },
+   "script": "latin"
+  },
+  {
+   "id": "middle_name",
+   "path": "applicant.name.middle_name",
+   "item": "2.1.C",
+   "kind": "text",
+   "prompt": {
+    "ru": "Ваше второе имя (middle name) латиницей, если оно есть в документах. Если нет — напишите «нет».",
+    "uk": "Ваше друге ім'я (middle name) латиницею, якщо воно є в документах. Якщо немає — напишіть «немає».",
+    "en": "Your middle name, if any. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "Provide your full legal name as shown on your birth certificate or legal change of name document in the spaces provided.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 1.a.-1.c."
+    }
+   },
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "has_other_names",
+   "path": "interview.has_other_names",
+   "item": "2.2",
+   "kind": "yes_no",
+   "prompt": {
+    "ru": "Использовали ли вы когда-нибудь другие имена или фамилии (например, девичью фамилию, псевдоним)?",
+    "uk": "Чи використовували ви колись інші імена чи прізвища (наприклад, дівоче прізвище, псевдонім)?",
+    "en": "Have you ever used other names (for example, a maiden name, an alias, or a nickname)?"
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   }
+  },
+  {
+   "id": "other_family_0",
+   "path": "applicant.other_names[0].family_name",
+   "item": "2.2.A",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №1: фамилия латиницей.",
+    "uk": "Інше ім'я №1: прізвище латиницею.",
+    "en": "Other name #1: family name."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "other_given_0",
+   "path": "applicant.other_names[0].given_name",
+   "item": "2.2.B",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №1: имя латиницей.",
+    "uk": "Інше ім'я №1: ім'я латиницею.",
+    "en": "Other name #1: given name."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "other_middle_0",
+   "path": "applicant.other_names[0].middle_name",
+   "item": "2.2.C",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №1: второе имя (middle name), если есть. Если нет — «нет».",
+    "uk": "Інше ім'я №1: друге ім'я (middle name), якщо є. Якщо немає — «немає».",
+    "en": "Other name #1: middle name, if any. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    }
+   ],
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "more_other_names_0",
+   "path": "interview.more_other_names[0]",
+   "item": "2.2",
+   "kind": "yes_no",
+   "prompt": {
+    "ru": "Есть ли ещё одно другое имя?",
+    "uk": "Чи є ще одне інше ім'я?",
+    "en": "Do you have another other name to add?"
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    }
+   ]
+  },
+  {
+   "id": "other_family_1",
+   "path": "applicant.other_names[1].family_name",
+   "item": "2.3.A",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №2: фамилия латиницей.",
+    "uk": "Інше ім'я №2: прізвище латиницею.",
+    "en": "Other name #2: family name."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[0]",
+     "equals": true
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "other_given_1",
+   "path": "applicant.other_names[1].given_name",
+   "item": "2.3.B",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №2: имя латиницей.",
+    "uk": "Інше ім'я №2: ім'я латиницею.",
+    "en": "Other name #2: given name."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[0]",
+     "equals": true
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "other_middle_1",
+   "path": "applicant.other_names[1].middle_name",
+   "item": "2.3.C",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №2: второе имя (middle name), если есть. Если нет — «нет».",
+    "uk": "Інше ім'я №2: друге ім'я (middle name), якщо є. Якщо немає — «немає».",
+    "en": "Other name #2: middle name, if any. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[0]",
+     "equals": true
+    }
+   ],
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "more_other_names_1",
+   "path": "interview.more_other_names[1]",
+   "item": "2.2",
+   "kind": "yes_no",
+   "prompt": {
+    "ru": "Есть ли ещё одно другое имя?",
+    "uk": "Чи є ще одне інше ім'я?",
+    "en": "Do you have another other name to add?"
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[0]",
+     "equals": true
+    }
+   ]
+  },
+  {
+   "id": "other_family_2",
+   "path": "applicant.other_names[2].family_name",
+   "item": "2.4.A",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №3: фамилия латиницей.",
+    "uk": "Інше ім'я №3: прізвище латиницею.",
+    "en": "Other name #3: family name."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[1]",
+     "equals": true
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "other_given_2",
+   "path": "applicant.other_names[2].given_name",
+   "item": "2.4.B",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №3: имя латиницей.",
+    "uk": "Інше ім'я №3: ім'я латиницею.",
+    "en": "Other name #3: given name."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[1]",
+     "equals": true
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "other_middle_2",
+   "path": "applicant.other_names[2].middle_name",
+   "item": "2.4.C",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №3: второе имя (middle name), если есть. Если нет — «нет».",
+    "uk": "Інше ім'я №3: друге ім'я (middle name), якщо є. Якщо немає — «немає».",
+    "en": "Other name #3: middle name, if any. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[1]",
+     "equals": true
+    }
+   ],
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "more_other_names_2",
+   "path": "interview.more_other_names[2]",
+   "item": "2.2",
+   "kind": "yes_no",
+   "prompt": {
+    "ru": "Есть ли ещё одно другое имя?",
+    "uk": "Чи є ще одне інше ім'я?",
+    "en": "Do you have another other name to add?"
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[1]",
+     "equals": true
+    }
+   ]
+  },
+  {
+   "id": "other_family_3",
+   "path": "applicant.other_names[3].family_name",
+   "item": "6.A",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №4: фамилия латиницей.",
+    "uk": "Інше ім'я №4: прізвище латиницею.",
+    "en": "Other name #4: family name."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[2]",
+     "equals": true
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "other_given_3",
+   "path": "applicant.other_names[3].given_name",
+   "item": "6.B",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №4: имя латиницей.",
+    "uk": "Інше ім'я №4: ім'я латиницею.",
+    "en": "Other name #4: given name."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[2]",
+     "equals": true
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "other_middle_3",
+   "path": "applicant.other_names[3].middle_name",
+   "item": "6.C",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №4: второе имя (middle name), если есть. Если нет — «нет».",
+    "uk": "Інше ім'я №4: друге ім'я (middle name), якщо є. Якщо немає — «немає».",
+    "en": "Other name #4: middle name, if any. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[2]",
+     "equals": true
+    }
+   ],
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "more_other_names_3",
+   "path": "interview.more_other_names[3]",
+   "item": "2.2",
+   "kind": "yes_no",
+   "prompt": {
+    "ru": "Есть ли ещё одно другое имя?",
+    "uk": "Чи є ще одне інше ім'я?",
+    "en": "Do you have another other name to add?"
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[2]",
+     "equals": true
+    }
+   ]
+  },
+  {
+   "id": "other_family_4",
+   "path": "applicant.other_names[4].family_name",
+   "item": "6.A",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №5: фамилия латиницей.",
+    "uk": "Інше ім'я №5: прізвище латиницею.",
+    "en": "Other name #5: family name."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[3]",
+     "equals": true
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "other_given_4",
+   "path": "applicant.other_names[4].given_name",
+   "item": "6.B",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №5: имя латиницей.",
+    "uk": "Інше ім'я №5: ім'я латиницею.",
+    "en": "Other name #5: given name."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[3]",
+     "equals": true
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "other_middle_4",
+   "path": "applicant.other_names[4].middle_name",
+   "item": "6.C",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №5: второе имя (middle name), если есть. Если нет — «нет».",
+    "uk": "Інше ім'я №5: друге ім'я (middle name), якщо є. Якщо немає — «немає».",
+    "en": "Other name #5: middle name, if any. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[3]",
+     "equals": true
+    }
+   ],
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "more_other_names_4",
+   "path": "interview.more_other_names[4]",
+   "item": "2.2",
+   "kind": "yes_no",
+   "prompt": {
+    "ru": "Есть ли ещё одно другое имя?",
+    "uk": "Чи є ще одне інше ім'я?",
+    "en": "Do you have another other name to add?"
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[3]",
+     "equals": true
+    }
+   ]
+  },
+  {
+   "id": "other_family_5",
+   "path": "applicant.other_names[5].family_name",
+   "item": "6.A",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №6: фамилия латиницей.",
+    "uk": "Інше ім'я №6: прізвище латиницею.",
+    "en": "Other name #6: family name."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[4]",
+     "equals": true
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "other_given_5",
+   "path": "applicant.other_names[5].given_name",
+   "item": "6.B",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №6: имя латиницей.",
+    "uk": "Інше ім'я №6: ім'я латиницею.",
+    "en": "Other name #6: given name."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[4]",
+     "equals": true
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "other_middle_5",
+   "path": "applicant.other_names[5].middle_name",
+   "item": "6.C",
+   "kind": "text",
+   "prompt": {
+    "ru": "Другое имя №6: второе имя (middle name), если есть. Если нет — «нет».",
+    "uk": "Інше ім'я №6: друге ім'я (middle name), якщо є. Якщо немає — «немає».",
+    "en": "Other name #6: middle name, if any. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "Provide all other names you have ever used, including aliases, maiden name, and nicknames.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 2.a.-4.c."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.has_other_names",
+     "equals": true
+    },
+    {
+     "path": "interview.more_other_names[4]",
+     "equals": true
+    }
+   ],
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "mail_care",
+   "path": "applicant.mailing_address.in_care_of",
+   "item": "2.5.A",
+   "kind": "text",
+   "prompt": {
+    "ru": "Если почту для вас получает другой человек, напишите его имя латиницей («In Care Of»). Если нет — «нет».",
+    "uk": "Якщо пошту для вас отримує інша людина, напишіть її ім'я латиницею («In Care Of»). Якщо ні — «немає».",
+    "en": "If someone else receives mail for you, enter their name (\"In Care Of\"). If not, type \"none\"."
+   },
+   "help": {
+    "quote": "If your mail is sent to someone other than yourself, please include an \"In Care Of Name\" as part of your mailing address.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 5.a.-5.f."
+    }
+   },
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "mail_street",
+   "path": "applicant.mailing_address.street",
+   "item": "2.5.B",
+   "kind": "text",
+   "prompt": {
+    "ru": "Почтовый адрес в США: номер дома и улица латиницей.",
+    "uk": "Поштова адреса в США: номер будинку та вулиця латиницею.",
+    "en": "U.S. mailing address: street number and name."
+   },
+   "help": {
+    "quote": "You must provide a valid mailing address in the United States.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 5.a.-5.f."
+    }
+   },
+   "script": "latin"
+  },
+  {
+   "id": "mail_unit_type",
+   "path": "applicant.mailing_address.unit_type",
+   "item": "2.5.C",
+   "kind": "choice",
+   "prompt": {
+    "ru": "Почтовый адрес в США: есть ли квартира, офис (suite) или этаж?",
+    "uk": "Поштова адреса в США: чи є квартира, офіс (suite) або поверх?",
+    "en": "U.S. mailing address: apartment, suite, or floor?"
+   },
+   "help": {
+    "quote": "You must provide a valid mailing address in the United States.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 5.a.-5.f."
+    }
+   },
+   "choices": [
+    {
+     "value": "apt",
+     "labels": {
+      "ru": "Квартира (Apt.)",
+      "uk": "Квартира (Apt.)",
+      "en": "Apartment (Apt.)"
+     }
+    },
+    {
+     "value": "ste",
+     "labels": {
+      "ru": "Офис (Ste.)",
+      "uk": "Офіс (Ste.)",
+      "en": "Suite (Ste.)"
+     }
+    },
+    {
+     "value": "flr",
+     "labels": {
+      "ru": "Этаж (Flr.)",
+      "uk": "Поверх (Flr.)",
+      "en": "Floor (Flr.)"
+     }
+    },
+    {
+     "value": null,
+     "labels": {
+      "ru": "Нет",
+      "uk": "Немає",
+      "en": "None"
+     }
+    }
+   ]
+  },
+  {
+   "id": "mail_unit_number",
+   "path": "applicant.mailing_address.unit_number",
+   "item": "2.5.C",
+   "kind": "text",
+   "prompt": {
+    "ru": "Почтовый адрес в США: номер квартиры, офиса или этажа.",
+    "uk": "Поштова адреса в США: номер квартири, офісу або поверху.",
+    "en": "U.S. mailing address: apartment, suite, or floor number."
+   },
+   "help": {
+    "quote": "You must provide a valid mailing address in the United States.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 5.a.-5.f."
+    }
+   },
+   "when": [
+    {
+     "path": "applicant.mailing_address.unit_type",
+     "not_equals": null
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "mail_city",
+   "path": "applicant.mailing_address.city",
+   "item": "2.5.D",
+   "kind": "text",
+   "prompt": {
+    "ru": "Почтовый адрес в США: город латиницей.",
+    "uk": "Поштова адреса в США: місто латиницею.",
+    "en": "U.S. mailing address: city or town."
+   },
+   "help": {
+    "quote": "You must provide a valid mailing address in the United States.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 5.a.-5.f."
+    }
+   },
+   "script": "latin"
+  },
+  {
+   "id": "mail_state",
+   "path": "applicant.mailing_address.state",
+   "item": "2.5.E",
+   "kind": "state",
+   "prompt": {
+    "ru": "Почтовый адрес в США: штат, двухбуквенный код (например, NY).",
+    "uk": "Поштова адреса в США: штат, двобуквений код (наприклад, NY).",
+    "en": "U.S. mailing address: state, two-letter code (for example, NY)."
+   },
+   "help": {
+    "quote": "You must provide a valid mailing address in the United States.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 5.a.-5.f."
+    }
+   }
+  },
+  {
+   "id": "mail_zip",
+   "path": "applicant.mailing_address.zip_code",
+   "item": "2.5.F",
+   "kind": "text",
+   "prompt": {
+    "ru": "Почтовый адрес в США: почтовый индекс (ZIP Code).",
+    "uk": "Поштова адреса в США: поштовий індекс (ZIP Code).",
+    "en": "U.S. mailing address: ZIP Code."
+   },
+   "help": {
+    "quote": "You must provide a valid mailing address in the United States.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 5.a.-5.f."
+    }
+   },
+   "script": "latin"
+  },
+  {
+   "id": "same_address",
+   "path": "applicant.mailing_same_as_physical",
+   "item": "2.6",
+   "kind": "yes_no",
+   "prompt": {
+    "ru": "Вы живёте по этому же адресу (почтовый адрес совпадает с адресом проживания)?",
+    "uk": "Ви живете за цією ж адресою (поштова адреса збігається з адресою проживання)?",
+    "en": "Is your current mailing address the same as your physical address?"
+   },
+   "help": {
+    "quote": "Provide your physical address if it is different from your mailing address.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 7.a.-7.e."
+    }
+   }
+  },
+  {
+   "id": "phys_street",
+   "path": "applicant.physical_address.street",
+   "item": "2.7.A",
+   "kind": "text",
+   "prompt": {
+    "ru": "Адрес проживания в США: номер дома и улица латиницей.",
+    "uk": "Адреса проживання в США: номер будинку та вулиця латиницею.",
+    "en": "U.S. physical address: street number and name."
+   },
+   "help": {
+    "quote": "Provide your physical address if it is different from your mailing address.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 7.a.-7.e."
+    }
+   },
+   "when": [
+    {
+     "path": "applicant.mailing_same_as_physical",
+     "equals": false
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "phys_unit_type",
+   "path": "applicant.physical_address.unit_type",
+   "item": "2.7.B",
+   "kind": "choice",
+   "prompt": {
+    "ru": "Адрес проживания в США: есть ли квартира, офис (suite) или этаж?",
+    "uk": "Адреса проживання в США: чи є квартира, офіс (suite) або поверх?",
+    "en": "U.S. physical address: apartment, suite, or floor?"
+   },
+   "help": {
+    "quote": "Provide your physical address if it is different from your mailing address.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 7.a.-7.e."
+    }
+   },
+   "when": [
+    {
+     "path": "applicant.mailing_same_as_physical",
+     "equals": false
+    }
+   ],
+   "choices": [
+    {
+     "value": "apt",
+     "labels": {
+      "ru": "Квартира (Apt.)",
+      "uk": "Квартира (Apt.)",
+      "en": "Apartment (Apt.)"
+     }
+    },
+    {
+     "value": "ste",
+     "labels": {
+      "ru": "Офис (Ste.)",
+      "uk": "Офіс (Ste.)",
+      "en": "Suite (Ste.)"
+     }
+    },
+    {
+     "value": "flr",
+     "labels": {
+      "ru": "Этаж (Flr.)",
+      "uk": "Поверх (Flr.)",
+      "en": "Floor (Flr.)"
+     }
+    },
+    {
+     "value": null,
+     "labels": {
+      "ru": "Нет",
+      "uk": "Немає",
+      "en": "None"
+     }
+    }
+   ]
+  },
+  {
+   "id": "phys_unit_number",
+   "path": "applicant.physical_address.unit_number",
+   "item": "2.7.B",
+   "kind": "text",
+   "prompt": {
+    "ru": "Адрес проживания в США: номер квартиры, офиса или этажа.",
+    "uk": "Адреса проживання в США: номер квартири, офісу або поверху.",
+    "en": "U.S. physical address: apartment, suite, or floor number."
+   },
+   "help": {
+    "quote": "Provide your physical address if it is different from your mailing address.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 7.a.-7.e."
+    }
+   },
+   "when": [
+    {
+     "path": "applicant.mailing_same_as_physical",
+     "equals": false
+    },
+    {
+     "path": "applicant.physical_address.unit_type",
+     "not_equals": null
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "phys_city",
+   "path": "applicant.physical_address.city",
+   "item": "2.7.C",
+   "kind": "text",
+   "prompt": {
+    "ru": "Адрес проживания в США: город латиницей.",
+    "uk": "Адреса проживання в США: місто латиницею.",
+    "en": "U.S. physical address: city or town."
+   },
+   "help": {
+    "quote": "Provide your physical address if it is different from your mailing address.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 7.a.-7.e."
+    }
+   },
+   "when": [
+    {
+     "path": "applicant.mailing_same_as_physical",
+     "equals": false
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "phys_state",
+   "path": "applicant.physical_address.state",
+   "item": "2.7.D",
+   "kind": "state",
+   "prompt": {
+    "ru": "Адрес проживания в США: штат, двухбуквенный код (например, NY).",
+    "uk": "Адреса проживання в США: штат, двобуквений код (наприклад, NY).",
+    "en": "U.S. physical address: state, two-letter code (for example, NY)."
+   },
+   "help": {
+    "quote": "Provide your physical address if it is different from your mailing address.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 7.a.-7.e."
+    }
+   },
+   "when": [
+    {
+     "path": "applicant.mailing_same_as_physical",
+     "equals": false
+    }
+   ]
+  },
+  {
+   "id": "phys_zip",
+   "path": "applicant.physical_address.zip_code",
+   "item": "2.7.E",
+   "kind": "text",
+   "prompt": {
+    "ru": "Адрес проживания в США: почтовый индекс (ZIP Code).",
+    "uk": "Адреса проживання в США: поштовий індекс (ZIP Code).",
+    "en": "U.S. physical address: ZIP Code."
+   },
+   "help": {
+    "quote": "Provide your physical address if it is different from your mailing address.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Numbers 7.a.-7.e."
+    }
+   },
+   "when": [
+    {
+     "path": "applicant.mailing_same_as_physical",
+     "equals": false
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "a_number",
+   "path": "applicant.a_number",
+   "item": "2.8",
+   "kind": "text",
+   "prompt": {
+    "ru": "Ваш A-Number (регистрационный номер иностранца), если есть. Он начинается с «A» и указан в письмах от USCIS/DHS. Если нет — напишите «нет».",
+    "uk": "Ваш A-Number (реєстраційний номер іноземця), якщо є. Він починається з «A» і вказаний у листах від USCIS/DHS. Якщо немає — напишіть «немає».",
+    "en": "Your A-Number (Alien Registration Number), if any. It begins with \"A\" and appears on letters from USCIS/DHS. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "If you do not have an A-Number, type or print \"N/A.\"",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Number 8"
+    }
+   },
+   "allow_na": true,
+   "script": "latin"
+  },
+  {
+   "id": "oan",
+   "path": "applicant.uscis_online_account_number",
+   "item": "2.9",
+   "kind": "text",
+   "prompt": {
+    "ru": "Номер онлайн-аккаунта USCIS (USCIS Online Account Number), если есть. Если нет — «нет».",
+    "uk": "Номер онлайн-акаунта USCIS (USCIS Online Account Number), якщо є. Якщо немає — «немає».",
+    "en": "Your USCIS Online Account Number, if any. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "If you do not have a receipt number that begins with IOE, you do not have an OAN.",
+    "source": {
+     "kind": "instructions",
+     "page": 17,
+     "section": "How To Complete Form I-765, USCIS Online Account Number"
+    }
+   },
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "sex",
+   "path": "applicant.sex",
+   "item": "2.10",
+   "kind": "choice",
+   "prompt": {
+    "ru": "Пол, как указано в свидетельстве о рождении.",
+    "uk": "Стать, як зазначено у свідоцтві про народження.",
+    "en": "Sex, as shown on your birth certificate."
+   },
+   "help": {
+    "quote": "Indicate whether you are male or female as provided on your birth certificate issued at the time of birth or issued closest to the time of birth or in secondary evidence you provided to USCIS, if applicable.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Number 10"
+    }
+   },
+   "choices": [
+    {
+     "value": "female",
+     "labels": {
+      "ru": "Женский",
+      "uk": "Жіноча",
+      "en": "Female"
+     }
+    },
+    {
+     "value": "male",
+     "labels": {
+      "ru": "Мужской",
+      "uk": "Чоловіча",
+      "en": "Male"
+     }
+    }
+   ]
+  },
+  {
+   "id": "marital",
+   "path": "applicant.marital_status",
+   "item": "2.11",
+   "kind": "choice",
+   "prompt": {
+    "ru": "Семейное положение на дату подачи формы.",
+    "uk": "Сімейний стан на дату подання форми.",
+    "en": "Marital status on the date you file the form."
+   },
+   "help": {
+    "quote": "Select the box that describes the marital status you have on the date you file Form I-765.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Number 11"
+    }
+   },
+   "choices": [
+    {
+     "value": "single",
+     "labels": {
+      "ru": "Не в браке",
+      "uk": "Не у шлюбі",
+      "en": "Single"
+     }
+    },
+    {
+     "value": "married",
+     "labels": {
+      "ru": "В браке",
+      "uk": "У шлюбі",
+      "en": "Married"
+     }
+    },
+    {
+     "value": "divorced",
+     "labels": {
+      "ru": "В разводе",
+      "uk": "Розлучений(-а)",
+      "en": "Divorced"
+     }
+    },
+    {
+     "value": "widowed",
+     "labels": {
+      "ru": "Вдова / вдовец",
+      "uk": "Вдова / вдівець",
+      "en": "Widowed"
+     }
+    }
+   ]
+  },
+  {
+   "id": "prev_filed",
+   "path": "applicant.previously_filed_i765",
+   "item": "2.12",
+   "kind": "yes_no",
+   "prompt": {
+    "ru": "Подавали ли вы раньше форму I-765?",
+    "uk": "Чи подавали ви раніше форму I-765?",
+    "en": "Have you previously filed Form I-765?"
+   },
+   "help": {
+    "quote": "If you have applied for employment authorization in the past, select \"Yes\" for Item Number 12.",
+    "source": {
+     "kind": "instructions",
+     "page": 18,
+     "section": "Part 2, Item Number 12"
+    }
+   }
+  },
+  {
+   "id": "ssn",
+   "path": "applicant.ssn",
+   "item": "2.13",
+   "kind": "text",
+   "prompt": {
+    "ru": "Ваш номер социального страхования (SSN), если знаете. Если нет — «нет».",
+    "uk": "Ваш номер соціального страхування (SSN), якщо знаєте. Якщо немає — «немає».",
+    "en": "Your Social Security Number (SSN), if known. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "Provide your Social Security Number (SSN) (if known).",
+    "source": {
+     "kind": "tooltip",
+     "pdf_field": "form1[0].Page2[0].Line12b_SSN[0]"
+    }
+   },
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "citizenship_0",
+   "path": "applicant.citizenship_countries[0]",
+   "item": "2.14.A",
+   "kind": "text",
+   "prompt": {
+    "ru": "Страна вашего гражданства. Если гражданств несколько — сначала одна, остальные дальше.",
+    "uk": "Країна вашого громадянства. Якщо громадянств кілька — спочатку одна, решта далі.",
+    "en": "Your country of citizenship or nationality. If you have more than one, enter one now and the others next."
+   },
+   "help": {
+    "quote": "Provide the name of the country where you are a citizen and/or national. This is not necessarily the country where you were born.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Numbers 14.a.-14.b."
+    }
+   },
+   "script": "any"
+  },
+  {
+   "id": "more_citizenship_0",
+   "path": "interview.more_citizenship[0]",
+   "item": "2.14",
+   "kind": "yes_no",
+   "prompt": {
+    "ru": "Есть ли у вас ещё одно гражданство?",
+    "uk": "Чи є у вас ще одне громадянство?",
+    "en": "Do you have another citizenship or nationality?"
+   },
+   "help": {
+    "quote": "Provide the name of the country where you are a citizen and/or national. This is not necessarily the country where you were born.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Numbers 14.a.-14.b."
+    }
+   }
+  },
+  {
+   "id": "citizenship_1",
+   "path": "applicant.citizenship_countries[1]",
+   "item": "2.14.B",
+   "kind": "text",
+   "prompt": {
+    "ru": "Страна гражданства №2.",
+    "uk": "Країна громадянства №2.",
+    "en": "Country of citizenship #2."
+   },
+   "help": {
+    "quote": "Provide the name of the country where you are a citizen and/or national. This is not necessarily the country where you were born.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Numbers 14.a.-14.b."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.more_citizenship[0]",
+     "equals": true
+    }
+   ],
+   "script": "any"
+  },
+  {
+   "id": "more_citizenship_1",
+   "path": "interview.more_citizenship[1]",
+   "item": "2.14",
+   "kind": "yes_no",
+   "prompt": {
+    "ru": "Есть ли у вас ещё одно гражданство?",
+    "uk": "Чи є у вас ще одне громадянство?",
+    "en": "Do you have another citizenship or nationality?"
+   },
+   "help": {
+    "quote": "Provide the name of the country where you are a citizen and/or national. This is not necessarily the country where you were born.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Numbers 14.a.-14.b."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.more_citizenship[0]",
+     "equals": true
+    }
+   ]
+  },
+  {
+   "id": "citizenship_2",
+   "path": "applicant.citizenship_countries[2]",
+   "item": "6",
+   "kind": "text",
+   "prompt": {
+    "ru": "Страна гражданства №3.",
+    "uk": "Країна громадянства №3.",
+    "en": "Country of citizenship #3."
+   },
+   "help": {
+    "quote": "Provide the name of the country where you are a citizen and/or national. This is not necessarily the country where you were born.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Numbers 14.a.-14.b."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.more_citizenship[1]",
+     "equals": true
+    }
+   ],
+   "script": "any"
+  },
+  {
+   "id": "more_citizenship_2",
+   "path": "interview.more_citizenship[2]",
+   "item": "2.14",
+   "kind": "yes_no",
+   "prompt": {
+    "ru": "Есть ли у вас ещё одно гражданство?",
+    "uk": "Чи є у вас ще одне громадянство?",
+    "en": "Do you have another citizenship or nationality?"
+   },
+   "help": {
+    "quote": "Provide the name of the country where you are a citizen and/or national. This is not necessarily the country where you were born.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Numbers 14.a.-14.b."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.more_citizenship[1]",
+     "equals": true
+    }
+   ]
+  },
+  {
+   "id": "citizenship_3",
+   "path": "applicant.citizenship_countries[3]",
+   "item": "6",
+   "kind": "text",
+   "prompt": {
+    "ru": "Страна гражданства №4.",
+    "uk": "Країна громадянства №4.",
+    "en": "Country of citizenship #4."
+   },
+   "help": {
+    "quote": "Provide the name of the country where you are a citizen and/or national. This is not necessarily the country where you were born.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Numbers 14.a.-14.b."
+    }
+   },
+   "when": [
+    {
+     "path": "interview.more_citizenship[2]",
+     "equals": true
+    }
+   ],
+   "script": "any"
+  },
+  {
+   "id": "birth_city",
+   "path": "applicant.birth_city",
+   "item": "2.15.A",
+   "kind": "text",
+   "prompt": {
+    "ru": "Город (село) рождения.",
+    "uk": "Місто (село) народження.",
+    "en": "City, town, or village of birth."
+   },
+   "help": {
+    "quote": "Type or print the name of the country as it was named when you were born, even if the country's name has changed or the country no longer exists.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Numbers 15.a.-15.c."
+    }
+   },
+   "script": "any"
+  },
+  {
+   "id": "birth_state",
+   "path": "applicant.birth_state_province",
+   "item": "2.15.B",
+   "kind": "text",
+   "prompt": {
+    "ru": "Область (регион) рождения, если есть. Если нет — «нет».",
+    "uk": "Область (регіон) народження, якщо є. Якщо немає — «немає».",
+    "en": "State or province of birth, if any. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "Type or print the name of the country as it was named when you were born, even if the country's name has changed or the country no longer exists.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Numbers 15.a.-15.c."
+    }
+   },
+   "optional": true,
+   "script": "any"
+  },
+  {
+   "id": "birth_country",
+   "path": "applicant.birth_country",
+   "item": "2.15.C",
+   "kind": "text",
+   "prompt": {
+    "ru": "Страна рождения — так, как она называлась, когда вы родились.",
+    "uk": "Країна народження — так, як вона називалася, коли ви народилися.",
+    "en": "Country of birth, as it was named when you were born."
+   },
+   "help": {
+    "quote": "Type or print the name of the country as it was named when you were born, even if the country's name has changed or the country no longer exists.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Numbers 15.a.-15.c."
+    }
+   },
+   "script": "any"
+  },
+  {
+   "id": "dob",
+   "path": "applicant.date_of_birth",
+   "item": "2.16",
+   "kind": "date",
+   "prompt": {
+    "ru": "Дата рождения.",
+    "uk": "Дата народження.",
+    "en": "Date of birth."
+   },
+   "help": {
+    "quote": "Enter your date of birth in mm/dd/yyyy format in the space provided.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Number 16"
+    }
+   }
+  },
+  {
+   "id": "i94",
+   "path": "applicant.i94_number",
+   "item": "2.17",
+   "kind": "text",
+   "prompt": {
+    "ru": "Номер формы I-94 (Arrival/Departure Record), если есть. Если нет — «нет».",
+    "uk": "Номер форми I-94 (Arrival/Departure Record), якщо є. Якщо немає — «немає».",
+    "en": "Your Form I-94 number, if any. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "If U.S. Customs and Border Protection (CBP) or USCIS issued you a Form I-94, Arrival/Departure Record, provide your Form I-94 number and date that your authorized period of stay expires or expired (as shown on your Form I-94).",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Number 17"
+    }
+   },
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "passport",
+   "path": "applicant.passport_number",
+   "item": "2.18",
+   "kind": "text",
+   "prompt": {
+    "ru": "Номер вашего последнего выданного загранпаспорта. Если паспорта нет — «нет».",
+    "uk": "Номер вашого останнього виданого закордонного паспорта. Якщо паспорта немає — «немає».",
+    "en": "Number of your most recently issued passport. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "If you used a passport or travel document to travel to the United States, enter the passport or travel document information in the appropriate space on the application, even if the passport or travel document is currently expired.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Passport and Travel Document Numbers"
+    }
+   },
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "travel_doc",
+   "path": "applicant.travel_document_number",
+   "item": "2.19",
+   "kind": "text",
+   "prompt": {
+    "ru": "Номер проездного документа (travel document), если есть. Если нет — «нет».",
+    "uk": "Номер проїзного документа (travel document), якщо є. Якщо немає — «немає».",
+    "en": "Travel document number, if any. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "If you used a passport or travel document to travel to the United States, enter the passport or travel document information in the appropriate space on the application, even if the passport or travel document is currently expired.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Passport and Travel Document Numbers"
+    }
+   },
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "passport_country",
+   "path": "applicant.passport_issuing_country",
+   "item": "2.20",
+   "kind": "text",
+   "prompt": {
+    "ru": "Страна, выдавшая паспорт или проездной документ.",
+    "uk": "Країна, що видала паспорт або проїзний документ.",
+    "en": "Country that issued your passport or travel document."
+   },
+   "help": {
+    "quote": "If you used a passport or travel document to travel to the United States, enter the passport or travel document information in the appropriate space on the application, even if the passport or travel document is currently expired.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Passport and Travel Document Numbers"
+    }
+   },
+   "optional": true,
+   "script": "any"
+  },
+  {
+   "id": "passport_exp",
+   "path": "applicant.passport_expiration_date",
+   "item": "2.21",
+   "kind": "date",
+   "prompt": {
+    "ru": "Дата окончания срока действия паспорта или проездного документа. Если документа нет — «нет».",
+    "uk": "Дата закінчення строку дії паспорта або проїзного документа. Якщо документа немає — «немає».",
+    "en": "Expiration date of your passport or travel document. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "If you used a passport or travel document to travel to the United States, enter the passport or travel document information in the appropriate space on the application, even if the passport or travel document is currently expired.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Passport and Travel Document Numbers"
+    }
+   },
+   "optional": true
+  },
+  {
+   "id": "last_entry",
+   "path": "applicant.last_entry_date",
+   "item": "2.22",
+   "kind": "date",
+   "prompt": {
+    "ru": "Дата вашего последнего въезда в США (примерно, если точно не помните).",
+    "uk": "Дата вашого останнього в'їзду до США (приблизно, якщо точно не пам'ятаєте).",
+    "en": "Date of your last arrival into the United States (on or about)."
+   },
+   "help": {
+    "quote": "Provide the date on which you last entered the United States in mm/dd/yyyy format.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Number 22"
+    }
+   },
+   "optional": true
+  },
+  {
+   "id": "last_place",
+   "path": "applicant.last_entry_place",
+   "item": "2.23",
+   "kind": "text",
+   "prompt": {
+    "ru": "Место последнего въезда в США (город, аэропорт или пограничный пункт).",
+    "uk": "Місце останнього в'їзду до США (місто, аеропорт або прикордонний пункт).",
+    "en": "Place of your last arrival into the United States."
+   },
+   "help": {
+    "quote": "Provide the location where you last entered the United States.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Number 23"
+    }
+   },
+   "optional": true,
+   "script": "any"
+  },
+  {
+   "id": "status_arrival",
+   "path": "applicant.status_at_last_arrival",
+   "item": "2.24",
+   "kind": "text",
+   "prompt": {
+    "ru": "Ваш иммиграционный статус при последнем въезде (как в документах), например «B-2 visitor». Если статуса не было — «no status».",
+    "uk": "Ваш імміграційний статус під час останнього в'їзду (як у документах), наприклад «B-2 visitor». Якщо статусу не було — «no status».",
+    "en": "Your immigration status at your last arrival, as in your documents (for example, \"B-2 visitor\" or \"no status\")."
+   },
+   "help": {
+    "quote": "For example, if you last entered the United States as a temporary visitor for pleasure, B-2, type or print \"B-2 visitor\" in the space provided.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Number 24"
+    }
+   },
+   "optional": true,
+   "script": "any"
+  },
+  {
+   "id": "status_current",
+   "path": "applicant.current_status",
+   "item": "2.25",
+   "kind": "text",
+   "prompt": {
+    "ru": "Ваш текущий иммиграционный статус или категория (как в документах), например «F-1 student».",
+    "uk": "Ваш поточний імміграційний статус або категорія (як у документах), наприклад «F-1 student».",
+    "en": "Your current immigration status or category, as in your documents (for example, \"F-1 student\")."
+   },
+   "help": {
+    "quote": "For example, if your current status is student academic, F-1, type or print \"F-1 student\" in the space provided.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Number 25"
+    }
+   },
+   "optional": true,
+   "script": "any"
+  },
+  {
+   "id": "sevis",
+   "path": "applicant.sevis_number",
+   "item": "2.26",
+   "kind": "text",
+   "prompt": {
+    "ru": "Номер SEVIS, если вам его выдавали. Если нет — «нет».",
+    "uk": "Номер SEVIS, якщо вам його видавали. Якщо ні — «немає».",
+    "en": "Your SEVIS number, if you were issued one. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "If you were issued a SEVIS number, enter it in the space provided.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Number 26"
+    }
+   },
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "category",
+   "path": "applicant.eligibility.category",
+   "item": "2.27",
+   "kind": "category",
+   "prompt": {
+    "ru": "Категория (eligibility category), под которой вы подаёте, ТАК, КАК ОНА УКАЗАНА В ВАШИХ ДОКУМЕНТАХ, например (c)(8). Мы не выбираем и не подсказываем категорию. Если не знаете — напишите «не знаю»: ваш кейс проверит юрист.",
+    "uk": "Категорія (eligibility category), за якою ви подаєте, ТАК, ЯК ВОНА ВКАЗАНА У ВАШИХ ДОКУМЕНТАХ, наприклад (c)(8). Ми не обираємо і не підказуємо категорію. Якщо не знаєте — напишіть «не знаю»: ваш кейс перевірить юрист.",
+    "en": "The eligibility category you are filing under, EXACTLY AS IT APPEARS IN YOUR DOCUMENTS, for example (c)(8). We do not choose or suggest a category. If you do not know, type \"I don't know\": an attorney will review your case."
+   },
+   "help": {
+    "quote": "Refer to the list of the eligibility categories in the Who May File Form I-765 section of these Instructions. Find your eligibility category, and enter it in the space provided.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Number 27"
+    }
+   }
+  },
+  {
+   "id": "stem_degree",
+   "path": "applicant.eligibility.stem_degree",
+   "item": "2.28.A",
+   "kind": "text",
+   "prompt": {
+    "ru": "Ваша степень и специальность латиницей (например, Bachelor's degree in English).",
+    "uk": "Ваш ступінь і спеціальність латиницею (наприклад, Bachelor's degree in English).",
+    "en": "Your degree level and major (for example, Bachelor's degree in English)."
+   },
+   "help": {
+    "quote": "provide your degree level and major (for example, Bachelor's degree in English), your employer's name as listed in E-Verify, your employer's E-Verify Company Identification Number, or E-Verify Client Company Identification Number in the spaces provided.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Number 28"
+    }
+   },
+   "when": [
+    {
+     "category_in": [
+      "(c)(3)(c)"
+     ]
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "stem_employer",
+   "path": "applicant.eligibility.stem_employer_name",
+   "item": "2.28.B",
+   "kind": "text",
+   "prompt": {
+    "ru": "Название работодателя, как оно указано в E-Verify.",
+    "uk": "Назва роботодавця, як вона вказана в E-Verify.",
+    "en": "Your employer's name as listed in E-Verify."
+   },
+   "help": {
+    "quote": "provide your degree level and major (for example, Bachelor's degree in English), your employer's name as listed in E-Verify, your employer's E-Verify Company Identification Number, or E-Verify Client Company Identification Number in the spaces provided.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Number 28"
+    }
+   },
+   "when": [
+    {
+     "category_in": [
+      "(c)(3)(c)"
+     ]
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "stem_everify",
+   "path": "applicant.eligibility.stem_everify_company_id",
+   "item": "2.28.C",
+   "kind": "text",
+   "prompt": {
+    "ru": "Идентификационный номер компании в E-Verify (E-Verify Company ID или Client Company ID).",
+    "uk": "Ідентифікаційний номер компанії в E-Verify (E-Verify Company ID або Client Company ID).",
+    "en": "Your employer's E-Verify Company Identification Number or Client Company Identification Number."
+   },
+   "help": {
+    "quote": "provide your degree level and major (for example, Bachelor's degree in English), your employer's name as listed in E-Verify, your employer's E-Verify Company Identification Number, or E-Verify Client Company Identification Number in the spaces provided.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Number 28"
+    }
+   },
+   "when": [
+    {
+     "category_in": [
+      "(c)(3)(c)"
+     ]
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "c26_receipt",
+   "path": "applicant.eligibility.c26_spouse_receipt_number",
+   "item": "2.29",
+   "kind": "text",
+   "prompt": {
+    "ru": "Номер квитанции (receipt number) последнего уведомления I-797 по форме I-129 вашего супруга(-и) с H-1B, 13 символов.",
+    "uk": "Номер квитанції (receipt number) останнього повідомлення I-797 за формою I-129 вашого чоловіка/дружини з H-1B, 13 символів.",
+    "en": "Receipt number of your H-1B spouse's most recent Form I-797 Notice for Form I-129 (13 characters)."
+   },
+   "help": {
+    "quote": "provide the receipt number of your spouse's most recent Form I-797 Notice for Form I-129, Petition for a Nonimmigrant Worker, in the space provided.",
+    "source": {
+     "kind": "instructions",
+     "page": 19,
+     "section": "Part 2, Item Number 29"
+    }
+   },
+   "when": [
+    {
+     "category_in": [
+      "(c)(26)"
+     ]
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "c8_arrested",
+   "path": "applicant.eligibility.c8_ever_arrested_or_convicted",
+   "item": "2.30",
+   "kind": "yes_no",
+   "prompt": {
+    "ru": "Вопрос формы: вас КОГДА-ЛИБО арестовывали и/или осуждали за какое-либо преступление?",
+    "uk": "Питання форми: вас КОЛИ-НЕБУДЬ заарештовували та/або засуджували за будь-який злочин?",
+    "en": "The form asks: have you EVER been arrested for and/or convicted of any crime?"
+   },
+   "help": {
+    "quote": "provide an answer to the question \"Have you have EVER been arrested for and/or convicted of any crime?\"",
+    "source": {
+     "kind": "instructions",
+     "page": 20,
+     "section": "Part 2, Item Number 30"
+    }
+   },
+   "when": [
+    {
+     "category_in": [
+      "(c)(8)"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c35_receipt",
+   "path": "applicant.eligibility.c35_c36_receipt_number",
+   "item": "2.31.A",
+   "kind": "text",
+   "prompt": {
+    "ru": "Номер квитанции (receipt number) уведомления I-797 по форме I-140 (вашей или супруга/родителя), 13 символов.",
+    "uk": "Номер квитанції (receipt number) повідомлення I-797 за формою I-140 (вашої або чоловіка/дружини/батька), 13 символів.",
+    "en": "Receipt number of the Form I-797 Notice for Form I-140 (yours, or your spouse's or parent's), 13 characters."
+   },
+   "help": {
+    "quote": "please provide the receipt number of your Form I-797 Notice for Form I-140 or the receipt number of your spouse's or parent's Form I-797 Notice for Form I-140.",
+    "source": {
+     "kind": "instructions",
+     "page": 20,
+     "section": "Part 2, Item Numbers 31.a.-31.b."
+    }
+   },
+   "when": [
+    {
+     "category_in": [
+      "(c)(35)",
+      "(c)(36)"
+     ]
+    }
+   ],
+   "script": "latin"
+  },
+  {
+   "id": "c35_arrested",
+   "path": "applicant.eligibility.c35_c36_ever_arrested_or_convicted",
+   "item": "2.31.B",
+   "kind": "yes_no",
+   "prompt": {
+    "ru": "Вопрос формы: вас КОГДА-ЛИБО арестовывали и/или осуждали за какое-либо преступление?",
+    "uk": "Питання форми: вас КОЛИ-НЕБУДЬ заарештовували та/або засуджували за будь-який злочин?",
+    "en": "The form asks: have you EVER been arrested for and/or convicted of any crime?"
+   },
+   "help": {
+    "quote": "Provide an answer to the question \"Have you EVER been arrested for and/or convicted of any crime?\"",
+    "source": {
+     "kind": "instructions",
+     "page": 20,
+     "section": "Part 2, Item Numbers 31.a.-31.b."
+    }
+   },
+   "when": [
+    {
+     "category_in": [
+      "(c)(35)",
+      "(c)(36)"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "phone_day",
+   "path": "statement.daytime_phone",
+   "item": "3.3",
+   "kind": "text",
+   "prompt": {
+    "ru": "Ваш дневной номер телефона.",
+    "uk": "Ваш денний номер телефону.",
+    "en": "Your daytime telephone number."
+   },
+   "help": {
+    "quote": "provide your daytime telephone number, mobile telephone number (if any), and email address (if any).",
+    "source": {
+     "kind": "instructions",
+     "page": 20,
+     "section": "Part 3, Item Numbers 1.a.-7.b."
+    }
+   },
+   "script": "latin"
+  },
+  {
+   "id": "phone_mobile",
+   "path": "statement.mobile_phone",
+   "item": "3.4",
+   "kind": "text",
+   "prompt": {
+    "ru": "Мобильный телефон, если отличается или есть. Если нет — «нет».",
+    "uk": "Мобільний телефон, якщо є. Якщо немає — «немає».",
+    "en": "Your mobile telephone number, if any. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "provide your daytime telephone number, mobile telephone number (if any), and email address (if any).",
+    "source": {
+     "kind": "instructions",
+     "page": 20,
+     "section": "Part 3, Item Numbers 1.a.-7.b."
+    }
+   },
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "email",
+   "path": "statement.email",
+   "item": "3.5",
+   "kind": "text",
+   "prompt": {
+    "ru": "Ваш email, если есть. Если нет — «нет».",
+    "uk": "Ваш email, якщо є. Якщо немає — «немає».",
+    "en": "Your email address, if any. If none, type \"none\"."
+   },
+   "help": {
+    "quote": "provide your daytime telephone number, mobile telephone number (if any), and email address (if any).",
+    "source": {
+     "kind": "instructions",
+     "page": 20,
+     "section": "Part 3, Item Numbers 1.a.-7.b."
+    }
+   },
+   "optional": true,
+   "script": "latin"
+  },
+  {
+   "id": "abc",
+   "path": "statement.abc_settlement_class_member",
+   "item": "3.6",
+   "kind": "yes_no",
+   "prompt": {
+    "ru": "Отмечаете ли вы себя участником соглашения ABC (это должно быть указано в ваших документах)? Мы не определяем, относится ли это к вам; ответ «да» проверит юрист.",
+    "uk": "Чи позначаєте ви себе учасником угоди ABC (це має бути вказано у ваших документах)? Ми не визначаємо, чи стосується це вас; відповідь «так» перевірить юрист.",
+    "en": "Do you identify yourself as an ABC settlement class member (as stated in your documents)? We do not decide whether this applies to you; a \"yes\" answer is reviewed by an attorney."
+   },
+   "help": {
+    "quote": "If you entered the (c)(8) eligibility category in Item Number 27. and are eligible for benefits under ABC settlement agreement as a Salvadoran or Guatemalan national, you should select the box.",
+    "source": {
+     "kind": "instructions",
+     "page": 20,
+     "section": "Part 3, Item Number 6"
+    }
+   },
+   "when": [
+    {
+     "category_in": [
+      "(c)(8)"
+     ]
+    }
+   ]
+  }
+ ]
+}
