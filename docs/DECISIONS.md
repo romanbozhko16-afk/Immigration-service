@@ -79,3 +79,15 @@ Format: date — decision — why. Newest last. Owner = the product owner.
   production task.
 - **2026-10-17 — Every answer stores `translation_method`** ("same" / "user" / "machine") so
   the lawyer sees which English values came from machine translation.
+- **2026-10-17 — The filler is literal.** It never prints "N/A" or any other value the user did
+  not give; "N/A" is a recorded answer. This keeps "not answered" distinguishable from "does
+  not apply".
+- **2026-10-17 — A-Number and SSN are written as digits only.** The form prints "A-" and uses
+  per-digit boxes; the stored answer is unchanged.
+- **2026-10-17 — Filled copy is AcroForm-only: XFA and the Adobe usage-rights signature are
+  removed.** Required for the copy to display consistently; acceptance by USCIS is an open
+  question for a lawyer.
+- **2026-10-17 — Read-back verification after every fill.** A writer failure raises instead of
+  producing a form with a missing or wrong field.
+- **2026-10-17 — `attorney_decisions_made` flag (default False)** decides whether Part 3 items
+  1-2 and Parts 4-5 are filled; lawyer mode will set it after the attorney decides.

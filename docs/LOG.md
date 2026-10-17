@@ -93,7 +93,7 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
   error. New flag code `notice` (severity info) with a verbatim quote from instructions
   page 19. Tests: notice only for a date before today, quote matches the PDF text. 386 tests.
 
-## Step 4 — Encrypted storage, audit log, deletion (see `git log` for the hash)
+## Step 4 — `aea627e` Encrypted storage, audit log, deletion
 
 - Owner approved step 3 (with the passport notice).
 - Added SQLAlchemy. `storage/crypto.py` (AES-256-GCM, context-bound), `storage/keystore.py`
@@ -110,3 +110,16 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
   (dropping the case id from the encryption context) is covered by per-case keys; it exposed
   a missing test for swapping ciphertext between fields of one case, which was added and
   catches field-binding removal. 407 tests in total.
+
+## Step 5 — PDF filling (see `git log` for the hash)
+
+- Owner approved step 4. Probed the PDF: comb text boxes (A-Number, SSN print only digits;
+  "A-" is printed), no length limits, no signature fields, an Adobe usage-rights signature
+  (`/Perms`) that any change invalidates.
+- `forms/i765/filler.py`: fill from the field map, drop XFA and `/Perms`, read back and
+  compare. Part 6 overflow, category split, attorney-decision skip, source files verified.
+- Validator: "N/A" accepted for the A-Number (instructions p.18).
+- Tests (hand-written expectations, 65 fields), two test mistakes found and fixed: barcodes
+  are not empty (they hold form id, edition, page) and a read-back cannot detect logic
+  errors, only writer failures (logic errors are covered by the hand-written expectations).
+  Corrupting the map in 4 ways fails tests. Rendered and viewed pages 1, 4, 5. 485 tests.

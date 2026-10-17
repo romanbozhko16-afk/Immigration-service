@@ -85,6 +85,8 @@ retention). Config rejects anything else.
   its official source and only produces flags.
 - `src/uscis_assistant/storage/` — done (step 4). Encrypted case store, separate key store,
   hash-chained audit log, deletion on request.
+- `src/uscis_assistant/forms/i765/filler.py` — done (step 5). `fill_i765` writes the PDF and
+  reads it back. The filled PDF contains personal data: never log it or write it unencrypted.
 - Planned modules: see the Architecture table in `README.md`.
 - `docs/STATUS.md` — current state and next steps (read first).
 - `docs/DECISIONS.md` — decisions and why.

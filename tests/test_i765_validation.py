@@ -209,6 +209,7 @@ def test_renewal_without_previous_filing_is_inconsistent():
         ("applicant.a_number", "123456789", False),
         ("applicant.a_number", "A-123456789", False),
         ("applicant.a_number", "A12345678", True),
+        ("applicant.a_number", "N/A", False),
         ("applicant.ssn", "123-45-6789", False),
         ("applicant.ssn", "12345", True),
         ("applicant.i94_number", "12345678901", False),

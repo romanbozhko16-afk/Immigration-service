@@ -1,6 +1,6 @@
 # Project status
 
-*Last updated: 2026-10-17, after step 4 (awaiting owner approval).*
+*Last updated: 2026-10-17, after step 5 (awaiting owner approval).*
 
 ## Where we stopped
 
@@ -10,18 +10,49 @@
 - **Step 2 is done and approved.** Schema `src/uscis_assistant/forms/i765/schema.py`, field
   map `forms/i765/mappings/08-21-25.json`.
 - **Step 3 is done and approved** (validation in `src/uscis_assistant/validation/`).
-- **Step 4 is done and awaiting the owner's approval** (407 tests pass): encrypted storage in
-  `src/uscis_assistant/storage/` (`crypto.py`, `keystore.py`, `models.py`, `store.py`, `db.py`).
+- **Step 4 is done and approved** (encrypted storage in `src/uscis_assistant/storage/`).
+- **Step 5 is done and awaiting the owner's approval** (485 tests pass): PDF filling in
+  `src/uscis_assistant/forms/i765/filler.py` (`fill_i765`, `read_pdf_values`).
 - The owner works from a phone and may continue in Codex or Claude Code. This file is the
   handoff: read it, then continue with "Next action".
 
 ## Next action
 
-1. Wait for the owner to approve step 4.
-2. Then step 5: PDF filling + round-trip test (recommended: Sonnet 5.5, effort high). Fill
-   AcroForm fields from `I765Application` using `forms/i765/mappings/08-21-25.json`, remove
-   `/XFA`, read the result back and compare. Never fill barcodes or signatures. Decide with
-   the owner where "N/A" is printed (see notes below).
+1. Wait for the owner to approve step 5.
+2. Then step 6: interview engine, RU/UK/EN texts (recommended: Opus 5.5, effort high). The
+   question flow is data, not the model. The model must not decide what to ask, and the
+   category is only ever the user's own answer.
+
+## Step 5 summary
+
+- `fill_i765(app, attorney_decisions_made=False)` returns `FillResult(pdf, report)`. It
+  verifies the pinned files and the edition, fills the AcroForm fields from the field map,
+  removes `/XFA` and the Adobe usage-rights signature (`/Perms`, invalid after any change),
+  sets NeedAppearances, then READS THE PDF BACK and compares every mapped field; a mismatch
+  raises `FillVerificationError`.
+- Literal filling: never invents answers. "N/A" is printed only when the user's answer is
+  "N/A" (the validator accepts it for the A-Number, instructions p.18). The interview
+  (step 6) must record "N/A" as an answer where the user has none.
+- A-Number and SSN go into the form as digits only (the boxes print "A-" and are comb
+  boxes); malformed values are written as given, never repaired, and are flagged by the
+  validator.
+- Category `(c)(17)(iii)` is split into 3 boxes (parentheses are printed on the form); a
+  badly shaped category is left empty and reported.
+- Entries that do not fit move to Part 6 (4th+ other name, 3rd+ citizenship), after the
+  user's own Part 6 entries; more than 5 Part 6 entries: `report.not_placed` > 0, a
+  separate sheet is needed.
+- Items with `attorney_decision` (Part 3 items 1-2, Parts 4-5) are skipped unless the caller
+  passes `attorney_decisions_made=True`. The report lists them.
+- The report contains no personal data (safe to log). The filled PDF DOES contain personal
+  data: never write it to a plain file or log it; if it is kept, store it with
+  `CaseStore.add_document`.
+- Barcodes (7, PDF417) are left untouched. They contain only `I-765|08/21/25|<page>`, not
+  the applicant's data (read from the PDF). OPEN QUESTION for a lawyer: whether USCIS
+  requires the XFA-generated form or accepts an AcroForm-only filled copy. A web search found
+  no USCIS statement either way, so this is unverified.
+- Tests: hand-written expected values for ~65 PDF fields, rendered pages checked visually
+  (Ste./Apt. boxes in Parts 4-5, category boxes, signatures empty). Corrupting the map in 4
+  ways fails tests.
 
 ## Step 4 summary
 
@@ -125,6 +156,8 @@
   2026-10-17 (see `DECISIONS.md`). If USCIS publishes or starts accepting another edition,
   add it to `forms/i765/editions.json`, generate its field list, and write a new map.
 - **Lawyer questions (owner will ask their attorney):**
+  - Whether USCIS accepts a copy filled as plain AcroForm (XFA removed, usage-rights signature
+    removed, barcodes unchanged) or requires a form filled in Adobe's XFA layer.
   - Whether/how to complete Interpreter and Preparer sections when the interview is done by
     software in another language (we flag them; we do not decide).
   - Review of the README "Legal Principles" section by a U.S.-licensed immigration attorney
@@ -144,8 +177,8 @@ not a rule from any documentation.
 | 1 | Fetch PDF + instructions, fix edition, list PDF fields (STOP for owner) | Sonnet 5.5 | medium | done |
 | 2 | Pydantic schema + mapping to PDF fields | Opus 5.5 | high | done |
 | 3 | Validation + flags | Opus 5.5 | high | done |
-| 4 | Storage: field encryption, audit log, case deletion | Opus 5.5 | high | done, awaiting owner approval |
-| 5 | PDF filling + round-trip test | Sonnet 5.5 | high | todo |
+| 4 | Storage: field encryption, audit log, case deletion | Opus 5.5 | high | done |
+| 5 | PDF filling + round-trip test | Sonnet 5.5 | high | done, awaiting owner approval |
 | 6 | Interview engine (no LLM decides questions), RU/UK/EN texts | Opus 5.5 | high | todo |
 | 7 | LLM layer: parse answers, translate, advice-request refusal, adversarial test phrases | Opus 5.5 | xhigh | todo |
 | 8 | RAG over official docs + Citations API; reference chat | Opus 5.5 | high | todo |

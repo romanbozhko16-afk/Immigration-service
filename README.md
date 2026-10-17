@@ -15,7 +15,7 @@ Audiences:
 - **Individuals (B2C):** self-preparation of the form, with optional paid review by a
   partner attorney.
 
-**Status:** under construction. Steps 0-4 of 11 are done (skeleton; form edition registry and PDF field list; data schema and PDF field map; validation; encrypted storage).
+**Status:** under construction. Steps 0-5 of 11 are done (skeleton; form edition registry and PDF field list; data schema and PDF field map; validation; encrypted storage; PDF filling).
 
 ---
 
@@ -129,6 +129,9 @@ Implemented so far:
 - `forms/i765/schema.py` + `forms/i765/mappings/08-21-25.json`: the I-765 data schema and its
   link to every PDF field, verified against the official PDF by tests. Signatures are never
   filled; interpreter and preparer items are marked for an attorney's decision.
+- `forms/i765/filler.py`: fills the official PDF from the collected answers, then reads it
+  back and compares every field. It writes only what the user answered, never leaves a
+  signature filled, and skips items reserved for an attorney's decision until one decides.
 - `storage/`: encrypted case store, separate key store, audit log, deletion on request.
 - `validation/`: formal checks that only raise flags (missing, inconsistent, format,
   attorney review, attorney decision, Part 6 overflow). Each rule cites the official

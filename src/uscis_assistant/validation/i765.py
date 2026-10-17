@@ -29,7 +29,12 @@ CATEGORY_SHAPE = re.compile(r"^\([a-z]\)\(\d{1,2}\)(\((?:[ivx]+|[A-Z])\))?$")
 RECEIPT_NUMBER = re.compile(r"^[A-Za-z0-9]{13}$")
 FORMATS: dict[str, tuple[str, re.Pattern[str], str]] = {
     # path: (item, pattern, what the form asks for)
-    "applicant.a_number": ("2.8", re.compile(r"^(?:A-?)?\d{9}$", re.IGNORECASE), "9 digits"),
+    "applicant.a_number": (
+        "2.8",
+        # "If you do not have an A-Number, type or print N/A" (Instructions, page 18).
+        re.compile(r"^(?:(?:A-?)?\d{9}|N/A)$", re.IGNORECASE),
+        "9 digits, or N/A if you have none",
+    ),
     "applicant.uscis_online_account_number": (
         "2.9",
         re.compile(r"^[A-Za-z0-9]{12}$"),
