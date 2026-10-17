@@ -54,7 +54,7 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
   preparer name offset); documented in `STATUS.md`.
 - 30 tests pass (8 new).
 
-## Step 2 — Pydantic schema and field map (see `git log` for the hash)
+## Step 2 — `7998124` Pydantic schema and field map
 
 - Owner confirmed edition 08/21/25 (re-uploaded both PDFs; byte-identical, no newer edition
   found). Registry flag `verified_against_uscis_page` set to true with that note.
@@ -73,3 +73,16 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
 - Verified visually by rendering page crops: Apt/Ste/Flr label order; category boxes print
   their own parentheses.
 - 346 tests pass.
+
+## Step 3 — Validation and flags (see `git log` for the hash)
+
+- Owner approved step 2 and chose "the safest option" for the two open questions: attorney
+  review for "Yes" to the arrest questions (P2.30, P2.31.B) and for the ABC box (P3.6).
+- Read the instructions (How To Complete, pages 17-20) and the PDF help texts; every rule
+  cites one of them.
+- `validation/flags.py`: flag codes and severities. `validation/i765.py`: 9 rules
+  (interpreter/preparer question, eligibility category and items 28-31, legally sensitive
+  answers, addresses, history, identifier formats, dates, lists and Part 6, Part 3).
+- Tests: 37 validation tests, including a guard that no message sounds like legal advice and
+  a test that the category shape accepts all 57 codes in the instructions. Turning off any
+  single rule fails at least 2 tests. 383 tests in total.

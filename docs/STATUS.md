@@ -1,32 +1,54 @@
 # Project status
 
-*Last updated: 2026-10-17, after step 2 (awaiting owner approval).*
+*Last updated: 2026-10-17, after step 3 (awaiting owner approval).*
 
 ## Where we stopped
 
 - **Step 0 is done and pushed** (skeleton, model config, PII-safe logging).
 - **Step 1 is done and approved** (owner confirmed edition 08/21/25 on 2026-10-17: two
   downloads from uscis.gov were byte-identical and the owner found no newer edition).
-- **Step 2 is done and awaiting the owner's approval** (346 tests pass): Pydantic schema
-  `src/uscis_assistant/forms/i765/schema.py` and field map `forms/i765/mappings/08-21-25.json`.
+- **Step 2 is done and approved.** Schema `src/uscis_assistant/forms/i765/schema.py`, field
+  map `forms/i765/mappings/08-21-25.json`.
+- **Step 3 is done and awaiting the owner's approval** (383 tests pass): validation in
+  `src/uscis_assistant/validation/` (`flags.py`, `i765.py`).
 - The owner works from a phone and may continue in Codex or Claude Code. This file is the
   handoff: read it, then continue with "Next action".
 
 ## Next action
 
-1. Wait for the owner to approve step 2.
-2. Then step 3: validation and flags (recommended: Opus 5.5, effort high). Inputs for it:
-   - Flag `requires attorney review` when `applicant.eligibility.category` is empty.
-   - Flag `requires attorney decision` for every map entry with `attorney_decision: true`
-     (Part 3 items 1-2, Parts 4-5) whenever they are filled or needed.
-   - Candidate flags to discuss with the owner (legal sensitivity, do not decide alone):
-     a "Yes" to P2.30 / P2.31.B (arrests/convictions; the form refers to court dispositions);
-     P3.6 ABC settlement (the user states it from own documents).
-   - Format checks: A-Number 9 digits (tooltip), SSN 9 digits, I-94 11 digits, receipt
-     numbers 13 characters, USCIS online account 12 characters, dates as MM/DD/YYYY on the
-     form, category shape like (c)(8) / (c)(17)(iii) split into 3 segments.
-   - Consistency: P2.6 "No" requires P2.7; category-dependent items 28-31 only for their
-     category; more other names / citizenships than the form holds go to Part 6.
+1. Wait for the owner to approve step 3.
+2. Then step 4: storage (recommended: Opus 5.5, effort high): SQLAlchemy models, field-level
+   encryption with a per-case key (deleting the key = crypto-shredding), append-only audit
+   log with timestamps (original answer + English translation), case deletion on request.
+   SQLite now, Postgres-ready. No personal data in logs.
+
+## Notes for later steps
+
+- Step 5 (PDF filling): the instructions say "If a question does not apply ... type or print
+  N/A unless otherwise directed" (page 17) and "If you do not have an A-Number, type or print
+  N/A" (page 18). Decide per field with the owner which empty answers print "N/A"; never
+  invent answers. Dates print as mm/dd/yyyy (page 19). The A-Number prints digits only; the
+  validator accepts an optional leading "A" (the instructions say it begins with an A).
+- Step 5: the category is split into 3 boxes, e.g. (c)(17)(iii) -> c | 17 | iii.
+- Step 6 (interview): validation messages are English; user-facing texts in RU/UK/EN are
+  needed for each flag code.
+- Possible future check (not done, needs owner decision): whether the entered category code
+  appears in the instructions' list. It is a formal check, but the message must not imply
+  a judgment about eligibility.
+
+## Step 3 summary
+
+- `Flag(code, item, path, message, source)`; severity is derived from the code: blocking
+  (missing_required), check (inconsistent, format), attorney (requires_attorney_review,
+  requires_attorney_decision), info (overflow_to_part_6).
+- Every rule cites the instructions page or the PDF help text it comes from. Rules never
+  change data (tested).
+- Always raised: requires_attorney_decision for the interpreter/preparer question.
+- Attorney review (owner chose "the safest option" on 2026-10-17): no category entered;
+  "Yes" to P2.30 or P2.31.B (arrests/convictions); P3.6 ABC settlement selected.
+- Not flagged on purpose: an expired passport (instructions: enter it even if expired).
+- Category shape is checked against all 57 codes found in the instructions (test).
+- Mutation check: switching off any one of the 9 rules makes tests fail.
 
 ## Step 1 findings
 
@@ -95,8 +117,8 @@ not a rule from any documentation.
 |---|---|---|---|---|
 | 0 | Skeleton, config, PII-safe logging | — | — | done |
 | 1 | Fetch PDF + instructions, fix edition, list PDF fields (STOP for owner) | Sonnet 5.5 | medium | done |
-| 2 | Pydantic schema + mapping to PDF fields | Opus 5.5 | high | done, awaiting owner approval |
-| 3 | Validation + flags | Opus 5.5 | high | todo |
+| 2 | Pydantic schema + mapping to PDF fields | Opus 5.5 | high | done |
+| 3 | Validation + flags | Opus 5.5 | high | done, awaiting owner approval |
 | 4 | Storage: field encryption, audit log, case deletion | Opus 5.5 | high | todo |
 | 5 | PDF filling + round-trip test | Sonnet 5.5 | high | todo |
 | 6 | Interview engine (no LLM decides questions), RU/UK/EN texts | Opus 5.5 | high | todo |

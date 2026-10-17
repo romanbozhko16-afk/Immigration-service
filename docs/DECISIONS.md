@@ -52,3 +52,14 @@ Format: date — decision — why. Newest last. Owner = the product owner.
   What USCIS sees is the ticked box next to the printed word; the on-values there are
   scrambled in the official PDF.
 - **2026-10-17 — Schema rejects only wrong shapes; content rules become flags in step 3.**
+- **2026-10-17 — Attorney review for "Yes" to P2.30 / P2.31.B and for P3.6 ABC settlement.**
+  Owner: "do the safest". Both answers carry legal consequences described in the instructions
+  (court dispositions; ABC class membership).
+- **2026-10-17 — Validation rules must cite official text**; rules without a source (e.g. ZIP
+  or email shape) were left out rather than invented.
+- **2026-10-17 — Category-specific checks compare categories case- and space-insensitively**
+  only to decide which checks apply; the stored answer is never normalized, and a wrong shape
+  gets its own format flag.
+- **2026-10-17 — Identifier format problems are "check" flags, not errors.** The PDF help text
+  says e.g. "11 digit number" for I-94; a flag asks to compare with the document instead of
+  rejecting the answer.

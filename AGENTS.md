@@ -79,6 +79,8 @@ retention). Config rejects anything else.
 - `src/uscis_assistant/forms/i765/schema.py`, `src/uscis_assistant/forms/field_map.py`,
   `forms/i765/mappings/08-21-25.json` — done (step 2). Edit the JSON map only together with
   its tests; they check every entry against the real PDF.
+- `src/uscis_assistant/validation/` (`flags.py`, `i765.py`) — done (step 3). Every rule cites
+  its official source and only produces flags.
 - Planned modules: see the Architecture table in `README.md`.
 - `docs/STATUS.md` — current state and next steps (read first).
 - `docs/DECISIONS.md` — decisions and why.
