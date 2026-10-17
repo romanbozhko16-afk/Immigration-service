@@ -124,7 +124,7 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
   errors, only writer failures (logic errors are covered by the hand-written expectations).
   Corrupting the map in 4 ways fails tests. Rendered and viewed pages 1, 4, 5. 485 tests.
 
-## Step 6 — Interview engine (see `git log` for the hash)
+## Step 6 — `7b075a1` Interview engine
 
 - Owner approved step 5. Located all 30 help quotes verbatim in the instructions (one page
   each) before writing them into the bank; SSN help uses the PDF tooltip (no instruction
@@ -136,3 +136,17 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
 - Tests: bank completeness, verbatim quotes on stated pages, no advice wording in 3
   languages, no attorney-decision item asked, parsing, full RU interview -> validation ->
   filled PDF. 845 tests in total.
+
+## Step 7 — Model layer and advice guard (see `git log` for the hash)
+
+- Owner approved step 6. Re-read the claude-api reference: structured output via
+  `output_config.format`; forced tool choice is rejected on Sonnet 5.5 / Opus 5.5; check
+  stop_reason for refusals. Added `anthropic` 1.15.
+- `llm/client.py`, `llm/tasks.py`, `interview/guard.py`; session gained the guard, the
+  translation confirmation step and `llm=` injection; store gained `ADVICE_DECLINED` events
+  and the "proposed" translation state; `evals/advice_phrases.json`;
+  `scripts/eval_advice_classifier.py` (live, not run: no key, costs money).
+- Found by the phrase set: patterns refusing the names "Chance" and "Advise"; narrowed.
+- Found by design review: a translation proposal is shown to the user, so it could carry
+  injected model text; proposals are now length- and advice-checked.
+- 952 tests; 6 mutation checks fail as expected.

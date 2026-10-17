@@ -42,6 +42,7 @@ class EventType(StrEnum):
     DOCUMENT_ADDED = "document_added"
     DOCUMENT_DELETED = "document_deleted"
     CASE_DELETED = "case_deleted"
+    ADVICE_DECLINED = "advice_request_declined"
 
 
 class CaseNotFound(Exception):
@@ -62,8 +63,10 @@ class AnswerRecord(BaseModel):
     english: Any  # JSON value that goes onto the form
     # How `english` was produced: "same" (already English or not text), "user" (typed by
     # the user), "machine" (translated by the model; shown to the user and lawyer to check),
-    # "pending" (not translated yet: `english` is None and the answer cannot reach the form)
-    translation_method: Literal["same", "user", "machine", "pending"]
+    # "pending" (not translated yet: `english` is None and the answer cannot reach the form),
+    # "proposed" (`english` is a model proposal the user has not confirmed: also blocked).
+    # "machine" therefore always means "proposed by the model and confirmed by the user".
+    translation_method: Literal["same", "user", "machine", "pending", "proposed"]
     updated_at: datetime
 
 
@@ -234,7 +237,7 @@ class CaseStore:
         original: str | None,
         original_language: str | None,
         english: Any,
-        translation_method: Literal["same", "user", "machine", "pending"],
+        translation_method: Literal["same", "user", "machine", "pending", "proposed"],
         actor: ActorRole,
     ) -> None:
         key = self._key_for_active_case(case_id)
@@ -281,6 +284,22 @@ class CaseStore:
                 path=row.path, item=row.item, updated_at=_as_utc(row.updated_at), **value
             )
         return result
+
+    def record_advice_declined(
+        self, case_id: str, *, text: str, language: str, item: str, actor: ActorRole
+    ) -> None:
+        """Keep, encrypted, that a request for legal advice was declined (for the lawyer)."""
+        key = self._key_for_active_case(case_id)
+        with Session(self._engine) as session, session.begin():
+            self._active_case(session, case_id)
+            self._append_event(
+                session,
+                key,
+                case_id,
+                actor,
+                EventType.ADVICE_DECLINED,
+                details={"text": text, "language": language, "item": item},
+            )
 
     # --- documents -------------------------------------------------------------------------
 

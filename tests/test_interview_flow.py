@@ -235,19 +235,17 @@ def test_changed_answer_drops_answers_that_no_longer_apply():
     assert next_question(BANK, answers).id == "reason"
 
 
-def test_untranslated_answer_blocks_the_application(store):
+def test_untranslated_answer_stops_the_interview_until_resolved(store):
     case_id = store.create_case(ActorRole.APPLICANT)
-    session = InterviewSession(store, case_id, "ru")
-    run_interview(session, {**RU_ANSWERS, "birth_city": "Киев"})
-    built = session.build()
-    assert built.application is None
-    assert built.pending_translation == ["applicant.birth_city"]
-    original = store.answers(case_id)["applicant.birth_city"]
-    assert (original.original, original.english, original.translation_method) == (
-        "Киев",
-        None,
-        "pending",
-    )
+    session = InterviewSession(store, case_id, "ru")  # no model: the user types it
+    while session.current().id != "birth_city":
+        session.submit(RU_ANSWERS[session.current().id])
+    session.submit("Киев")
+    assert session.current().id == "birth_city"
+    assert session.build().pending_translation == ["applicant.birth_city"]
+    assert session.submit("Kyiv").accepted
+    record = store.answers(case_id)["applicant.birth_city"]
+    assert (record.original, record.english, record.translation_method) == ("Киев", "Kyiv", "user")
 
 
 def test_wrong_answer_is_asked_again_in_the_users_language(store):

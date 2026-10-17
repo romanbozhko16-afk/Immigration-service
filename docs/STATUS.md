@@ -1,6 +1,6 @@
 # Project status
 
-*Last updated: 2026-10-17, after step 6 (awaiting owner approval).*
+*Last updated: 2026-10-17, after step 7 (awaiting owner approval).*
 
 ## Where we stopped
 
@@ -12,19 +12,53 @@
 - **Step 3 is done and approved** (validation in `src/uscis_assistant/validation/`).
 - **Step 4 is done and approved** (encrypted storage in `src/uscis_assistant/storage/`).
 - **Step 5 is done and approved** (PDF filling, `forms/i765/filler.py`).
-- **Step 6 is done and awaiting the owner's approval** (845 tests pass): interview in
-  `src/uscis_assistant/interview/` and the question bank `forms/i765/interview/08-21-25.json`.
+- **Step 6 is done and approved** (interview, `src/uscis_assistant/interview/`).
+- **Step 7 is done and awaiting the owner's approval** (952 tests pass): model layer in
+  `src/uscis_assistant/llm/` and the guard `src/uscis_assistant/interview/guard.py`.
+  NOT yet measured on the live model (no API key in the sandbox; costs money): run
+  `uv run python scripts/eval_advice_classifier.py` with the owner's approval.
 - The owner works from a phone and may continue in Codex or Claude Code. This file is the
   handoff: read it, then continue with "Next action".
 
 ## Next action
 
-1. Wait for the owner to approve step 6.
-2. Then step 7: LLM layer (recommended: Opus 5.5, effort xhigh): translate answers that are
-   `translation_method="pending"` (user confirms the translation -> "machine" + confirmed),
-   detect advice requests during the interview and decline them (offer attorney review),
-   optionally parse free-form answers. Adversarial test phrases in RU/UK/EN. Read the
-   claude-api skill before writing the code; model from `LLM_MODEL`.
+1. Wait for the owner to approve step 7, and ask whether to run the live classifier eval
+   (needs ANTHROPIC_API_KEY; about 40 API calls).
+2. Then step 8: reference chat over official USCIS documents with citations (recommended:
+   Opus 5.5, effort high). General questions only; personal-situation questions are
+   declined by the same guard; "I don't know, ask a lawyer" when sources do not answer.
+   Use the Anthropic Citations API on the instructions text; BM25 retrieval, no embeddings.
+
+## Step 7 summary
+
+- The model NEVER writes text shown to the user. It returns a label (answer /
+  advice_request / form_question / unclear) or a short Latin rendering of an answer that the
+  user must confirm. All user-facing sentences are fixed RU/UK/EN templates.
+- Guard (`interview/guard.py`), before anything is recorded:
+  1. Obvious advice requests (RU/UK/EN patterns) -> fixed refusal + offer of a partner
+     attorney; no model call; an encrypted `advice_request_declined` audit event keeps the
+     text for the lawyer.
+  2. "?" in the text, a parse failure, a category that does not look like a code, or long
+     free text -> model label first. Without a model (or on any model failure) such
+     messages are never stored as answers.
+  3. Plain answers are recorded without a model call, so names, numbers and addresses do not
+     reach the model (tested on a full interview).
+- Patterns were narrowed after the test set caught false refusals: "Chance" and "Advise"
+  are real names and must be accepted.
+- Translation: Cyrillic answers in place/country/status fields get a model proposal
+  (`translation_method="proposed"`), the user confirms ("machine") or types their own
+  ("user"). Without a model the user types the English version. Unconfirmed answers block
+  the application. Proposals that are not short Latin text, are much longer than the
+  answer, or read like advice are discarded (protects against injected instructions).
+- Client (`llm/client.py`): model and effort from settings, JSON schema via
+  `output_config.format`, stop_reason checked (refusal / max_tokens -> unavailable), no
+  logging of content. Server-side refusal fallbacks deliberately NOT enabled (they would
+  route to other models; see DECISIONS).
+- `evals/advice_phrases.json`: 34 advice requests (obvious and subtle), 5 form questions,
+  20 plain answers. Tests: every obvious request is declined by patterns, no advice request
+  can be recorded unchecked on any question, no plain answer is ever declined.
+- Mutation check: 6 weakenings (proposal checks, "?" routing, audit of declines, skipping
+  classification, ignoring stop_reason, adding fallbacks) each fail a test.
 
 ## Step 6 summary
 
@@ -214,8 +248,8 @@ not a rule from any documentation.
 | 3 | Validation + flags | Opus 5.5 | high | done |
 | 4 | Storage: field encryption, audit log, case deletion | Opus 5.5 | high | done |
 | 5 | PDF filling + round-trip test | Sonnet 5.5 | high | done |
-| 6 | Interview engine (no LLM decides questions), RU/UK/EN texts | Opus 5.5 | high | done, awaiting owner approval |
-| 7 | LLM layer: parse answers, translate, advice-request refusal, adversarial test phrases | Opus 5.5 | xhigh | todo |
+| 6 | Interview engine (no LLM decides questions), RU/UK/EN texts | Opus 5.5 | high | done |
+| 7 | LLM layer: parse answers, translate, advice-request refusal, adversarial test phrases | Opus 5.5 | xhigh | done, awaiting owner approval |
 | 8 | RAG over official docs + Citations API; reference chat | Opus 5.5 | high | todo |
 | 9 | Lawyer mode: English summary, flags, audit log export | Sonnet 5.5 | high | todo |
 | 10 | FastAPI + minimal web page with disclaimer | Sonnet 5.5 | medium | todo |

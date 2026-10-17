@@ -103,3 +103,19 @@ Format: date — decision — why. Newest last. Owner = the product owner.
   "(if any)" fields stay empty until a lawyer says otherwise.
 - **2026-10-17 — The interview never asks attorney-decision items** (Part 3 items 1-2,
   Parts 4-5) or the attorney's G-28 box.
+- **2026-10-17 — The model never writes user-facing text.** It returns labels or a short
+  English rendering that the user confirms. Refusals and all other messages are fixed
+  templates. This makes "the bot gave advice" impossible by construction, not by prompt.
+- **2026-10-17 — Obvious advice requests are declined by patterns without a model;** subtle
+  ones are labeled by the model; with no model available, a possible question is never
+  stored as an answer (fail safe).
+- **2026-10-17 — Plain answers are not sent to the model** (data minimization).
+- **2026-10-17 — Declined advice requests are kept (encrypted) in the audit log** so the
+  lawyer sees what the person asked and that the service declined.
+- **2026-10-17 — Server-side refusal fallbacks are NOT enabled.** The claude-api reference
+  recommends `fallbacks: "default"` for Sonnet 5.5, but it re-runs a refused request on
+  another model chosen by the server. That conflicts with the owner's rules (one configured
+  model for everyone; no model that requires 30-day data retention). A refusal is handled
+  as "no model answer" and falls back to the safe path. Owner may revisit.
+- **2026-10-17 — Translation proposals are validated** (Latin only, short, not longer than
+  about twice the answer, no advice wording) before the user sees them.

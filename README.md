@@ -15,7 +15,7 @@ Audiences:
 - **Individuals (B2C):** self-preparation of the form, with optional paid review by a
   partner attorney.
 
-**Status:** under construction. Steps 0-6 of 11 are done (skeleton; form edition registry and PDF field list; data schema and PDF field map; validation; encrypted storage; PDF filling; interview).
+**Status:** under construction. Steps 0-7 of 11 are done (skeleton; form edition registry and PDF field list; data schema and PDF field map; validation; encrypted storage; PDF filling; interview; AI safeguards and translation).
 
 ---
 
@@ -48,6 +48,12 @@ The system does not:
 
 If a user asks for advice ("Am I eligible?", "What should I file?", "What are my chances?"),
 the system politely declines, explains why, and offers review by a partner attorney.
+
+The AI model never writes the text the user sees. It only classifies a message (an answer,
+a request for advice, a general question about the form) or proposes an English rendering
+of an answer, which the user must confirm. Every refusal and every other message is fixed,
+reviewed text. Obvious requests for advice are recognized without the AI model at all. A
+record of each declined request is kept, encrypted, for the reviewing attorney.
 
 ### 4. Eligibility category comes from the user
 
@@ -99,8 +105,12 @@ a human attorney; it does not unlock a "better" AI.
   record that a deletion took place remains, with no personal data.
 - API keys and secrets live only in `.env`, which is never committed.
 - Development and tests use fictitious data only.
-- Answers are sent to the Anthropic API for processing; this must be disclosed in the
+- Only messages that need it are sent to the Anthropic API: answers typed in Cyrillic that
+  need an English version, and messages that may be questions rather than answers. Plain
+  answers (names, numbers, addresses, dates) are not sent. This must be disclosed in the
   privacy policy. Claude Fable 5.1 is not used because it requires 30-day data retention.
+- Every machine translation is shown to the applicant and confirmed before it can be used,
+  and the attorney sees which answers were machine-translated.
 
 ---
 
@@ -136,6 +146,8 @@ Implemented so far:
   conditions are data, not decisions of the AI model. Help shows the verbatim official
   USCIS text with page and link. The eligibility category is only ever the applicant's
   own answer; "I don't know" sends the case to an attorney.
+- `llm/` and `interview/guard.py`: the AI layer and the advice guard described in the
+  Legal Principles above.
 - `storage/`: encrypted case store, separate key store, audit log, deletion on request.
 - `validation/`: formal checks that only raise flags (missing, inconsistent, format,
   attorney review, attorney decision, Part 6 overflow). Each rule cites the official

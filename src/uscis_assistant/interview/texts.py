@@ -79,4 +79,29 @@ MESSAGES: dict[str, dict[Language, str]] = {
         "uk": "Усі питання поставлено.",
         "en": "All questions have been asked.",
     },
+    "decline_advice": {
+        "ru": "Я не могу давать юридические советы: оценивать ваши шансы, говорить, подходите ли вы, или подсказывать, какую категорию или форму выбрать. Это может сделать только юрист. Вы можете запросить проверку вашего кейса юристом-партнёром. А сейчас вернёмся к вопросу формы.",
+        "uk": "Я не можу надавати юридичні поради: оцінювати ваші шанси, казати, чи підходите ви, або підказувати, яку категорію чи форму обрати. Це може зробити лише юрист. Ви можете замовити перевірку вашого кейсу юристом-партнером. А зараз повернімося до питання форми.",
+        "en": "I can't give legal advice: I can't assess your chances, say whether you qualify, or tell you which category or form to choose. Only an attorney can do that. You can request a review of your case by a partner attorney. Let's continue with the form question.",
+    },
+    "form_question": {
+        "ru": "Я могу показать официальный текст инструкции USCIS к этому вопросу — напишите «?». Ответ применительно к вашей ситуации может дать только юрист: вы можете запросить проверку кейса юристом-партнёром.",
+        "uk": "Я можу показати офіційний текст інструкції USCIS до цього питання — напишіть «?». Відповідь щодо вашої ситуації може дати лише юрист: ви можете замовити перевірку кейсу юристом-партнером.",
+        "en": 'I can show the official USCIS instruction text for this question: type "?". Only an attorney can answer for your specific situation; you can request a review by a partner attorney.',
+    },
+    "rephrase": {
+        "ru": "Похоже, это вопрос, а не ответ. Если это ответ — напишите его без знака «?». Чтобы увидеть официальный текст инструкции, напишите «?».",
+        "uk": "Схоже, це питання, а не відповідь. Якщо це відповідь — напишіть її без знака «?». Щоб побачити офіційний текст інструкції, напишіть «?».",
+        "en": 'This looks like a question rather than an answer. If it is an answer, type it without "?". To see the official instruction text, type "?".',
+    },
+    "translation_confirm": {
+        "ru": "Для формы ответ нужен на английском. Предлагаемый вариант: «{english}» (ваш ответ: «{original}»). Если верно — напишите «да». Если нет — напишите правильный вариант латиницей.",
+        "uk": "Для форми відповідь потрібна англійською. Запропонований варіант: «{english}» (ваша відповідь: «{original}»). Якщо правильно — напишіть «так». Якщо ні — напишіть правильний варіант латиницею.",
+        "en": 'The form needs this answer in English. Suggested: "{english}" (your answer: "{original}"). If correct, type "yes". If not, type the correct version in Latin letters.',
+    },
+    "type_latin": {
+        "ru": "Для формы этот ответ нужен на английском (латиницей). Ваш ответ: «{original}». Напишите его, пожалуйста, латиницей.",
+        "uk": "Для форми ця відповідь потрібна англійською (латиницею). Ваша відповідь: «{original}». Напишіть її, будь ласка, латиницею.",
+        "en": 'The form needs this answer in English (Latin letters). Your answer: "{original}". Please type it in Latin letters.',
+    },
 }

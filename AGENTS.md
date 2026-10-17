@@ -89,6 +89,9 @@ retention). Config rejects anything else.
   reads it back. The filled PDF contains personal data: never log it or write it unencrypted.
 - `src/uscis_assistant/interview/` + `forms/i765/interview/08-21-25.json` — done (step 6).
   The bank is product content: every help quote must be verbatim official text (tested).
+- `src/uscis_assistant/llm/` + `src/uscis_assistant/interview/guard.py` — done (step 7). The
+  model must never write user-facing text; keep it to labels and confirmed translations.
+  Live eval: `scripts/eval_advice_classifier.py` (costs money; ask the owner first).
 - Planned modules: see the Architecture table in `README.md`.
 - `docs/STATUS.md` — current state and next steps (read first).
 - `docs/DECISIONS.md` — decisions and why.

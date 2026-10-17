@@ -4,6 +4,10 @@ The flow is fully determined by the question bank and the answers: the first que
 conditions hold and that has no answer yet is asked next. Answers to questions that no
 longer apply (for example after the user changed an earlier answer) are kept in the audit
 trail but are not used to build the application.
+
+Every message passes `guard.route` first. Requests for legal advice are declined with a
+fixed text; the model, when available, only labels messages and proposes English
+renderings, which the user must confirm before they can reach the form.
 """
 
 import re
@@ -14,9 +18,19 @@ from pydantic import BaseModel, ConfigDict, ValidationError
 from uscis_assistant.forms.i765.schema import I765Application
 from uscis_assistant.forms.registry import REPO_ROOT, load_registry
 from uscis_assistant.interview.bank import Language, Question, QuestionBank, load_bank
-from uscis_assistant.interview.parse import parse_answer
-from uscis_assistant.interview.texts import DATE_FORMAT, HELP_REQUEST, MESSAGES
-from uscis_assistant.storage.store import ActorRole, CaseStore
+from uscis_assistant.interview.guard import Route, looks_like_advice_request, route
+from uscis_assistant.interview.parse import CYRILLIC, Parsed
+from uscis_assistant.interview.texts import DATE_FORMAT, HELP_REQUEST, MESSAGES, YES
+from uscis_assistant.llm.client import LLMUnavailable, StructuredLLM
+from uscis_assistant.llm.tasks import (
+    ENGLISH_VALUE,
+    MessageKind,
+    classify_message,
+    translate_answer,
+)
+from uscis_assistant.storage.store import ActorRole, AnswerRecord, CaseStore
+
+UNCONFIRMED = ("pending", "proposed")  # translation states that keep an answer off the form
 
 INTERVIEW_PREFIX = "interview."  # control answers (e.g. "more names?") that are not on the form
 PATH_PART = re.compile(r"^(?P<name>[a-z0-9_]+)(?:\[(?P<index>\d+)\])?$")
@@ -118,25 +132,48 @@ class InterviewSession:
         language: Language,
         bank: QuestionBank | None = None,
         actor: ActorRole = ActorRole.APPLICANT,
+        llm: StructuredLLM | None = None,
     ):
         self._store = store
         self._case_id = case_id
         self._language = language
         self._bank = bank or load_active_bank()
         self._actor = actor
+        self._llm = llm
 
-    def _records(self):
+    # --- state -----------------------------------------------------------------------------
+
+    def _records(self) -> dict[str, AnswerRecord]:
         return self._store.answers(self._case_id)
 
     def answers(self) -> dict[str, Any]:
         return {path: record.english for path, record in self._records().items()}
 
+    def awaiting_translation(self) -> tuple[Question, AnswerRecord] | None:
+        """An answer waiting for its English version; it is handled before the next question."""
+        records = self._records()
+        answers = {path: record.english for path, record in records.items()}
+        for question in self._bank.questions:
+            record = records.get(question.path)
+            if record and record.translation_method in UNCONFIRMED and question.applies(answers):
+                return question, record
+        return None
+
     def current(self) -> Question | None:
-        return next_question(self._bank, self.answers())
+        waiting = self.awaiting_translation()
+        return waiting[0] if waiting else next_question(self._bank, self.answers())
 
     def prompt(self) -> str:
-        question = self.current()
         lang = self._language
+        waiting = self.awaiting_translation()
+        if waiting:
+            question, record = waiting
+            if record.translation_method == "proposed":
+                return MESSAGES["translation_confirm"][lang].format(
+                    english=record.english, original=record.original
+                )
+            return MESSAGES["type_latin"][lang].format(original=record.original)
+        question = self.current()
         if question is None:
             return MESSAGES["done"][lang]
         lines = [question.prompt[lang]]
@@ -167,35 +204,118 @@ class InterviewSession:
             ]
         )
 
-    def submit(self, raw: str) -> SubmitResult:
-        question = self.current()
-        if question is None:
-            return SubmitResult(accepted=False, message=MESSAGES["done"][self._language])
-        if raw.strip().lower() in HELP_REQUEST:
-            return SubmitResult(accepted=False, message=self.help(question))
-        return self.answer(question, raw)
+    # --- answering ---------------------------------------------------------------------------
 
-    def answer(self, question: Question, raw: str) -> SubmitResult:
-        """Record an answer to a given question (also used to change an earlier answer)."""
-        parsed = parse_answer(question, raw, self._language)
-        if not parsed.ok:
-            return SubmitResult(accepted=False, message=MESSAGES[parsed.error][self._language])
+    def _reply(self, key: str, accepted: bool = False) -> "SubmitResult":
+        return SubmitResult(accepted=accepted, message=MESSAGES[key][self._language])
+
+    def _decline(self, question: Question, raw: str) -> "SubmitResult":
+        self._store.record_advice_declined(
+            self._case_id, text=raw, language=self._language, item=question.item, actor=self._actor
+        )
+        return self._reply("decline_advice")
+
+    def _classify(self, question: Question, raw: str) -> MessageKind:
+        if self._llm is None:
+            return MessageKind.UNCLEAR
+        try:
+            return classify_message(self._llm, question, raw, self._language)
+        except LLMUnavailable:
+            return MessageKind.UNCLEAR
+
+    def _record(
+        self,
+        question: Question,
+        *,
+        original: str,
+        english: Any,
+        method: str,
+        original_language: str | None = None,
+    ) -> None:
         self._store.record_answer(
             self._case_id,
             path=question.path,
             item=question.item,
-            original=raw,
-            original_language=self._language,
-            english=parsed.value,
-            translation_method=parsed.translation_method,
+            original=original,
+            original_language=original_language or self._language,
+            english=english,
+            translation_method=method,
             actor=self._actor,
         )
-        key = "translation_pending" if parsed.translation_method == "pending" else "saved"
-        return SubmitResult(accepted=True, message=MESSAGES[key][self._language])
+
+    def submit(self, raw: str) -> "SubmitResult":
+        waiting = self.awaiting_translation()
+        if waiting:
+            return self._resolve_translation(*waiting, raw)
+        question = self.current()
+        if question is None:
+            return self._reply("done")
+        if raw.strip().lower() in HELP_REQUEST:
+            return SubmitResult(accepted=False, message=self.help(question))
+        return self.answer(question, raw)
+
+    def answer(self, question: Question, raw: str) -> "SubmitResult":
+        """Handle an answer to a given question (also used to change an earlier answer)."""
+        decision, parsed = route(question, raw, self._language)
+        if decision is Route.DECLINE:
+            return self._decline(question, raw)
+        if decision is Route.CLASSIFY:
+            kind = self._classify(question, raw)
+            if kind is MessageKind.ADVICE_REQUEST:
+                return self._decline(question, raw)
+            if kind is MessageKind.FORM_QUESTION:
+                return self._reply("form_question")
+            if not parsed.ok:
+                return self._reply(parsed.error)
+            if "?" in raw and kind is not MessageKind.ANSWER:
+                return self._reply("rephrase")
+        if parsed.translation_method == "pending":
+            return self._translate(question, raw)
+        return self._store_parsed(question, raw, parsed)
+
+    def _store_parsed(self, question: Question, raw: str, parsed: Parsed) -> "SubmitResult":
+        self._record(question, original=raw, english=parsed.value, method="same")
+        return self._reply("saved", accepted=True)
+
+    def _translate(self, question: Question, raw: str) -> "SubmitResult":
+        proposal = None
+        if self._llm is not None:
+            try:
+                proposal = translate_answer(self._llm, question, raw, self._language)
+            except LLMUnavailable:
+                proposal = None
+        if proposal is not None and proposal.kind is MessageKind.ADVICE_REQUEST:
+            return self._decline(question, raw)
+        if proposal is not None and proposal.kind is MessageKind.FORM_QUESTION:
+            return self._reply("form_question")
+        if proposal is not None and proposal.english is not None:
+            self._record(question, original=raw, english=proposal.english, method="proposed")
+        else:
+            self._record(question, original=raw, english=None, method="pending")
+        return SubmitResult(accepted=True, message=self.prompt())
+
+    def _resolve_translation(
+        self, question: Question, record: AnswerRecord, raw: str
+    ) -> "SubmitResult":
+        text = raw.strip()
+        lowered = text.lower()
+        if lowered in HELP_REQUEST:
+            return SubmitResult(accepted=False, message=self.help(question))
+        if looks_like_advice_request(text, self._language):
+            return self._decline(question, raw)
+        keep = {"original": record.original, "original_language": record.original_language}
+        confirmed = lowered in YES[self._language] or lowered in YES["en"]
+        if record.translation_method == "proposed" and confirmed:
+            self._record(question, english=record.english, method="machine", **keep)
+            return self._reply("saved", accepted=True)
+        if CYRILLIC.search(text) or not ENGLISH_VALUE.match(text):
+            return self._reply("latin")
+        self._record(question, english=text, method="user", **keep)
+        return self._reply("saved", accepted=True)
 
     def build(self) -> BuildResult:
         records = self._records()
-        pending = {p for p, r in records.items() if r.translation_method == "pending"}
+        pending = {p for p, r in records.items() if r.translation_method in UNCONFIRMED}
         return build_application(self._bank, self.answers(), pending)
 
     def date_format(self) -> str:
