@@ -74,6 +74,8 @@ retention). Config rejects anything else.
 ## Repo map
 
 - `src/uscis_assistant/config.py`, `logging_utils.py` — done (step 0).
+- `src/uscis_assistant/forms/registry.py` + `forms/i765/` (editions.json, source PDFs,
+  fields list) — done (step 1). `scripts/list_pdf_fields.py` regenerates the field list.
 - Planned modules: see the Architecture table in `README.md`.
 - `docs/STATUS.md` — current state and next steps (read first).
 - `docs/DECISIONS.md` — decisions and why.

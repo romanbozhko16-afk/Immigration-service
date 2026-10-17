@@ -4,8 +4,10 @@ version = "0.1.0"
 description = "AI-assisted intake and form preparation for USCIS Form I-765. Not a law firm; no legal advice."
 requires-python = ">=3.12"
 dependencies = [
+    "cryptography>=50.0.2",
     "pydantic>=2.14,<3",
     "pydantic-settings>=2.16,<3",
+    "pypdf>=6.21.1",
 ]
 
 [dependency-groups]

@@ -32,3 +32,12 @@ Format: date — decision — why. Newest last. Owner = the product owner.
 - **2026-10-17 — Handoff files: `AGENTS.md` (read automatically by Codex), `CLAUDE.md`
   importing it, and `docs/` for state.** Source: OpenAI Codex docs, "Custom instructions with
   AGENTS.md".
+- **2026-10-17 — Active edition set to 08/21/25 provisionally.** It is the edition printed in
+  both official files the owner supplied; secondary web sources say USCIS currently accepts it
+  after the 2026-09-14 court order. The owner believes 09/15/26 is required, so this stays
+  unverified until the owner reads the edition notice on uscis.gov/i-765. Registry flag
+  `verified_against_uscis_page` is false until then.
+- **2026-10-17 — Map PDF fields by tooltip (Part + item number), never by field name.** Names
+  are misleading (see `STATUS.md` traps).
+- **2026-10-17 — Official PDFs are committed to the repo** (public government forms) with
+  SHA-256 pins checked by a test, so any change to the files is caught.

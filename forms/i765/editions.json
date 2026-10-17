@@ -1,0 +1,25 @@
+{
+  "form": "I-765",
+  "active_edition": "08/21/25",
+  "editions": {
+    "08/21/25": {
+      "omb_expires": "08/31/2027",
+      "source_page": "https://www.uscis.gov/i-765",
+      "obtained": "Uploaded by the product owner on 2026-10-17; downloaded by them from the USCIS form page (not independently verified by the assistant, because uscis.gov blocks automated requests).",
+      "verified_against_uscis_page": false,
+      "form_pdf": {
+        "path": "forms/i765/source/i-765.pdf",
+        "sha256": "9ac0eae287749d4c2dfa0a591f464cc2124c18647c10e999b59484f090e0dc7d",
+        "bytes": 467424,
+        "pdf_created": "2025-08-26"
+      },
+      "instructions_pdf": {
+        "path": "forms/i765/source/i-765instr.pdf",
+        "sha256": "2bf87fd107831352d2ceec4c32ebadf11f9f4b5ada6e8a9acc793d3dfe5be10f",
+        "bytes": 580406,
+        "pdf_created": "2026-05-12"
+      },
+      "fields_json": "forms/i765/fields/08-21-25.json"
+    }
+  }
+}

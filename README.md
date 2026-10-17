@@ -15,7 +15,7 @@ Audiences:
 - **Individuals (B2C):** self-preparation of the form, with optional paid review by a
   partner attorney.
 
-**Status:** under construction. Step 0 of 11 (project skeleton) is done.
+**Status:** under construction. Steps 0-1 of 11 are done (skeleton; form edition registry and PDF field list).
 
 ---
 
@@ -117,6 +117,7 @@ Implemented so far:
 - `config.py`: settings from `.env`. One model for all users: `claude-sonnet-5-5` by default,
   switchable to `claude-opus-5-5`; other models are rejected at startup.
 - `logging_utils.py`: log formatter that redacts personal identifiers.
+- `forms/registry.py`: pins the active form edition and verifies SHA-256 of the official PDFs.
 
 ---
 
