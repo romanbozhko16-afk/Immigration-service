@@ -1,6 +1,6 @@
 # Project status
 
-*Last updated: 2026-10-17, after step 3 (awaiting owner approval).*
+*Last updated: 2026-10-17, after step 4 (awaiting owner approval).*
 
 ## Where we stopped
 
@@ -9,18 +9,40 @@
   downloads from uscis.gov were byte-identical and the owner found no newer edition).
 - **Step 2 is done and approved.** Schema `src/uscis_assistant/forms/i765/schema.py`, field
   map `forms/i765/mappings/08-21-25.json`.
-- **Step 3 is done and awaiting the owner's approval** (386 tests pass): validation in
-  `src/uscis_assistant/validation/` (`flags.py`, `i765.py`).
+- **Step 3 is done and approved** (validation in `src/uscis_assistant/validation/`).
+- **Step 4 is done and awaiting the owner's approval** (407 tests pass): encrypted storage in
+  `src/uscis_assistant/storage/` (`crypto.py`, `keystore.py`, `models.py`, `store.py`, `db.py`).
 - The owner works from a phone and may continue in Codex or Claude Code. This file is the
   handoff: read it, then continue with "Next action".
 
 ## Next action
 
-1. Wait for the owner to approve step 3.
-2. Then step 4: storage (recommended: Opus 5.5, effort high): SQLAlchemy models, field-level
-   encryption with a per-case key (deleting the key = crypto-shredding), append-only audit
-   log with timestamps (original answer + English translation), case deletion on request.
-   SQLite now, Postgres-ready. No personal data in logs.
+1. Wait for the owner to approve step 4.
+2. Then step 5: PDF filling + round-trip test (recommended: Sonnet 5.5, effort high). Fill
+   AcroForm fields from `I765Application` using `forms/i765/mappings/08-21-25.json`, remove
+   `/XFA`, read the result back and compare. Never fill barcodes or signatures. Decide with
+   the owner where "N/A" is printed (see notes below).
+
+## Step 4 summary
+
+- Envelope encryption, AES-256-GCM: a random key per case, wrapped by `MASTER_KEY` (.env).
+  Each ciphertext is bound to case + field (associated data), so swapped or moved
+  ciphertext fails to decrypt (tested).
+- Per-case keys live in a SEPARATE database (`KEYSTORE_URL`), not with the case data. This is
+  what makes deletion by key destruction meaningful for backups: keep the key store's
+  backups on a separate, shorter retention. Production: replace `KeyStore` with a KMS.
+- Plain columns hold no personal data (ids, timestamps, status, event types, question
+  paths). Answers (original + language + English + translation method), document contents
+  and file names, and audit details are encrypted. Tests scan the raw database files.
+- Audit log: append-only (ORM blocks update/delete), hash-chained, with the chain head kept
+  on the case row so removal of the newest events is detected. Limitation: someone with
+  full write access to the database can rewrite chain and head together; exporting the
+  head elsewhere is a production task.
+- Deletion on request: key destroyed first, then answers/documents/audit rows deleted; a
+  tombstone event without personal data remains. SQLite `secure_delete` overwrites freed
+  pages (tested by scanning files).
+- Mutation check: disabling secure_delete, encryption, the chain-head check, key
+  destruction, or field binding each fails a test.
 
 ## Notes for later steps
 
@@ -121,8 +143,8 @@ not a rule from any documentation.
 | 0 | Skeleton, config, PII-safe logging | — | — | done |
 | 1 | Fetch PDF + instructions, fix edition, list PDF fields (STOP for owner) | Sonnet 5.5 | medium | done |
 | 2 | Pydantic schema + mapping to PDF fields | Opus 5.5 | high | done |
-| 3 | Validation + flags | Opus 5.5 | high | done, awaiting owner approval |
-| 4 | Storage: field encryption, audit log, case deletion | Opus 5.5 | high | todo |
+| 3 | Validation + flags | Opus 5.5 | high | done |
+| 4 | Storage: field encryption, audit log, case deletion | Opus 5.5 | high | done, awaiting owner approval |
 | 5 | PDF filling + round-trip test | Sonnet 5.5 | high | todo |
 | 6 | Interview engine (no LLM decides questions), RU/UK/EN texts | Opus 5.5 | high | todo |
 | 7 | LLM layer: parse answers, translate, advice-request refusal, adversarial test phrases | Opus 5.5 | xhigh | todo |

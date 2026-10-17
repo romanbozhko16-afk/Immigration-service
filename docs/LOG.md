@@ -74,7 +74,7 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
   their own parentheses.
 - 346 tests pass.
 
-## Step 3 — Validation and flags (see `git log` for the hash)
+## Step 3 — `06b7a24` Validation and flags
 
 - Owner approved step 2 and chose "the safest option" for the two open questions: attorney
   review for "Yes" to the arrest questions (P2.30, P2.31.B) and for the ABC box (P3.6).
@@ -87,8 +87,26 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
   a test that the category shape accepts all 57 codes in the instructions. Turning off any
   single rule fails at least 2 tests. 383 tests in total.
 
-## Step 3 addition — expired passport notice (see `git log` for the hash)
+## Step 3 addition — `f0bc63b` Expired passport notice
 
 - Owner asked for a user-facing notice when the passport is expired, explaining it is not an
   error. New flag code `notice` (severity info) with a verbatim quote from instructions
   page 19. Tests: notice only for a date before today, quote matches the PDF text. 386 tests.
+
+## Step 4 — Encrypted storage, audit log, deletion (see `git log` for the hash)
+
+- Owner approved step 3 (with the passport notice).
+- Added SQLAlchemy. `storage/crypto.py` (AES-256-GCM, context-bound), `storage/keystore.py`
+  (per-case keys in a separate DB, wrapped by MASTER_KEY), `storage/models.py`,
+  `storage/store.py` (`CaseStore`), `storage/db.py` (SQLite pragmas: foreign_keys,
+  secure_delete). `scripts/generate_master_key.py`; `.env.example` has MASTER_KEY and
+  KEYSTORE_URL.
+- Corrected an earlier claim: deleting a key protects backups only if keys are stored apart
+  from the data. Hence the separate key store.
+- Self-review found that a hash chain alone misses removal of the newest events; added the
+  chain head on the case row.
+- 21 storage tests, including raw-file scans for plaintext and for the destroyed key.
+  Mutation check: 6 deliberate weakenings; 5 failed tests at once. The one that did not
+  (dropping the case id from the encryption context) is covered by per-case keys; it exposed
+  a missing test for swapping ciphertext between fields of one case, which was added and
+  catches field-binding removal. 407 tests in total.

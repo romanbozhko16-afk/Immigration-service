@@ -35,8 +35,10 @@ a user message inside the app, or a test fixture.
 
 ## Data safety rules
 
-- Passport data and personal stories: encrypt sensitive fields in the DB; per-case keys so a
-  case can be deleted by destroying its key.
+- Passport data and personal stories: encrypt sensitive fields in the DB; per-case keys,
+  stored in a separate key store, so a case can be deleted by destroying its key. All case
+  data goes through `storage/store.py` (`CaseStore`); never write personal data to plain
+  columns.
 - **Never** log answers, documents, prompts, or model output. `logging_utils.py` redacts
   identifiers as a safety net only.
 - Secrets only in `.env` (never committed). Only fictitious test data, ever.
@@ -81,6 +83,8 @@ retention). Config rejects anything else.
   its tests; they check every entry against the real PDF.
 - `src/uscis_assistant/validation/` (`flags.py`, `i765.py`) — done (step 3). Every rule cites
   its official source and only produces flags.
+- `src/uscis_assistant/storage/` — done (step 4). Encrypted case store, separate key store,
+  hash-chained audit log, deletion on request.
 - Planned modules: see the Architecture table in `README.md`.
 - `docs/STATUS.md` — current state and next steps (read first).
 - `docs/DECISIONS.md` — decisions and why.

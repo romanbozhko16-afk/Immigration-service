@@ -24,6 +24,12 @@ class Settings(BaseSettings):
     llm_effort: Effort = "high"
     app_env: Literal["dev", "test", "prod"] = "dev"
     database_url: str = "sqlite:///./data/cases.db"
+    # Per-case keys live in a separate database so a backup of the case data alone cannot
+    # be decrypted after a case is deleted. Production: a managed KMS.
+    keystore_url: str = "sqlite:///./data/keys.db"
+    # Master key that wraps the per-case keys (base64, 32 bytes).
+    # Generate with: uv run python scripts/generate_master_key.py
+    master_key: SecretStr | None = None
 
 
 @lru_cache

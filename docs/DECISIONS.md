@@ -25,6 +25,9 @@ Format: date — decision — why. Newest last. Owner = the product owner.
   storage only in v1; vision extraction in v2. One organization, two roles (applicant, lawyer).
 - **2026-10-17 — Storage plan: SQLite for the demo, Postgres-ready; per-case encryption keys
   (crypto-shredding) so deleting a key makes a case unreadable even in backups.**
+  *Corrected 2026-10-17 (step 4): this holds only if the keys are stored apart from the
+  data; a backup holding both the wrapped key and the data stays readable while the master
+  key exists. Keys are therefore kept in a separate key store (see below).*
 - **2026-10-17 — RAG without embeddings (BM25), citations via the Anthropic Citations API.**
   Small corpus (form instructions + Policy Manual chapters); simpler to audit.
 - **2026-10-17 — Logging: never log answers/documents/prompts/model output; regex redaction
@@ -65,3 +68,14 @@ Format: date — decision — why. Newest last. Owner = the product owner.
   rejecting the answer.
 - **2026-10-17 — Expired passport: notice, not error.** Owner's request. The notice quotes the
   instructions verbatim so the user sees why it is acceptable; it never blocks filing.
+- **2026-10-17 — Per-case keys in a separate key store (`KEYSTORE_URL`), wrapped by
+  `MASTER_KEY`.** Production: a managed KMS; key-store backups get their own, shorter
+  retention so deleted cases cannot be restored from them.
+- **2026-10-17 — Deletion on request removes the case's audit events too**, leaving one
+  tombstone event without personal data. The audit log is otherwise append-only; a person's
+  deletion request is the one exception.
+- **2026-10-17 — Audit log tamper evidence: hash chain + head on the case row.** Not a
+  defense against someone with full database write access; exporting the head is a
+  production task.
+- **2026-10-17 — Every answer stores `translation_method`** ("same" / "user" / "machine") so
+  the lawyer sees which English values came from machine translation.

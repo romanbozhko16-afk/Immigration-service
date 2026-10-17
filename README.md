@@ -15,7 +15,7 @@ Audiences:
 - **Individuals (B2C):** self-preparation of the form, with optional paid review by a
   partner attorney.
 
-**Status:** under construction. Steps 0-3 of 11 are done (skeleton; form edition registry and PDF field list; data schema and PDF field map; validation).
+**Status:** under construction. Steps 0-4 of 11 are done (skeleton; form edition registry and PDF field list; data schema and PDF field map; validation; encrypted storage).
 
 ---
 
@@ -84,11 +84,19 @@ a human attorney; it does not unlock a "better" AI.
 
 ## Data Protection
 
-- Sensitive fields (passport data, A-Number, personal history) are encrypted in the database.
+- All personal data (answers in the original language and in English, documents and their
+  file names, audit details) is encrypted with AES-256-GCM using a separate key for each
+  case. Case keys are themselves encrypted with a master key and kept in a separate key
+  store, not next to the data.
+- Every change to a case is recorded in an append-only audit log with a UTC timestamp and
+  the role of the person who made it (applicant, lawyer, system); the log is hash-chained
+  so alterations are detectable.
 - No personal data in logs. Code never logs answers, documents, prompts, or model output;
   an additional redaction filter removes identifiers (A-Numbers, SSNs, document numbers,
   receipt numbers, phone numbers, emails) that slip into log lines by mistake.
-- A user can have their case deleted on request.
+- A user can have their case deleted on request: the case key is destroyed first, so every
+  copy of the encrypted data becomes unreadable, then the records are removed. Only a
+  record that a deletion took place remains, with no personal data.
 - API keys and secrets live only in `.env`, which is never committed.
 - Development and tests use fictitious data only.
 - Answers are sent to the Anthropic API for processing; this must be disclosed in the
@@ -121,6 +129,7 @@ Implemented so far:
 - `forms/i765/schema.py` + `forms/i765/mappings/08-21-25.json`: the I-765 data schema and its
   link to every PDF field, verified against the official PDF by tests. Signatures are never
   filled; interpreter and preparer items are marked for an attorney's decision.
+- `storage/`: encrypted case store, separate key store, audit log, deletion on request.
 - `validation/`: formal checks that only raise flags (missing, inconsistent, format,
   attorney review, attorney decision, Part 6 overflow). Each rule cites the official
   instructions or the form's own help text; no rule judges eligibility.
