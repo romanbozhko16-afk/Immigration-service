@@ -86,3 +86,9 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
 - Tests: 37 validation tests, including a guard that no message sounds like legal advice and
   a test that the category shape accepts all 57 codes in the instructions. Turning off any
   single rule fails at least 2 tests. 383 tests in total.
+
+## Step 3 addition — expired passport notice (see `git log` for the hash)
+
+- Owner asked for a user-facing notice when the passport is expired, explaining it is not an
+  error. New flag code `notice` (severity info) with a verbatim quote from instructions
+  page 19. Tests: notice only for a date before today, quote matches the PDF text. 386 tests.

@@ -63,3 +63,5 @@ Format: date — decision — why. Newest last. Owner = the product owner.
 - **2026-10-17 — Identifier format problems are "check" flags, not errors.** The PDF help text
   says e.g. "11 digit number" for I-94; a flag asks to compare with the document instead of
   rejecting the answer.
+- **2026-10-17 — Expired passport: notice, not error.** Owner's request. The notice quotes the
+  instructions verbatim so the user sees why it is acceptable; it never blocks filing.

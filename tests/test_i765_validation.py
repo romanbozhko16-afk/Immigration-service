@@ -222,10 +222,30 @@ def test_identifier_formats(path, value, flagged):
     assert bool(flags_of(app, FlagCode.FORMAT)) is flagged
 
 
-def test_expired_passport_is_not_flagged():
-    # Instructions: enter the passport "even if it is currently expired".
+def test_expired_passport_gives_only_a_notice_not_an_error():
+    # Instructions: enter the passport "even if the passport ... is currently expired".
     app = build(**{"applicant.passport_expiration_date": "2020-01-01"})
-    assert not flags_of(app, item="2.21")
+    flags = flags_of(app, item="2.21")
+    assert [f.code for f in flags] == [FlagCode.NOTICE]
+    assert flags[0].severity is Severity.INFO
+    assert "not an error" in flags[0].message
+    assert "even if the passport or travel document is currently expired" in flags[0].message
+
+
+@pytest.mark.parametrize("expires", ["2026-10-17", "2030-01-01"])
+def test_valid_passport_gives_no_notice(expires):
+    # Expiring today still counts as valid; only a date before today gets the notice.
+    assert not flags_of(build(**{"applicant.passport_expiration_date": expires}), item="2.21")
+
+
+def test_expired_passport_quote_matches_the_instructions_text():
+    reader = PdfReader(REPO_ROOT / load_registry().active.instructions_pdf.path)
+    text = " ".join(" ".join(p.extract_text().split()) for p in reader.pages)
+    quote = (
+        "enter the passport or travel document information in the appropriate space on the "
+        "application, even if the passport or travel document is currently expired."
+    )
+    assert quote in text
 
 
 def test_future_birth_date_is_flagged():

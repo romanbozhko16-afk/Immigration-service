@@ -373,7 +373,22 @@ def _dates(app: I765Application, today: date) -> list[Flag]:
                 source=instructions_source(19, "Item Number 22"),
             )
         )
-    # An expired passport is NOT flagged: the instructions say to enter it even if expired.
+    # An expired passport is not an error. The user only gets a notice that quotes the rule.
+    if a.passport_expiration_date is not None and a.passport_expiration_date < today:
+        flags.append(
+            Flag(
+                code=FlagCode.NOTICE,
+                item="2.21",
+                path="applicant.passport_expiration_date",
+                message=(
+                    "The passport or travel document expiration date is in the past. This is "
+                    'not an error: the instructions say to "enter the passport or travel '
+                    "document information in the appropriate space on the application, even "
+                    'if the passport or travel document is currently expired."'
+                ),
+                source=instructions_source(19, "Passport and Travel Document Numbers"),
+            )
+        )
     return flags
 
 

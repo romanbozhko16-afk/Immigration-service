@@ -14,13 +14,14 @@ class FlagCode(StrEnum):
     ATTORNEY_REVIEW = "requires_attorney_review"  # legally sensitive: an attorney must look
     ATTORNEY_DECISION = "requires_attorney_decision"  # open legal question: attorney decides
     OVERFLOW = "overflow_to_part_6"  # more entries than the form has space for
+    NOTICE = "notice"  # not an error; tells the user something worth knowing, with its source
 
 
 class Severity(StrEnum):
     BLOCKING = "blocking"  # must be resolved before the form can be filed
     CHECK = "check"  # may be correct; the user or attorney should confirm
     ATTORNEY = "attorney"  # only an attorney can resolve it
-    INFO = "info"  # nothing is wrong; tells how the answer will be placed
+    INFO = "info"  # nothing is wrong; does not block filing
 
 
 SEVERITY = {
@@ -30,6 +31,7 @@ SEVERITY = {
     FlagCode.ATTORNEY_REVIEW: Severity.ATTORNEY,
     FlagCode.ATTORNEY_DECISION: Severity.ATTORNEY,
     FlagCode.OVERFLOW: Severity.INFO,
+    FlagCode.NOTICE: Severity.INFO,
 }
 
 

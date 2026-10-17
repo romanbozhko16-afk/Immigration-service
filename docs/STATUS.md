@@ -9,7 +9,7 @@
   downloads from uscis.gov were byte-identical and the owner found no newer edition).
 - **Step 2 is done and approved.** Schema `src/uscis_assistant/forms/i765/schema.py`, field
   map `forms/i765/mappings/08-21-25.json`.
-- **Step 3 is done and awaiting the owner's approval** (383 tests pass): validation in
+- **Step 3 is done and awaiting the owner's approval** (386 tests pass): validation in
   `src/uscis_assistant/validation/` (`flags.py`, `i765.py`).
 - The owner works from a phone and may continue in Codex or Claude Code. This file is the
   handoff: read it, then continue with "Next action".
@@ -40,13 +40,16 @@
 
 - `Flag(code, item, path, message, source)`; severity is derived from the code: blocking
   (missing_required), check (inconsistent, format), attorney (requires_attorney_review,
-  requires_attorney_decision), info (overflow_to_part_6).
+  requires_attorney_decision), info (overflow_to_part_6, notice).
 - Every rule cites the instructions page or the PDF help text it comes from. Rules never
   change data (tested).
 - Always raised: requires_attorney_decision for the interpreter/preparer question.
 - Attorney review (owner chose "the safest option" on 2026-10-17): no category entered;
   "Yes" to P2.30 or P2.31.B (arrests/convictions); P3.6 ABC settlement selected.
-- Not flagged on purpose: an expired passport (instructions: enter it even if expired).
+- An expired passport is NOT an error. At the owner's request (2026-10-17) it raises a
+  `notice` (severity info) that quotes the instructions, page 19: "enter the passport or
+  travel document information ... even if the passport or travel document is currently
+  expired." A test checks that the quote matches the instructions PDF word for word.
 - Category shape is checked against all 57 codes found in the instructions (test).
 - Mutation check: switching off any one of the 9 rules makes tests fail.
 
