@@ -35,6 +35,7 @@ class FormEdition(BaseModel):
     form_pdf: PinnedFile
     instructions_pdf: PinnedFile
     fields_json: str
+    field_map: str
 
 
 class FormRegistry(BaseModel):

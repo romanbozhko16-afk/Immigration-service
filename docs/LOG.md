@@ -39,7 +39,7 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
 - Added `AGENTS.md`, `CLAUDE.md`, `docs/STATUS.md`, `docs/DECISIONS.md`, `docs/LOG.md` so a
   new session (Codex or Claude Code) can continue without the chat history.
 
-## Step 1 — Official PDFs, edition registry, field list (see `git log` for the hash)
+## Step 1 — `21a903f` Official PDFs, edition registry, field list
 
 - The owner downloaded the form and instructions in a browser and uploaded them; the
   assistant copied them to `forms/i765/source/` and pinned SHA-256 values.
@@ -53,3 +53,23 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
 - Found traps for the mapping step (names vs item numbers, checkbox on-values, interpreter/
   preparer name offset); documented in `STATUS.md`.
 - 30 tests pass (8 new).
+
+## Step 2 — Pydantic schema and field map (see `git log` for the hash)
+
+- Owner confirmed edition 08/21/25 (re-uploaded both PDFs; byte-identical, no newer edition
+  found). Registry flag `verified_against_uscis_page` set to true with that note.
+- `forms/i765/schema.py`: `I765Application` with Parts 1-6 and the attorney box; enums for
+  every checkbox group; eligibility category stored exactly as the user states it (None =
+  attorney review); interpreter/preparer names have no middle name (the form has none).
+- `forms/i765/mappings/08-21-25.json`: 148 entries + 6 deliberately unmapped (signatures and
+  signature dates) = all 154 fillable fields. Each entry carries tooltip snippets.
+- `forms/field_map.py`: loader, schema path resolver, leaf-path enumeration.
+- Tests check the map against the real PDF: field exists and type matches, tooltip contains
+  the snippets and the right Part, checkbox on-value exists, the value matches the box's
+  meaning, full coverage both ways, Apt/Ste/Flr order by position, attorney-decision flags.
+- Mutation check: 7 deliberate corruptions of the map (sex swap, yes/no swap, marital swap,
+  naive unit mapping, item 3/4 swap, dropped entry, missing attorney flag) all fail tests.
+  The first run missed the sex swap; a "value matches meaning" test was added.
+- Verified visually by rendering page crops: Apt/Ste/Flr label order; category boxes print
+  their own parentheses.
+- 346 tests pass.

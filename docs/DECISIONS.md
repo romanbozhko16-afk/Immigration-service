@@ -41,3 +41,14 @@ Format: date — decision — why. Newest last. Owner = the product owner.
   are misleading (see `STATUS.md` traps).
 - **2026-10-17 — Official PDFs are committed to the repo** (public government forms) with
   SHA-256 pins checked by a test, so any change to the files is caught.
+- **2026-10-17 — Edition 08/21/25 confirmed by the owner** ("nothing newer found, work with
+  this; we will add or change later"). Registry `verified_against_uscis_page: true`.
+- **2026-10-17 — Signatures and signature dates are never filled.** The form states it cannot
+  be signed electronically; dates are written at signing so they are true.
+- **2026-10-17 — Part 3 items 1 and 2 are "attorney decision" too**, not only Parts 4-5:
+  they say whether an interpreter read the form and whether a preparer prepared it, which is
+  the same open legal question.
+- **2026-10-17 — Unit checkboxes in Parts 4-5 follow the printed label, not the on-value.**
+  What USCIS sees is the ticked box next to the printed word; the on-values there are
+  scrambled in the official PDF.
+- **2026-10-17 — Schema rejects only wrong shapes; content rules become flags in step 3.**

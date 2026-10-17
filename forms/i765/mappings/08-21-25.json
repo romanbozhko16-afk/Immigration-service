@@ -1,0 +1,1660 @@
+{
+ "form": "I-765",
+ "edition": "08/21/25",
+ "rules": [
+  "Map by tooltip (Part + item number), never by PDF field name.",
+  "Barcode fields (PDF417BarCode) are never filled.",
+  "Entries with attorney_decision=true are filled only after an attorney decides."
+ ],
+ "entries": [
+  {
+   "item": "1.1.A",
+   "path": "reason_for_applying",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page1[0].Part1_Checkbox[0]",
+   "when": "initial",
+   "on_value": "/1",
+   "tooltip": [
+    "1. A. Select Initial Permission"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "1.1.B",
+   "path": "reason_for_applying",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page1[0].Part1_Checkbox[1]",
+   "when": "replacement",
+   "on_value": "/2",
+   "tooltip": [
+    "1.B. Select Replacement"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "1.1.C",
+   "path": "reason_for_applying",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page1[0].Part1_Checkbox[2]",
+   "when": "renewal",
+   "on_value": "/3",
+   "tooltip": [
+    "1.C. Select Renewal"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.1.A",
+   "path": "applicant.name.family_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page1[0].Line1a_FamilyName[0]",
+   "tooltip": [
+    "1. A. Enter Family Name"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.1.B",
+   "path": "applicant.name.given_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page1[0].Line1b_GivenName[0]",
+   "tooltip": [
+    "1.B. Enter Given Name"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.1.C",
+   "path": "applicant.name.middle_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page1[0].Line1c_MiddleName[0]",
+   "tooltip": [
+    "1.C. Enter Middle Name"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.2.A",
+   "path": "applicant.other_names[0].family_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page1[0].Line2a_FamilyName[0]",
+   "tooltip": [
+    "2. A. Enter Family Name"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.2.B",
+   "path": "applicant.other_names[0].given_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page1[0].Line2b_GivenName[0]",
+   "tooltip": [
+    "2.B. Enter Given Name"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.2.C",
+   "path": "applicant.other_names[0].middle_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page1[0].Line2c_MiddleName[0]",
+   "tooltip": [
+    "2.C. Enter Middle Name"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.3.A",
+   "path": "applicant.other_names[1].family_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page1[0].Line3a_FamilyName[1]",
+   "tooltip": [
+    "3. A. Enter Family Name"
+   ],
+   "attorney_decision": false,
+   "note": "Name suffix [1] is item 3 and [0] is item 4."
+  },
+  {
+   "item": "2.3.B",
+   "path": "applicant.other_names[1].given_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page1[0].Line3b_GivenName[1]",
+   "tooltip": [
+    "3.B. Enter Given Name"
+   ],
+   "attorney_decision": false,
+   "note": "Name suffix [1] is item 3 and [0] is item 4."
+  },
+  {
+   "item": "2.3.C",
+   "path": "applicant.other_names[1].middle_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page1[0].Line3c_MiddleName[1]",
+   "tooltip": [
+    "3.C. Enter Middle Name"
+   ],
+   "attorney_decision": false,
+   "note": "Name suffix [1] is item 3 and [0] is item 4."
+  },
+  {
+   "item": "2.4.A",
+   "path": "applicant.other_names[2].family_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page1[0].Line3a_FamilyName[0]",
+   "tooltip": [
+    "4. A. Enter Family Name"
+   ],
+   "attorney_decision": false,
+   "note": "Name suffix [1] is item 3 and [0] is item 4."
+  },
+  {
+   "item": "2.4.B",
+   "path": "applicant.other_names[2].given_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page1[0].Line3b_GivenName[0]",
+   "tooltip": [
+    "4.B. Enter Given Name"
+   ],
+   "attorney_decision": false,
+   "note": "Name suffix [1] is item 3 and [0] is item 4."
+  },
+  {
+   "item": "2.4.C",
+   "path": "applicant.other_names[2].middle_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page1[0].Line3c_MiddleName[0]",
+   "tooltip": [
+    "4.C. Enter Middle Name"
+   ],
+   "attorney_decision": false,
+   "note": "Name suffix [1] is item 3 and [0] is item 4."
+  },
+  {
+   "item": "G-28",
+   "path": "attorney.g28_attached",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page1[0].Attorney-Rep[0].CheckBox1[0]",
+   "when": true,
+   "on_value": "/1",
+   "tooltip": [
+    "Select this box if Form G-28 is attached"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "G-28.bar",
+   "path": "attorney.state_bar_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page1[0].Attorney-Rep[0].attorneyBarNumber[0]",
+   "tooltip": [
+    "Attorney State Bar Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "G-28.online",
+   "path": "attorney.uscis_online_account_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page1[0].Attorney-Rep[0].USCISELISAcctNumber[0]",
+   "tooltip": [
+    "Enter Attorney or Accredited Representative U S C I S Online Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.5.A",
+   "path": "applicant.mailing_address.in_care_of",
+   "kind": "text",
+   "pdf_field": "form1[0].Page2[0].Line4a_InCareofName[0]",
+   "tooltip": [
+    "5. A. Enter In Care of Name"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.5.B",
+   "path": "applicant.mailing_address.street",
+   "kind": "text",
+   "pdf_field": "form1[0].Page2[0].Line4b_StreetNumberName[0]",
+   "tooltip": [
+    "5. B. Enter Street Number and Name"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.5.C",
+   "path": "applicant.mailing_address.unit_type",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Pt2Line5_Unit[2]",
+   "when": "apt",
+   "on_value": "/ APT ",
+   "tooltip": [
+    "5. C. Select Apartment"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.5.C",
+   "path": "applicant.mailing_address.unit_type",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Pt2Line5_Unit[0]",
+   "when": "ste",
+   "on_value": "/ STE ",
+   "tooltip": [
+    "5. C. Select Suite"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.5.C",
+   "path": "applicant.mailing_address.unit_type",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Pt2Line5_Unit[1]",
+   "when": "flr",
+   "on_value": "/ FLR ",
+   "tooltip": [
+    "5. C. Select Designated Floor"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.5.C",
+   "path": "applicant.mailing_address.unit_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page2[0].Pt2Line5_AptSteFlrNumber[0]",
+   "tooltip": [
+    "5. C. Enter Apartment, Suite or Floor Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.5.D",
+   "path": "applicant.mailing_address.city",
+   "kind": "text",
+   "pdf_field": "form1[0].Page2[0].Pt2Line5_CityOrTown[0]",
+   "tooltip": [
+    "5. D. Enter City or Town"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.5.E",
+   "path": "applicant.mailing_address.state",
+   "kind": "choice",
+   "pdf_field": "form1[0].Page2[0].Pt2Line5_State[0]",
+   "tooltip": [
+    "5. E Select state"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.5.F",
+   "path": "applicant.mailing_address.zip_code",
+   "kind": "text",
+   "pdf_field": "form1[0].Page2[0].Pt2Line5_ZipCode[0]",
+   "tooltip": [
+    "5. F. Enter Zip Code"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.6",
+   "path": "applicant.mailing_same_as_physical",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Part2Line5_Checkbox[1]",
+   "when": true,
+   "on_value": "/Y",
+   "tooltip": [
+    "6. Is your current mailing address the same as your physical address",
+    "Select Yes"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.6",
+   "path": "applicant.mailing_same_as_physical",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Part2Line5_Checkbox[0]",
+   "when": false,
+   "on_value": "/N",
+   "tooltip": [
+    "6. Is your current mailing address the same as your physical address",
+    "Select No"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.7.A",
+   "path": "applicant.physical_address.street",
+   "kind": "text",
+   "pdf_field": "form1[0].Page2[0].Pt2Line7_StreetNumberName[0]",
+   "tooltip": [
+    "7. A. Enter Street Number and Name"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.7.B",
+   "path": "applicant.physical_address.unit_type",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Pt2Line7_Unit[2]",
+   "when": "apt",
+   "on_value": "/ APT ",
+   "tooltip": [
+    "7. B. Select Apartment"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.7.B",
+   "path": "applicant.physical_address.unit_type",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Pt2Line7_Unit[0]",
+   "when": "ste",
+   "on_value": "/ STE ",
+   "tooltip": [
+    "7. B. Select Suite"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.7.B",
+   "path": "applicant.physical_address.unit_type",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Pt2Line7_Unit[1]",
+   "when": "flr",
+   "on_value": "/ FLR ",
+   "tooltip": [
+    "7. B. Select Designated Floor"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.7.B",
+   "path": "applicant.physical_address.unit_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page2[0].Pt2Line7_AptSteFlrNumber[0]",
+   "tooltip": [
+    "7.B. Enter Apartment, Suite or Floor number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.7.C",
+   "path": "applicant.physical_address.city",
+   "kind": "text",
+   "pdf_field": "form1[0].Page2[0].Pt2Line7_CityOrTown[0]",
+   "tooltip": [
+    "7. C. Enter city or town"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.7.D",
+   "path": "applicant.physical_address.state",
+   "kind": "choice",
+   "pdf_field": "form1[0].Page2[0].Pt2Line7_State[0]",
+   "tooltip": [
+    "7. D. Select State"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.7.E",
+   "path": "applicant.physical_address.zip_code",
+   "kind": "text",
+   "pdf_field": "form1[0].Page2[0].Pt2Line7_ZipCode[0]",
+   "tooltip": [
+    "7. E. Enter ZIP Code"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.8",
+   "path": "applicant.a_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page2[0].Line7_AlienNumber[0]",
+   "tooltip": [
+    "8. Enter Alien Registration Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.9",
+   "path": "applicant.uscis_online_account_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page2[0].Line8_ElisAccountNumber[0]",
+   "tooltip": [
+    "9. U SC I S Online Account Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.10",
+   "path": "applicant.sex",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Line9_Checkbox[0]",
+   "when": "female",
+   "on_value": "/N",
+   "tooltip": [
+    "10. Sex. Select Female"
+   ],
+   "attorney_decision": false,
+   "note": "On-value /N means Female, not No."
+  },
+  {
+   "item": "2.10",
+   "path": "applicant.sex",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Line9_Checkbox[1]",
+   "when": "male",
+   "on_value": "/Y",
+   "tooltip": [
+    "10. Sex. Select Male"
+   ],
+   "attorney_decision": false,
+   "note": "On-value /Y means Male, not Yes."
+  },
+  {
+   "item": "2.11",
+   "path": "applicant.marital_status",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Line10_Checkbox[0]",
+   "when": "widowed",
+   "on_value": "/Widowed",
+   "tooltip": [
+    "11. Marital Status. Select Widowed"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.11",
+   "path": "applicant.marital_status",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Line10_Checkbox[1]",
+   "when": "divorced",
+   "on_value": "/Divorced",
+   "tooltip": [
+    "11. Marital Status. Select Divorced"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.11",
+   "path": "applicant.marital_status",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Line10_Checkbox[2]",
+   "when": "single",
+   "on_value": "/Single",
+   "tooltip": [
+    "11. Marital Status. Select Single"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.11",
+   "path": "applicant.marital_status",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Line10_Checkbox[3]",
+   "when": "married",
+   "on_value": "/Married",
+   "tooltip": [
+    "11. Marital Status. Select Married"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.12",
+   "path": "applicant.previously_filed_i765",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Line19_Checkbox[1]",
+   "when": true,
+   "on_value": "/Y",
+   "tooltip": [
+    "12. Have you previously filed Form I - 7 65",
+    "Select Yes"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.12",
+   "path": "applicant.previously_filed_i765",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page2[0].Line19_Checkbox[0]",
+   "when": false,
+   "on_value": "/N",
+   "tooltip": [
+    "12. Have you previously filed Form I - 7 65",
+    "Select No"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.13",
+   "path": "applicant.ssn",
+   "kind": "text",
+   "pdf_field": "form1[0].Page2[0].Line12b_SSN[0]",
+   "tooltip": [
+    "13. Provide your Social Security Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.14.A",
+   "path": "applicant.citizenship_countries[0]",
+   "kind": "text",
+   "pdf_field": "form1[0].Page2[0].Line17a_CountryOfBirth[0]",
+   "tooltip": [
+    "Country or Countries of Citizenship",
+    "14. A. Enter the Country"
+   ],
+   "attorney_decision": false,
+   "note": "Named CountryOfBirth but it is citizenship."
+  },
+  {
+   "item": "2.14.B",
+   "path": "applicant.citizenship_countries[1]",
+   "kind": "text",
+   "pdf_field": "form1[0].Page2[0].Line17b_CountryOfBirth[0]",
+   "tooltip": [
+    "Country or Countries of Citizenship",
+    "14. B. Enter the Country"
+   ],
+   "attorney_decision": false,
+   "note": "Named CountryOfBirth but it is citizenship."
+  },
+  {
+   "item": "2.15.A",
+   "path": "applicant.birth_city",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line18a_CityTownOfBirth[0]",
+   "tooltip": [
+    "15. A. Enter City / Town / Village of Birth"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.15.B",
+   "path": "applicant.birth_state_province",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line18b_CityTownOfBirth[0]",
+   "tooltip": [
+    "15. B. Enter State / Province of Birth"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.15.C",
+   "path": "applicant.birth_country",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line18c_CountryOfBirth[0]",
+   "tooltip": [
+    "15. C. Enter Country of your Birth"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.16",
+   "path": "applicant.date_of_birth",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line19_DOB[0]",
+   "tooltip": [
+    "16. Date of Birth"
+   ],
+   "format": "date",
+   "attorney_decision": false
+  },
+  {
+   "item": "2.17",
+   "path": "applicant.i94_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line20a_I94Number[0]",
+   "tooltip": [
+    "17. Enter Form I - 94 Arrival-Departure Record Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.18",
+   "path": "applicant.passport_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line20b_Passport[0]",
+   "tooltip": [
+    "18. Enter Passport Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.19",
+   "path": "applicant.travel_document_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line20c_TravelDoc[0]",
+   "tooltip": [
+    "19. Enter your Travel Document Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.20",
+   "path": "applicant.passport_issuing_country",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line20d_CountryOfIssuance[0]",
+   "tooltip": [
+    "20. Enter Country That Issued Your Passport"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.21",
+   "path": "applicant.passport_expiration_date",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line20e_ExpDate[0]",
+   "tooltip": [
+    "21. Enter the Expiration Date for your Passport"
+   ],
+   "format": "date",
+   "attorney_decision": false
+  },
+  {
+   "item": "2.22",
+   "path": "applicant.last_entry_date",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line21_DateOfLastEntry[0]",
+   "tooltip": [
+    "22. Enter the Date of your Last Entry"
+   ],
+   "format": "date",
+   "attorney_decision": false
+  },
+  {
+   "item": "2.23",
+   "path": "applicant.last_entry_place",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].place_entry[0]",
+   "tooltip": [
+    "23. Enter Place of Last Arrival"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.24",
+   "path": "applicant.status_at_last_arrival",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line23_StatusLastEntry[0]",
+   "tooltip": [
+    "24. Enter Immigration Status at Your Last Arrival"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.25",
+   "path": "applicant.current_status",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line24_CurrentStatus[0]",
+   "tooltip": [
+    "25. Enter Your Current Immigration Status or Category"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.26",
+   "path": "applicant.sevis_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line26_SEVISnumber[0]",
+   "tooltip": [
+    "26. Enter Student and Exchange Visitor Information System"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.27",
+   "path": "applicant.eligibility.category",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].#area[1].section_1[0]",
+   "tooltip": [
+    "27. Eligibility Category",
+    "Enter first four characters"
+   ],
+   "format": "category_segment_1",
+   "attorney_decision": false,
+   "note": "Parentheses are printed on the form; e.g. (c)(17)(iii) -> c | 17 | iii."
+  },
+  {
+   "item": "2.27",
+   "path": "applicant.eligibility.category",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].#area[1].section_2[0]",
+   "tooltip": [
+    "27. Eligibility Category",
+    "Enter middle three characters"
+   ],
+   "format": "category_segment_2",
+   "attorney_decision": false,
+   "note": "Parentheses are printed on the form; e.g. (c)(17)(iii) -> c | 17 | iii."
+  },
+  {
+   "item": "2.27",
+   "path": "applicant.eligibility.category",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].#area[1].section_3[0]",
+   "tooltip": [
+    "27. Eligibility Category",
+    "Enter Last three characters"
+   ],
+   "format": "category_segment_3",
+   "attorney_decision": false,
+   "note": "Parentheses are printed on the form; e.g. (c)(17)(iii) -> c | 17 | iii."
+  },
+  {
+   "item": "2.28.A",
+   "path": "applicant.eligibility.stem_degree",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line27a_Degree[0]",
+   "tooltip": [
+    "28. A. Enter Degree"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.28.B",
+   "path": "applicant.eligibility.stem_employer_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line27b_Everify[0]",
+   "tooltip": [
+    "28. B. Enter your Employer's Name as Listed in E Verify"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.28.C",
+   "path": "applicant.eligibility.stem_everify_company_id",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line27c_EverifyIDNumber[0]",
+   "tooltip": [
+    "28.C. Enter your Employer's E Verify Company Identification Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.29",
+   "path": "applicant.eligibility.c26_spouse_receipt_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line28_ReceiptNumber[0]",
+   "tooltip": [
+    "29. (c)(26) Eligibility Category"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.30",
+   "path": "applicant.eligibility.c8_ever_arrested_or_convicted",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page3[0].PtLine29_YesNo[0]",
+   "when": true,
+   "on_value": "/Y",
+   "tooltip": [
+    "30. (c)(8) Eligibility Category",
+    "Select Yes"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.30",
+   "path": "applicant.eligibility.c8_ever_arrested_or_convicted",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page3[0].PtLine29_YesNo[1]",
+   "when": false,
+   "on_value": "/N",
+   "tooltip": [
+    "30. (c)(8) Eligibility Category",
+    "Select No"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.31.A",
+   "path": "applicant.eligibility.c35_c36_receipt_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page3[0].Line18a_Receipt[0].Line30a_ReceiptNumber[0]",
+   "tooltip": [
+    "31. A. (c)(35) and (c)(36) Eligibility Category"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.31.B",
+   "path": "applicant.eligibility.c35_c36_ever_arrested_or_convicted",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page3[0].PtLine30b_YesNo[0]",
+   "when": true,
+   "on_value": "/Y",
+   "tooltip": [
+    "31. B. If you entered the eligibility category (c)(35) or (c)(36)",
+    "Select Yes"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "2.31.B",
+   "path": "applicant.eligibility.c35_c36_ever_arrested_or_convicted",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page3[0].PtLine30b_YesNo[1]",
+   "when": false,
+   "on_value": "/N",
+   "tooltip": [
+    "31. B. If you entered the eligibility category (c)(35) or (c)(36)",
+    "Select No"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "3.1.A",
+   "path": "statement.statement",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page4[0].Pt3Line1Checkbox[1]",
+   "when": "reads_english",
+   "on_value": "/A",
+   "tooltip": [
+    "1. A. Select I can read and understand English"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "3.1.B",
+   "path": "statement.statement",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page4[0].Pt3Line1Checkbox[0]",
+   "when": "interpreter_read",
+   "on_value": "/B",
+   "tooltip": [
+    "1. B. Select The interpreter named in Part 4"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "3.1.B",
+   "path": "statement.interpreter_language",
+   "kind": "text",
+   "pdf_field": "form1[0].Page4[0].Pt3Line1b_Language[0]",
+   "tooltip": [
+    "1. B. Enter the language in which you are fluent"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "3.2",
+   "path": "statement.prepared_by_preparer",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page4[0].Part3_Checkbox[0]",
+   "when": true,
+   "on_value": "/C",
+   "tooltip": [
+    "2. Select At my request, the preparer named in Part 5"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "3.2",
+   "path": "statement.preparer_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page4[0].Pt3Line2_RepresentativeName[0]",
+   "tooltip": [
+    "2. Enter name of Preparer from Part 5"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "3.3",
+   "path": "statement.daytime_phone",
+   "kind": "text",
+   "pdf_field": "form1[0].Page4[0].Pt3Line3_DaytimePhoneNumber1[0]",
+   "tooltip": [
+    "3. Enter Applicant's Daytime Telephone Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "3.4",
+   "path": "statement.mobile_phone",
+   "kind": "text",
+   "pdf_field": "form1[0].Page4[0].Pt3Line4_MobileNumber1[0]",
+   "tooltip": [
+    "4. Enter Applicant's Mobile Telephone Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "3.5",
+   "path": "statement.email",
+   "kind": "text",
+   "pdf_field": "form1[0].Page4[0].Pt3Line5_Email[0]",
+   "tooltip": [
+    "5. Enter Applicant's Email Address"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "3.6",
+   "path": "statement.abc_settlement_class_member",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page4[0].Pt4Line6_Checkbox[0]",
+   "when": true,
+   "on_value": "/A",
+   "tooltip": [
+    "6. Select this box if you are a Salvadoran or Guatemalan national"
+   ],
+   "attorney_decision": false,
+   "note": "Named Pt4 but it is Part 3, item 6."
+  },
+  {
+   "item": "4.1.A",
+   "path": "interpreter.name.family_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page4[0].Pt4Line1a_InterpreterFamilyName[0]",
+   "tooltip": [
+    "1. A. Enter Interpreter's Family Name"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "4.1.B",
+   "path": "interpreter.name.given_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page4[0].Pt4Line1b_InterpreterGivenName[0]",
+   "tooltip": [
+    "1. B. Enter Interpreter's Given Name"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "4.2",
+   "path": "interpreter.organization",
+   "kind": "text",
+   "pdf_field": "form1[0].Page4[0].Pt4Line2_InterpreterBusinessorOrg[0]",
+   "tooltip": [
+    "2. Enter Interpreter's Business or Organization Name"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "4.3.A",
+   "path": "interpreter.address.street",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt5Line3a_StreetNumberName[0]",
+   "tooltip": [
+    "Interpreter's Mailing Address",
+    "3. A. Enter Street Number and Name"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "4.3.B",
+   "path": "interpreter.address.unit_type",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page5[0].Pt5Line3b_Unit[1]",
+   "when": "apt",
+   "on_value": "/ FLR ",
+   "tooltip": [
+    "Interpreter's Mailing Address",
+    "3. B. Select Apartment"
+   ],
+   "attorney_decision": true,
+   "note": "On-values in this section do not match the printed labels; mapped by printed label and tooltip (checked by widget position)."
+  },
+  {
+   "item": "4.3.B",
+   "path": "interpreter.address.unit_type",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page5[0].Pt5Line3b_Unit[2]",
+   "when": "ste",
+   "on_value": "/ APT ",
+   "tooltip": [
+    "Interpreter's Mailing Address",
+    "3. B. Select Suite"
+   ],
+   "attorney_decision": true,
+   "note": "On-values in this section do not match the printed labels; mapped by printed label and tooltip (checked by widget position)."
+  },
+  {
+   "item": "4.3.B",
+   "path": "interpreter.address.unit_type",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page5[0].Pt5Line3b_Unit[0]",
+   "when": "flr",
+   "on_value": "/ STE ",
+   "tooltip": [
+    "Interpreter's Mailing Address",
+    "3. B. Select Floor"
+   ],
+   "attorney_decision": true,
+   "note": "On-values in this section do not match the printed labels; mapped by printed label and tooltip (checked by widget position)."
+  },
+  {
+   "item": "4.3.B",
+   "path": "interpreter.address.unit_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt5Line3b_AptSteFlrNumber[0]",
+   "tooltip": [
+    "Interpreter's Mailing Address",
+    "Apartment, Suite or Floor number"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "4.3.C",
+   "path": "interpreter.address.city",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt5Line3c_CityOrTown[0]",
+   "tooltip": [
+    "Interpreter's Mailing Address",
+    "3. C. Enter"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "4.3.D",
+   "path": "interpreter.address.state",
+   "kind": "choice",
+   "pdf_field": "form1[0].Page5[0].Pt5Line3d_State[0]",
+   "tooltip": [
+    "3. D. Select state"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "4.3.E",
+   "path": "interpreter.address.zip_code",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt5Line3e_ZipCode[0]",
+   "tooltip": [
+    "Interpreter's Mailing Address",
+    "3. E. Enter"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "4.3.F",
+   "path": "interpreter.address.province",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt5Line3f_Province[0]",
+   "tooltip": [
+    "Interpreter's Mailing Address",
+    "3. F. Enter the Province"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "4.3.G",
+   "path": "interpreter.address.postal_code",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt5Line3g_PostalCode[0]",
+   "tooltip": [
+    "Interpreter's Mailing Address",
+    "3. G. Enter the Postal Code"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "4.3.H",
+   "path": "interpreter.address.country",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt5Line3h_Country[0]",
+   "tooltip": [
+    "Interpreter's Mailing Address",
+    "3. H. Enter the Country"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "4.4",
+   "path": "interpreter.daytime_phone",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt4Line4_InterpreterDaytimeTelephone[0]",
+   "tooltip": [
+    "4. Enter Interpreter's Daytime Telephone Number"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "4.5",
+   "path": "interpreter.mobile_phone",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt4Line5_MobileNumber[0]",
+   "tooltip": [
+    "5. Enter Interpreter's Mobile Telephone Number"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "4.6",
+   "path": "interpreter.email",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt4Line6_Email[0]",
+   "tooltip": [
+    "6. Enter Interpreter's Email Address"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "4.cert",
+   "path": "interpreter.language",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Part4_NameofLanguage[0]",
+   "tooltip": [
+    "Interpreter's Certification",
+    "(enter language)"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.1.A",
+   "path": "preparer.name.family_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt5Line1a_PreparerFamilyName[0]",
+   "tooltip": [
+    "1. A. Enter Preparer's Family Name"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.1.B",
+   "path": "preparer.name.given_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt5Line1b_PreparerGivenName[0]",
+   "tooltip": [
+    "1. B. Enter Preparer's Given Name"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.2",
+   "path": "preparer.business_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt5Line2_BusinessName[0]",
+   "tooltip": [
+    "2. Enter Preparer's Business or Organization Name"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.3.A",
+   "path": "preparer.address.street",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt6Line3a_StreetNumberName[0]",
+   "tooltip": [
+    "Preparer's Mailing Address",
+    "3. A. Enter Street Number and Name"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.3.B",
+   "path": "preparer.address.unit_type",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page5[0].Pt6Line3b_Unit[1]",
+   "when": "apt",
+   "on_value": "/ FLR ",
+   "tooltip": [
+    "Preparer's Mailing Address",
+    "3. B. Select Apartment"
+   ],
+   "attorney_decision": true,
+   "note": "On-values in this section do not match the printed labels; mapped by printed label and tooltip (checked by widget position)."
+  },
+  {
+   "item": "5.3.B",
+   "path": "preparer.address.unit_type",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page5[0].Pt6Line3b_Unit[2]",
+   "when": "ste",
+   "on_value": "/ APT ",
+   "tooltip": [
+    "Preparer's Mailing Address",
+    "3. B. Select Suite"
+   ],
+   "attorney_decision": true,
+   "note": "On-values in this section do not match the printed labels; mapped by printed label and tooltip (checked by widget position)."
+  },
+  {
+   "item": "5.3.B",
+   "path": "preparer.address.unit_type",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page5[0].Pt6Line3b_Unit[0]",
+   "when": "flr",
+   "on_value": "/ STE ",
+   "tooltip": [
+    "Preparer's Mailing Address",
+    "3. B. Select Floor"
+   ],
+   "attorney_decision": true,
+   "note": "On-values in this section do not match the printed labels; mapped by printed label and tooltip (checked by widget position)."
+  },
+  {
+   "item": "5.3.B",
+   "path": "preparer.address.unit_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt6Line3b_AptSteFlrNumber[0]",
+   "tooltip": [
+    "Preparer's Mailing Address",
+    "Apartment, Suite or Floor number"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.3.C",
+   "path": "preparer.address.city",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt6Line3c_CityOrTown[0]",
+   "tooltip": [
+    "Preparer's Mailing Address",
+    "3. C. Enter"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.3.D",
+   "path": "preparer.address.state",
+   "kind": "choice",
+   "pdf_field": "form1[0].Page5[0].Pt6Line3d_State[0]",
+   "tooltip": [
+    "3. D. Select state"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.3.E",
+   "path": "preparer.address.zip_code",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt6Line3e_ZipCode[0]",
+   "tooltip": [
+    "Preparer's Mailing Address",
+    "3. E. Enter"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.3.F",
+   "path": "preparer.address.province",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt6Line3f_Province[0]",
+   "tooltip": [
+    "Preparer's Mailing Address",
+    "3. F. Enter the Province"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.3.G",
+   "path": "preparer.address.postal_code",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt6Line3g_PostalCode[0]",
+   "tooltip": [
+    "Preparer's Mailing Address",
+    "3. G. Enter the Postal Code"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.3.H",
+   "path": "preparer.address.country",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt6Line3h_Country[0]",
+   "tooltip": [
+    "Preparer's Mailing Address",
+    "3. H. Enter the Country"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.4",
+   "path": "preparer.daytime_phone",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt5Line4_DaytimePhoneNumber1[0]",
+   "tooltip": [
+    "4. Enter Preparer's Daytime Telephone Number"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.5",
+   "path": "preparer.mobile_phone",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt5Line5_PreparerFaxNumber[0]",
+   "tooltip": [
+    "5. Enter Preparer's Mobile Telephone Number"
+   ],
+   "attorney_decision": true,
+   "note": "Named FaxNumber but it is the mobile number."
+  },
+  {
+   "item": "5.6",
+   "path": "preparer.email",
+   "kind": "text",
+   "pdf_field": "form1[0].Page5[0].Pt5Line6_Email[0]",
+   "tooltip": [
+    "6. Enter Preparer's Email Address"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.7.A",
+   "path": "preparer.statement",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page6[0].Part5Line7_Checkbox[0]",
+   "when": "not_attorney",
+   "on_value": "/A",
+   "tooltip": [
+    "7. A. Select I am not an attorney"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.7.B",
+   "path": "preparer.statement",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page6[0].Part5Line7_Checkbox[1]",
+   "when": "attorney",
+   "on_value": "/B",
+   "tooltip": [
+    "extends or does not extend beyond the preparation"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.7.B",
+   "path": "preparer.representation_extends_beyond_preparation",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page6[0].Part5Line7b_Checkbox[0]",
+   "when": true,
+   "on_value": "/Y",
+   "tooltip": [
+    "my representation of the applicant in this case extends beyond the preparation"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "5.7.B",
+   "path": "preparer.representation_extends_beyond_preparation",
+   "kind": "checkbox",
+   "pdf_field": "form1[0].Page6[0].Part5Line7b_Checkbox[1]",
+   "when": false,
+   "on_value": "/N",
+   "tooltip": [
+    "does not extend beyond the preparation of this application"
+   ],
+   "attorney_decision": true
+  },
+  {
+   "item": "6.1.A",
+   "path": "applicant.name.family_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Line1a_FamilyName[0]",
+   "tooltip": [
+    "1. A. Family Name",
+    "pre-populated from Part 1"
+   ],
+   "attorney_decision": false,
+   "note": "Copy of P2.1.A; XFA fills it, plain AcroForm filling does not."
+  },
+  {
+   "item": "6.1.B",
+   "path": "applicant.name.given_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Line1b_GivenName[0]",
+   "tooltip": [
+    "1. B. Given Name",
+    "pre-populated from Part 1"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.1.C",
+   "path": "applicant.name.middle_name",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Line1c_MiddleName[0]",
+   "tooltip": [
+    "1. C. Middle Name",
+    "pre-populated from Part 1"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.2",
+   "path": "applicant.a_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Line7_AlienNumber[0]",
+   "tooltip": [
+    "2. A. Number",
+    "pre-populated from Part 1"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.3.A",
+   "path": "additional_info[0].page_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line3a_PageNumber[0]",
+   "tooltip": [
+    "3. A. Enter Page Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.3.B",
+   "path": "additional_info[0].part_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line3b_PartNumber[0]",
+   "tooltip": [
+    "3. B. Enter Part Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.3.C",
+   "path": "additional_info[0].item_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line3c_ItemNumber[0]",
+   "tooltip": [
+    "3. C. Enter Item Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.3.D",
+   "path": "additional_info[0].text",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line4d_AdditionalInfo[1]",
+   "tooltip": [
+    "3. D. Enter additional information"
+   ],
+   "attorney_decision": false,
+   "note": "Item 3.D is the widget named Pt6Line4d_AdditionalInfo[1]."
+  },
+  {
+   "item": "6.4.A",
+   "path": "additional_info[1].page_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line4a_PageNumber[0]",
+   "tooltip": [
+    "4. A. Enter Page Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.4.B",
+   "path": "additional_info[1].part_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line4b_PartNumber[0]",
+   "tooltip": [
+    "4. B. Enter Part Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.4.C",
+   "path": "additional_info[1].item_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line4c_ItemNumber[0]",
+   "tooltip": [
+    "4. C. Enter Item Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.4.D",
+   "path": "additional_info[1].text",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line4d_AdditionalInfo[0]",
+   "tooltip": [
+    "4. D. Enter additional information"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.5.A",
+   "path": "additional_info[2].page_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line5a_PageNumber[0]",
+   "tooltip": [
+    "5. A. Enter Page Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.5.B",
+   "path": "additional_info[2].part_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line5b_PartNumber[0]",
+   "tooltip": [
+    "5. B. Enter Part Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.5.C",
+   "path": "additional_info[2].item_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line5c_ItemNumber[0]",
+   "tooltip": [
+    "5. C. Enter Item Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.5.D",
+   "path": "additional_info[2].text",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line5d_AdditionalInfo[0]",
+   "tooltip": [
+    "5. D. Enter additional information"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.6.A",
+   "path": "additional_info[3].page_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line6a_PageNumber[0]",
+   "tooltip": [
+    "6. A. Enter Page Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.6.B",
+   "path": "additional_info[3].part_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line6b_PartNumber[0]",
+   "tooltip": [
+    "6. B. Enter Part Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.6.C",
+   "path": "additional_info[3].item_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line6c_ItemNumber[0]",
+   "tooltip": [
+    "6. C. Enter Item Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.6.D",
+   "path": "additional_info[3].text",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line6d_AdditionalInfo[0]",
+   "tooltip": [
+    "6. D. Enter additional information"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.7.A",
+   "path": "additional_info[4].page_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line7a_PageNumber[0]",
+   "tooltip": [
+    "7. A. Enter Page Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.7.B",
+   "path": "additional_info[4].part_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line7b_PartNumber[0]",
+   "tooltip": [
+    "7. B. Enter Part Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.7.C",
+   "path": "additional_info[4].item_number",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line7c_ItemNumber[0]",
+   "tooltip": [
+    "7. C. Enter Item Number"
+   ],
+   "attorney_decision": false
+  },
+  {
+   "item": "6.7.D",
+   "path": "additional_info[4].text",
+   "kind": "text",
+   "pdf_field": "form1[0].Page7[0].Pt6Line7d_AdditionalInfo[0]",
+   "tooltip": [
+    "7. D. Enter additional information"
+   ],
+   "attorney_decision": false
+  }
+ ],
+ "unmapped": [
+  {
+   "pdf_field": "form1[0].Page4[0].Pt3Line7a_Signature[0]",
+   "reason": "Applicant signature: must be signed in ink; the form says it cannot be signed electronically or typed."
+  },
+  {
+   "pdf_field": "form1[0].Page4[0].Pt3Line7b_DateofSignature[0]",
+   "reason": "Applicant writes the date when signing."
+  },
+  {
+   "pdf_field": "form1[0].Page5[0].Pt4Line6a_Signature[0]",
+   "reason": "Interpreter signature: must be signed in ink."
+  },
+  {
+   "pdf_field": "form1[0].Page5[0].Pt4Line6b_DateofSignature[0]",
+   "reason": "Interpreter writes the date when signing."
+  },
+  {
+   "pdf_field": "form1[0].Page6[0].Pt5Line8a_Signature[0]",
+   "reason": "Preparer signature: must be signed in ink."
+  },
+  {
+   "pdf_field": "form1[0].Page6[0].Pt5Line8b_DateofSignature[0]",
+   "reason": "Preparer writes the date when signing."
+  }
+ ]
+}

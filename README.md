@@ -15,7 +15,7 @@ Audiences:
 - **Individuals (B2C):** self-preparation of the form, with optional paid review by a
   partner attorney.
 
-**Status:** under construction. Steps 0-1 of 11 are done (skeleton; form edition registry and PDF field list).
+**Status:** under construction. Steps 0-2 of 11 are done (skeleton; form edition registry and PDF field list; data schema and PDF field map).
 
 ---
 
@@ -118,6 +118,9 @@ Implemented so far:
   switchable to `claude-opus-5-5`; other models are rejected at startup.
 - `logging_utils.py`: log formatter that redacts personal identifiers.
 - `forms/registry.py`: pins the active form edition and verifies SHA-256 of the official PDFs.
+- `forms/i765/schema.py` + `forms/i765/mappings/08-21-25.json`: the I-765 data schema and its
+  link to every PDF field, verified against the official PDF by tests. Signatures are never
+  filled; interpreter and preparer items are marked for an attorney's decision.
 
 ---
 

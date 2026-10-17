@@ -1,21 +1,32 @@
 # Project status
 
-*Last updated: 2026-10-17, after step 1 (awaiting owner approval).*
+*Last updated: 2026-10-17, after step 2 (awaiting owner approval).*
 
 ## Where we stopped
 
 - **Step 0 is done and pushed** (skeleton, model config, PII-safe logging).
-- **Step 1 is done and awaiting the owner's approval** (30 tests pass): the owner uploaded the
-  official PDFs, the edition registry exists, and the full PDF field list is generated.
+- **Step 1 is done and approved** (owner confirmed edition 08/21/25 on 2026-10-17: two
+  downloads from uscis.gov were byte-identical and the owner found no newer edition).
+- **Step 2 is done and awaiting the owner's approval** (346 tests pass): Pydantic schema
+  `src/uscis_assistant/forms/i765/schema.py` and field map `forms/i765/mappings/08-21-25.json`.
 - The owner works from a phone and may continue in Codex or Claude Code. This file is the
   handoff: read it, then continue with "Next action".
 
 ## Next action
 
-1. **Wait for the owner to (a) review `forms/i765/fields/08-21-25.md` and (b) settle the
-   edition question** (see Blockers). Do NOT write the field mapping before both.
-2. Then step 2: Pydantic schema + mapping to PDF fields (recommended: Opus 5.5, effort high).
-   Map by TOOLTIP text, not by field name (see "Traps in the PDF" below).
+1. Wait for the owner to approve step 2.
+2. Then step 3: validation and flags (recommended: Opus 5.5, effort high). Inputs for it:
+   - Flag `requires attorney review` when `applicant.eligibility.category` is empty.
+   - Flag `requires attorney decision` for every map entry with `attorney_decision: true`
+     (Part 3 items 1-2, Parts 4-5) whenever they are filled or needed.
+   - Candidate flags to discuss with the owner (legal sensitivity, do not decide alone):
+     a "Yes" to P2.30 / P2.31.B (arrests/convictions; the form refers to court dispositions);
+     P3.6 ABC settlement (the user states it from own documents).
+   - Format checks: A-Number 9 digits (tooltip), SSN 9 digits, I-94 11 digits, receipt
+     numbers 13 characters, USCIS online account 12 characters, dates as MM/DD/YYYY on the
+     form, category shape like (c)(8) / (c)(17)(iii) split into 3 segments.
+   - Consistency: P2.6 "No" requires P2.7; category-dependent items 28-31 only for their
+     category; more other names / citizenships than the form holds go to Part 6.
 
 ## Step 1 findings
 
@@ -46,8 +57,16 @@
   the category.
 - Part 6 (page 7) repeats name and A-Number as "pre-populated" fields; the XFA fills them
   automatically, plain AcroForm filling will not, so we must fill them ourselves.
-- Several tooltips contain stray spaces ("I - 7 65"); do not match tooltips verbatim, match by
-  Part/item number.
+- Several tooltips contain stray spaces ("I - 7 65"); tests normalize tooltips to lowercase
+  alphanumerics before matching.
+- Found in step 2: in Parts 4-5 the Apt/Ste/Flr on-values do not match the printed labels
+  (the box printed "Apt." has on-value `/ FLR `). Tooltips match the printed labels. The map
+  follows the printed label; a test checks it by widget x-position.
+- Found in step 2: other names item 3 is `Line3*[1]` and item 4 is `Line3*[0]`; Part 6
+  item 3.D is `Pt6Line4d_AdditionalInfo[1]`; `Pt5Line5_PreparerFaxNumber` is the preparer's
+  MOBILE number; `Pt4Line6_Checkbox` is Part 3 item 6 (ABC settlement).
+- Signatures (and their dates) are never filled: the form says it cannot be signed
+  electronically. The applicant signs and dates in ink.
 
 ## Blockers and open questions
 
@@ -55,18 +74,9 @@
   host, but the site (Akamai) answers `403 Access Denied` to automated requests from
   datacenter IPs. Do not try to bypass it. Workflow: the owner downloads files in a normal
   browser and uploads them (done for the form and instructions on 2026-10-17).
-- **Which I-765 edition is current: owner must confirm.** Registry holds 08/21/25 as the
-  active edition PROVISIONALLY (`verified_against_uscis_page: false`).
-  - Owner's statement (2026-10-17): since 2026-09-15 only edition **09/15/26** is accepted;
-    **08/21/25** is rejected. Owner wants only 09/15/26.
-  - The files the owner uploaded (said to come from the USCIS form page) are **08/21/25**.
-  - Web search the same day (law-firm and university pages, not the USCIS page itself):
-    a court order of 2026-09-14 (D. Mass., duration-of-status rule) paused the new edition;
-    USCIS reportedly accepts **08/21/25** and does not accept 09/15/26. Pre-order notices
-    say the opposite. This matches the uploaded files, but is secondary evidence.
-  - To close it: the owner opens uscis.gov/i-765 in a browser, reads the "Edition Date" and
-    any notice, and sends a screenshot/text. If USCIS offers 09/15/26, upload that PDF and
-    its instructions; the registry needs only a new entry and `active_edition` change.
+- **Edition: resolved for now.** Active edition 08/21/25, confirmed by the owner on
+  2026-10-17 (see `DECISIONS.md`). If USCIS publishes or starts accepting another edition,
+  add it to `forms/i765/editions.json`, generate its field list, and write a new map.
 - **Lawyer questions (owner will ask their attorney):**
   - Whether/how to complete Interpreter and Preparer sections when the interview is done by
     software in another language (we flag them; we do not decide).
@@ -84,8 +94,8 @@ not a rule from any documentation.
 | # | Step | Model | Effort | State |
 |---|---|---|---|---|
 | 0 | Skeleton, config, PII-safe logging | — | — | done |
-| 1 | Fetch PDF + instructions, fix edition, list PDF fields (STOP for owner) | Sonnet 5.5 | medium | done, awaiting owner approval |
-| 2 | Pydantic schema + mapping to PDF fields | Opus 5.5 | high | todo |
+| 1 | Fetch PDF + instructions, fix edition, list PDF fields (STOP for owner) | Sonnet 5.5 | medium | done |
+| 2 | Pydantic schema + mapping to PDF fields | Opus 5.5 | high | done, awaiting owner approval |
 | 3 | Validation + flags | Opus 5.5 | high | todo |
 | 4 | Storage: field encryption, audit log, case deletion | Opus 5.5 | high | todo |
 | 5 | PDF filling + round-trip test | Sonnet 5.5 | high | todo |
