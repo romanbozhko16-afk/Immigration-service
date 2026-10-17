@@ -1,0 +1,20 @@
+# Secrets: keys live only in .env, never in git
+.env
+.env.*
+!.env.example
+
+# Local data: case database and uploaded documents contain personal data
+data/
+*.db
+*.sqlite3
+uploads/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
