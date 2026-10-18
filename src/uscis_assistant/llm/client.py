@@ -14,6 +14,7 @@ import json
 from typing import Any, Protocol
 
 import anthropic
+from pydantic import BaseModel, ConfigDict
 
 from uscis_assistant.config import Settings
 
@@ -24,6 +25,27 @@ class LLMUnavailable(Exception):
 
 class StructuredLLM(Protocol):
     def json(self, *, system: str, user: str, schema: dict[str, Any]) -> dict[str, Any]: ...
+
+
+class CitedRange(BaseModel):
+    """Passages the model cited: indexes into the blocks it was given (end exclusive)."""
+
+    model_config = ConfigDict(frozen=True)
+
+    start: int
+    end: int
+    cited_text: str
+
+
+class CitedAnswer(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    text: str  # the model's own wording: never shown to users
+    citations: list[CitedRange]
+
+
+class CitingLLM(Protocol):
+    def cite(self, *, system: str, title: str, blocks: list[str], question: str) -> CitedAnswer: ...
 
 
 class AnthropicLLM:
@@ -64,3 +86,47 @@ class AnthropicLLM:
         if not isinstance(data, dict):
             raise LLMUnavailable("JSON is not an object")
         return data
+
+    def cite(self, *, system: str, title: str, blocks: list[str], question: str) -> CitedAnswer:
+        """Ask a question about `blocks` with the Citations API (no JSON format: the two
+        features cannot be combined)."""
+        document = {
+            "type": "document",
+            "source": {
+                "type": "content",
+                "content": [{"type": "text", "text": block} for block in blocks],
+            },
+            "title": title,
+            "citations": {"enabled": True},
+        }
+        try:
+            response = self._client.messages.create(
+                model=self._model,
+                max_tokens=self._max_tokens,
+                system=system,
+                messages=[
+                    {"role": "user", "content": [document, {"type": "text", "text": question}]}
+                ],
+                output_config={"effort": self._effort},
+            )
+        except anthropic.APIConnectionError as exc:
+            raise LLMUnavailable(f"connection error: {type(exc).__name__}") from None
+        except anthropic.APIStatusError as exc:
+            raise LLMUnavailable(f"API error {exc.status_code}") from None
+        if response.stop_reason != "end_turn":
+            raise LLMUnavailable(f"stop_reason={response.stop_reason}")
+        texts, citations = [], []
+        for block in response.content:
+            if block.type != "text":
+                continue
+            texts.append(block.text)
+            for citation in getattr(block, "citations", None) or []:
+                if citation.type == "content_block_location" and citation.document_index == 0:
+                    citations.append(
+                        CitedRange(
+                            start=citation.start_block_index,
+                            end=citation.end_block_index,
+                            cited_text=citation.cited_text,
+                        )
+                    )
+        return CitedAnswer(text="".join(texts), citations=citations)

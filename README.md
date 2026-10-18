@@ -15,7 +15,7 @@ Audiences:
 - **Individuals (B2C):** self-preparation of the form, with optional paid review by a
   partner attorney.
 
-**Status:** under construction. Steps 0-7 of 11 are done (skeleton; form edition registry and PDF field list; data schema and PDF field map; validation; encrypted storage; PDF filling; interview; AI safeguards and translation).
+**Status:** under construction. Steps 0-8 of 11 are done (skeleton; form edition registry and PDF field list; data schema and PDF field map; validation; encrypted storage; PDF filling; interview; AI safeguards and translation; reference chat).
 
 ---
 
@@ -73,6 +73,12 @@ The reference chat answers general questions about the form and the process (for
   declined as in principle 3.
 - Every answer carries the label: *"Reference information from official USCIS sources.
   Not legal advice."*
+- The answer consists only of verbatim sentences from the official instructions, each with
+  its page number and a link. The AI model selects the passages through citations; its own
+  wording is never shown. If no passage answers the question, the user is told so and is
+  referred to an attorney.
+- Current source: the Form I-765 instructions of the edition in use. Additional official
+  sources (USCIS Policy Manual chapters) will be added after attorney review.
 
 ### 6. Sections reserved for an attorney's decision
 
@@ -148,6 +154,7 @@ Implemented so far:
   own answer; "I don't know" sends the case to an attorney.
 - `llm/` and `interview/guard.py`: the AI layer and the advice guard described in the
   Legal Principles above.
+- `reference/`: the reference chat (search over the official instructions, citations).
 - `storage/`: encrypted case store, separate key store, audit log, deletion on request.
 - `validation/`: formal checks that only raise flags (missing, inconsistent, format,
   attorney review, attorney decision, Part 6 overflow). Each rule cites the official

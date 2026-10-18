@@ -1,6 +1,6 @@
 # Project status
 
-*Last updated: 2026-10-17, after step 7 (awaiting owner approval).*
+*Last updated: 2026-10-18, after step 8 (awaiting owner approval).*
 
 ## Where we stopped
 
@@ -13,21 +13,40 @@
 - **Step 4 is done and approved** (encrypted storage in `src/uscis_assistant/storage/`).
 - **Step 5 is done and approved** (PDF filling, `forms/i765/filler.py`).
 - **Step 6 is done and approved** (interview, `src/uscis_assistant/interview/`).
-- **Step 7 is done and awaiting the owner's approval** (952 tests pass): model layer in
-  `src/uscis_assistant/llm/` and the guard `src/uscis_assistant/interview/guard.py`.
-  NOT yet measured on the live model (no API key in the sandbox; costs money): run
-  `uv run python scripts/eval_advice_classifier.py` with the owner's approval.
+- **Step 7 is done and approved** (model layer and advice guard). The live classifier
+  eval (`scripts/eval_advice_classifier.py`) has NOT been run yet: no API key in the
+  sandbox; it costs money; run it with the owner's key and approval.
+- **Step 8 is done and awaiting the owner's approval** (981 tests pass): reference chat in
+  `src/uscis_assistant/reference/` (`corpus.py`, `search.py`, `chat.py`, `texts.py`).
 - The owner works from a phone and may continue in Codex or Claude Code. This file is the
   handoff: read it, then continue with "Next action".
 
 ## Next action
 
-1. Wait for the owner to approve step 7, and ask whether to run the live classifier eval
-   (needs ANTHROPIC_API_KEY; about 40 API calls).
-2. Then step 8: reference chat over official USCIS documents with citations (recommended:
-   Opus 5.5, effort high). General questions only; personal-situation questions are
-   declined by the same guard; "I don't know, ask a lawyer" when sources do not answer.
-   Use the Anthropic Citations API on the instructions text; BM25 retrieval, no embeddings.
+1. Wait for the owner to approve step 8.
+2. Then step 9: lawyer mode (recommended: Sonnet 5.5, effort high): case summary in English
+   (answers with original + translation and method), all flags grouped by severity, declined
+   advice requests, full audit log with timestamps, and the attorney's decisions on the
+   interpreter/preparer question (then fill with `attorney_decisions_made=True`).
+
+## Step 8 summary
+
+- Corpus: the I-765 instructions of the active edition, split into 693 sentences with page
+  numbers (page headers removed; "Part 6." / "Item Number 16." do not end a sentence).
+  The USCIS Policy Manual is NOT in the corpus yet: uscis.gov blocks downloads from the
+  sandbox; the owner can upload chosen chapters (choose them with the lawyer).
+- Search: BM25 over 3-sentence windows, hyphenated terms kept ("i-94", "a-number").
+- Pipeline: advice patterns (no model) -> model label + English keyword query (structured
+  output; personal advice -> decline, off topic -> fixed text) -> BM25 -> Citations API on
+  the candidate sentences as a custom-content document -> only cited sentences are shown,
+  verbatim, with page and link; the model's prose is discarded. "NO_ANSWER", no citation,
+  an out-of-range or mismatching citation -> "I don't know, ask an attorney". Any model
+  failure -> "unavailable", never an invented answer.
+- Every answer carries the label in the user's language plus the exact English label
+  required by AGENTS rule 6.
+- Mutation check: showing model prose, trusting cited text, ignoring NO_ANSWER, removing
+  the pattern pre-check each fail a test.
+- Not measured on the live model yet (same reason as step 7).
 
 ## Step 7 summary
 
@@ -249,8 +268,8 @@ not a rule from any documentation.
 | 4 | Storage: field encryption, audit log, case deletion | Opus 5.5 | high | done |
 | 5 | PDF filling + round-trip test | Sonnet 5.5 | high | done |
 | 6 | Interview engine (no LLM decides questions), RU/UK/EN texts | Opus 5.5 | high | done |
-| 7 | LLM layer: parse answers, translate, advice-request refusal, adversarial test phrases | Opus 5.5 | xhigh | done, awaiting owner approval |
-| 8 | RAG over official docs + Citations API; reference chat | Opus 5.5 | high | todo |
+| 7 | LLM layer: parse answers, translate, advice-request refusal, adversarial test phrases | Opus 5.5 | xhigh | done |
+| 8 | RAG over official docs + Citations API; reference chat | Opus 5.5 | high | done, awaiting owner approval |
 | 9 | Lawyer mode: English summary, flags, audit log export | Sonnet 5.5 | high | todo |
 | 10 | FastAPI + minimal web page with disclaimer | Sonnet 5.5 | medium | todo |
 | 11 | Final README for lawyers | Opus 5.5 | high | todo |

@@ -92,6 +92,8 @@ retention). Config rejects anything else.
 - `src/uscis_assistant/llm/` + `src/uscis_assistant/interview/guard.py` — done (step 7). The
   model must never write user-facing text; keep it to labels and confirmed translations.
   Live eval: `scripts/eval_advice_classifier.py` (costs money; ask the owner first).
+- `src/uscis_assistant/reference/` — done (step 8). Reference chat: shows only verbatim cited
+  sentences from the official instructions; never the model's own wording.
 - Planned modules: see the Architecture table in `README.md`.
 - `docs/STATUS.md` — current state and next steps (read first).
 - `docs/DECISIONS.md` — decisions and why.

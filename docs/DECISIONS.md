@@ -119,3 +119,11 @@ Format: date — decision — why. Newest last. Owner = the product owner.
   as "no model answer" and falls back to the safe path. Owner may revisit.
 - **2026-10-17 — Translation proposals are validated** (Latin only, short, not longer than
   about twice the answer, no advice wording) before the user sees them.
+- **2026-10-18 — Reference chat shows only verbatim cited official sentences.** The model picks
+  passages through the Citations API; its own wording is discarded. Explanations in the
+  user's language were not added: they would be model-written text about the law (possible
+  later, with an attorney's approval).
+- **2026-10-18 — Corpus = the I-765 instructions of the active edition only, for now.** The
+  USCIS Policy Manual needs a manual upload; chapters to be chosen with the lawyer.
+- **2026-10-18 — Any doubt ends in "I don't know, ask an attorney"**: no citation, invalid
+  citation, NO_ANSWER, or model failure.

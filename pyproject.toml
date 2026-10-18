@@ -40,3 +40,4 @@ select = ["E", "F", "I", "B", "UP", "S"]
 "tests/**" = ["S101"]
 # User-facing sentences in three languages; splitting them hurts readability.
 "src/uscis_assistant/interview/texts.py" = ["E501"]
+"src/uscis_assistant/reference/texts.py" = ["E501"]

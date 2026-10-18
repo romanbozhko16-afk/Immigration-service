@@ -137,7 +137,7 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
   languages, no attorney-decision item asked, parsing, full RU interview -> validation ->
   filled PDF. 845 tests in total.
 
-## Step 7 — Model layer and advice guard (see `git log` for the hash)
+## Step 7 — `462ebc1` Model layer and advice guard
 
 - Owner approved step 6. Re-read the claude-api reference: structured output via
   `output_config.format`; forced tool choice is rejected on Sonnet 5.5 / Opus 5.5; check
@@ -150,3 +150,15 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
 - Found by design review: a translation proposal is shown to the user, so it could carry
   injected model text; proposals are now length- and advice-checked.
 - 952 tests; 6 mutation checks fail as expected.
+
+## Step 8 — Reference chat with citations (see `git log` for the hash, 2026-10-18)
+
+- Owner approved step 7. Read the Citations API docs (platform.claude.com, citations page):
+  custom content documents are cited by block index; citations cannot be combined with
+  structured outputs, so the citing call is separate.
+- `reference/corpus.py`, `reference/search.py` (BM25), `reference/chat.py`,
+  `reference/texts.py`; `llm/tasks.py` gained `reference_query`; `llm/client.py` gained
+  `cite` and `CitingLLM`.
+- Found by tests: sentence splitting cut "Part 6. Additional Information" and "Item Number
+  16." into fragments; fixed and tested. Hyphenated identifiers were split ("I-94"); fixed.
+- 29 reference-chat tests; 981 in total; 4 mutation checks fail as expected.
