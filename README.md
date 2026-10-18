@@ -15,7 +15,7 @@ Audiences:
 - **Individuals (B2C):** self-preparation of the form, with optional paid review by a
   partner attorney.
 
-**Status:** under construction. Steps 0-8 of 11 are done (skeleton; form edition registry and PDF field list; data schema and PDF field map; validation; encrypted storage; PDF filling; interview; AI safeguards and translation; reference chat).
+**Status:** under construction. Steps 0-9 of 11 are done (skeleton; form edition registry and PDF field list; data schema and PDF field map; validation; encrypted storage; PDF filling; interview; AI safeguards and translation; reference chat; attorney review mode).
 
 ---
 
@@ -154,6 +154,12 @@ Implemented so far:
   own answer; "I don't know" sends the case to an attorney.
 - `llm/` and `interview/guard.py`: the AI layer and the advice guard described in the
   Legal Principles above.
+- `lawyer/`: attorney review mode. One page per case in English: open points, all flags with
+  their official source, the applicant's original answers next to the English text that goes
+  on the form (and how it was produced), declined requests for advice, and the full audit
+  log with timestamps. The attorney records the decision on the interpreter and preparer
+  question here; only then are those sections filled. The page is assembled from stored
+  answers and formal checks; it contains no AI-written text and no legal analysis.
 - `reference/`: the reference chat (search over the official instructions, citations).
 - `storage/`: encrypted case store, separate key store, audit log, deletion on request.
 - `validation/`: formal checks that only raise flags (missing, inconsistent, format,

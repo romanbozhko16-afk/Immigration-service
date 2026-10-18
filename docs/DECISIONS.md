@@ -127,3 +127,13 @@ Format: date — decision — why. Newest last. Owner = the product owner.
   USCIS Policy Manual needs a manual upload; chapters to be chosen with the lawyer.
 - **2026-10-18 — Any doubt ends in "I don't know, ask an attorney"**: no citation, invalid
   citation, NO_ANSWER, or model failure.
+- **2026-10-18 — Attorney mode shows data and flags, never analysis or model text.** The
+  summary is assembled from stored answers and validator results only.
+- **2026-10-18 — The attorney decides the interpreter/preparer question with
+  `complete` / `not_required` plus a note, recorded in the audit log;** the latest decision
+  wins. The reserved PDF items are filled only after a decision.
+- **2026-10-18 — Only the listed paths can be entered by an attorney** (interpreter,
+  preparer, Part 3 items 1-2, G-28 box, Part 6); applicant answers are never overwritten
+  through attorney mode.
+- **2026-10-18 — The filled PDF from attorney mode is a draft** (`filled_i765_draft`), stored
+  encrypted; signatures remain to be made in ink.

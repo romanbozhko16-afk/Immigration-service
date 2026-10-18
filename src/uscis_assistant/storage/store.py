@@ -43,6 +43,7 @@ class EventType(StrEnum):
     DOCUMENT_DELETED = "document_deleted"
     CASE_DELETED = "case_deleted"
     ADVICE_DECLINED = "advice_request_declined"
+    ATTORNEY_DECISION = "attorney_decision_recorded"
 
 
 class CaseNotFound(Exception):
@@ -299,6 +300,22 @@ class CaseStore:
                 actor,
                 EventType.ADVICE_DECLINED,
                 details={"text": text, "language": language, "item": item},
+            )
+
+    def record_attorney_decision(
+        self, case_id: str, *, decision: str, note: str, actor: ActorRole
+    ) -> None:
+        """An attorney's decision on the interpreter / preparer question (kept in the audit log)."""
+        key = self._key_for_active_case(case_id)
+        with Session(self._engine) as session, session.begin():
+            self._active_case(session, case_id)
+            self._append_event(
+                session,
+                key,
+                case_id,
+                actor,
+                EventType.ATTORNEY_DECISION,
+                details={"decision": decision, "note": note},
             )
 
     # --- documents -------------------------------------------------------------------------

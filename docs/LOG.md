@@ -151,7 +151,7 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
   injected model text; proposals are now length- and advice-checked.
 - 952 tests; 6 mutation checks fail as expected.
 
-## Step 8 — Reference chat with citations (see `git log` for the hash, 2026-10-18)
+## Step 8 — `da2220d` Reference chat with citations (2026-10-18)
 
 - Owner approved step 7. Read the Citations API docs (platform.claude.com, citations page):
   custom content documents are cited by block index; citations cannot be combined with
@@ -162,3 +162,13 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
 - Found by tests: sentence splitting cut "Part 6. Additional Information" and "Item Number
   16." into fragments; fixed and tested. Hyphenated identifiers were split ("I-94"); fixed.
 - 29 reference-chat tests; 981 in total; 4 mutation checks fail as expected.
+
+## Step 9 — Attorney mode (see `git log` for the hash, 2026-10-18)
+
+- Owner approved step 8. Added `lawyer/review.py`, `lawyer/render.py`, `lawyer/session.py`;
+  `CaseStore.record_attorney_decision` and the `attorney_decision_recorded` event;
+  `build_application(..., attorney_values=...)` so attorney-entered items join the form data.
+- Found by tests: "what is missing" showed only `applicant` for an unfinished interview;
+  replaced by "interview not finished, N questions, next item X" (`unanswered_items`).
+  One of my tests asserted nothing (`or True`); rewritten. 19 lawyer-mode tests;
+  1000 tests in total; 5 mutation checks fail as expected.

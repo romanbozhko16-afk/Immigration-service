@@ -91,8 +91,13 @@ class BuildResult(BaseModel):
 
 
 def build_application(
-    bank: QuestionBank, answers: dict[str, Any], pending: set[str] | None = None
+    bank: QuestionBank,
+    answers: dict[str, Any],
+    pending: set[str] | None = None,
+    attorney_values: dict[str, Any] | None = None,
 ) -> BuildResult:
+    """`attorney_values` holds values entered by an attorney for items the interview never
+    asks (interpreter, preparer, Part 3 items 1-2, G-28 box, Part 6)."""
     pending = pending or set()
     data: dict[str, Any] = {}
     waiting = []
@@ -104,6 +109,8 @@ def build_application(
             continue
         if value is not None:
             _set_path(data, path, value)
+    for path, value in (attorney_values or {}).items():
+        _set_path(data, path, value)
     try:
         return BuildResult(
             application=I765Application.model_validate(_lists_from_indexes(data)),

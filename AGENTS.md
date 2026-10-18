@@ -94,6 +94,8 @@ retention). Config rejects anything else.
   Live eval: `scripts/eval_advice_classifier.py` (costs money; ask the owner first).
 - `src/uscis_assistant/reference/` — done (step 8). Reference chat: shows only verbatim cited
   sentences from the official instructions; never the model's own wording.
+- `src/uscis_assistant/lawyer/` — done (step 9). Attorney review: summary, audit log,
+  decisions, draft PDF. Only `ActorRole.LAWYER` may open it; step 10 must set the role.
 - Planned modules: see the Architecture table in `README.md`.
 - `docs/STATUS.md` — current state and next steps (read first).
 - `docs/DECISIONS.md` — decisions and why.

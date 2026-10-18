@@ -1,6 +1,6 @@
 # Project status
 
-*Last updated: 2026-10-18, after step 8 (awaiting owner approval).*
+*Last updated: 2026-10-18, after step 9 (awaiting owner approval).*
 
 ## Where we stopped
 
@@ -16,18 +16,48 @@
 - **Step 7 is done and approved** (model layer and advice guard). The live classifier
   eval (`scripts/eval_advice_classifier.py`) has NOT been run yet: no API key in the
   sandbox; it costs money; run it with the owner's key and approval.
-- **Step 8 is done and awaiting the owner's approval** (981 tests pass): reference chat in
-  `src/uscis_assistant/reference/` (`corpus.py`, `search.py`, `chat.py`, `texts.py`).
+- **Step 8 is done and approved** (reference chat, `src/uscis_assistant/reference/`).
+- **Step 9 is done and awaiting the owner's approval** (1000 tests pass): attorney mode in
+  `src/uscis_assistant/lawyer/` (`review.py`, `render.py`, `session.py`).
 - The owner works from a phone and may continue in Codex or Claude Code. This file is the
   handoff: read it, then continue with "Next action".
 
 ## Next action
 
-1. Wait for the owner to approve step 8.
-2. Then step 9: lawyer mode (recommended: Sonnet 5.5, effort high): case summary in English
-   (answers with original + translation and method), all flags grouped by severity, declined
-   advice requests, full audit log with timestamps, and the attorney's decisions on the
-   interpreter/preparer question (then fill with `attorney_decisions_made=True`).
+1. Wait for the owner to approve step 9.
+2. Then step 10: FastAPI + minimal web page with the disclaimer (recommended: Sonnet 5.5,
+   effort medium). Endpoints: create case, interview (prompt/submit), reference chat, lawyer
+   summary/audit/decision/fill/download, delete case. Two roles; authentication is needed
+   (decide with the owner: simplest for the MVP is one API token per role from `.env`).
+   The API layer must set the actor role (the data layer only checks `ActorRole.LAWYER`) and
+   must never log request bodies. Serve the PDF only to the lawyer role.
+3. Step 11: final README for lawyers.
+
+## Step 9 summary
+
+- `LawyerSession(store, case_id, actor=ActorRole.LAWYER)`: refuses any other role
+  (`PermissionError`). Methods: `review(today)`, `summary(today)` (Markdown, English),
+  `audit_log(today)`, `enter_attorney_data(path, value)`, `record_decision(decision, note)`,
+  `fill_pdf()` (stores the encrypted draft PDF through `CaseStore`).
+- The summary: open points first (interpreter/preparer decision, unconfirmed translations,
+  unfinished interview, machine translations to verify, declined advice requests), then
+  flags grouped by severity with their official source, the declined requests with time and
+  the person's words, and the answers table: item, question, applicant's original + language,
+  English value, method (same / user / machine), who entered it. It states that it contains
+  no legal analysis. It contains NO model-written text.
+- Attorney-entered items (the ones the interview never asks): `statement.statement`,
+  `statement.interpreter_language`, `statement.prepared_by_preparer`,
+  `statement.preparer_name`, `interpreter.*`, `preparer.*`, `attorney.*`, `additional_info[*]`.
+  Anything else is rejected. Partial data (for example an interpreter without an address)
+  keeps the form from being built and the summary names the gap.
+- Decision: `record_decision("complete" | "not_required", note)`, stored in the audit log
+  (note encrypted). The latest decision wins. Without a decision `fill_pdf()` leaves the
+  reserved items blank (`attorney_decisions_made=False`); with one, they are filled.
+- Audit log rendering: sequence, UTC time, role, event, path, details (originals included);
+  the summary says if the hash chain shows tampering.
+- Mutation check: filling without a decision, missing role check, hidden declined
+  requests, hidden tampering, hidden machine translations each fail a test.
+- Known gap: identity and authentication of the attorney are not part of this layer (step 10).
 
 ## Step 8 summary
 
@@ -269,8 +299,8 @@ not a rule from any documentation.
 | 5 | PDF filling + round-trip test | Sonnet 5.5 | high | done |
 | 6 | Interview engine (no LLM decides questions), RU/UK/EN texts | Opus 5.5 | high | done |
 | 7 | LLM layer: parse answers, translate, advice-request refusal, adversarial test phrases | Opus 5.5 | xhigh | done |
-| 8 | RAG over official docs + Citations API; reference chat | Opus 5.5 | high | done, awaiting owner approval |
-| 9 | Lawyer mode: English summary, flags, audit log export | Sonnet 5.5 | high | todo |
+| 8 | RAG over official docs + Citations API; reference chat | Opus 5.5 | high | done |
+| 9 | Lawyer mode: English summary, flags, audit log export | Sonnet 5.5 | high | done, awaiting owner approval |
 | 10 | FastAPI + minimal web page with disclaimer | Sonnet 5.5 | medium | todo |
 | 11 | Final README for lawyers | Opus 5.5 | high | todo |
 
