@@ -147,3 +147,11 @@ Format: date — decision — why. Newest last. Owner = the product owner.
 - **2026-10-18 — The web page ships no inline scripts and never inserts server text as HTML**
   (strict CSP); the disclaimer is shown in all three languages at the top and as a sticky
   strip.
+- **2026-10-18 — The README states the Legal Principles as a draft for attorney review** and
+  lists only what the code does. Principles that were already enforced but unstated (answers
+  that always go to an attorney, signatures never filled, the disclaimer) were added as
+  principles 7-9, and each principle is mapped to its mechanism and tests. Open legal
+  questions and known limitations are listed in the README, not hidden.
+- **2026-10-18 — The README does not quote 8 CFR 1.2.** The regulation's text could not be
+  re-checked (ecfr.gov and govinfo.gov are not reachable from the sandbox), so the README
+  names the question for the attorney without quoting it.

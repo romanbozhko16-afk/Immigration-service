@@ -1,6 +1,6 @@
 # Project status
 
-*Last updated: 2026-10-18, after step 10 (awaiting owner approval).*
+*Last updated: 2026-10-18, after step 11 (all planned steps done; awaiting owner review).*
 
 ## Where we stopped
 
@@ -18,18 +18,35 @@
   sandbox; it costs money; run it with the owner's key and approval.
 - **Step 8 is done and approved** (reference chat, `src/uscis_assistant/reference/`).
 - **Step 9 is done and approved** (attorney mode, `src/uscis_assistant/lawyer/`).
-- **Step 10 is done and awaiting the owner's approval** (1030 tests pass): HTTP API and web
-  page in `src/uscis_assistant/api/` and `src/uscis_assistant/web/static/`.
+- **Step 10 is done and approved** (HTTP API and web page in `src/uscis_assistant/api/` and
+  `src/uscis_assistant/web/static/`).
+- **Step 11 is done and awaiting the owner's review** (final `README.md` for attorneys;
+  1030 tests pass).
 - The owner works from a phone and may continue in Codex or Claude Code. This file is the
   handoff: read it, then continue with "Next action".
 
 ## Next action
 
-1. Wait for the owner to approve step 10.
-2. Then step 11 (last): the final README for lawyers (recommended: Opus 5.5, effort high):
-   professional "Legal principles of the product" section, architecture, how to run, data
-   protection, limitations, open questions for attorneys (collected in "Blockers" above).
-   It must be accurate to the code and honest about what is not done or not verified.
+All 11 planned steps are done. Nothing starts without the owner's go-ahead. Candidates,
+in the order recommended:
+
+1. The owner gives `README.md` (sections "Legal Principles", "Questions for Attorney
+   Review") to a U.S.-licensed immigration attorney; apply the answers.
+2. Live eval of the advice classifier with the owner's API key
+   (`scripts/eval_advice_classifier.py`; costs money; ask first).
+3. Native-speaker review of the RU/UK texts (`interview/texts.py`, `reference/texts.py`).
+4. Before any real users: personal accounts, HTTPS proxy, rate limiting, a KMS for keys,
+   privacy policy (it must disclose what is sent to Anthropic).
+5. Policy Manual chapters for the reference chat (chosen with the attorney, uploaded by the
+   owner).
+
+## Step 11 summary
+
+- `README.md` rewritten: 10 Legal Principles (draft), "How the Principles Are Enforced"
+  table (mechanism + test file per principle), Data Protection, Questions for Attorney
+  Review (8), Known Limitations, Architecture (real modules, API by role), Getting Started.
+- Every statement was checked against the code; no code changed.
+- 8 CFR 1.2 is named but not quoted: its text could not be re-checked from the sandbox.
 
 ## Step 10 summary
 
@@ -331,8 +348,8 @@ not a rule from any documentation.
 | 7 | LLM layer: parse answers, translate, advice-request refusal, adversarial test phrases | Opus 5.5 | xhigh | done |
 | 8 | RAG over official docs + Citations API; reference chat | Opus 5.5 | high | done |
 | 9 | Lawyer mode: English summary, flags, audit log export | Sonnet 5.5 | high | done |
-| 10 | FastAPI + minimal web page with disclaimer | Sonnet 5.5 | medium | done, awaiting owner approval |
-| 11 | Final README for lawyers | Opus 5.5 | high | todo |
+| 10 | FastAPI + minimal web page with disclaimer | Sonnet 5.5 | medium | done |
+| 11 | Final README for lawyers | Opus 5.5 | high | done, awaiting owner review |
 
 Notes on design (details in `docs/DECISIONS.md`):
 - Interview order is code/data, not the model. The model only does narrow tasks.

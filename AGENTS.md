@@ -100,7 +100,8 @@ retention). Config rejects anything else.
   only from the bearer token. Never log request bodies; never echo user input in errors; no
   inline scripts or HTML insertion in the web page (tested). Run: `uv run uvicorn --factory
   uscis_assistant.api.app:app_factory`.
-- Planned modules: see the Architecture table in `README.md`.
+- `README.md` — done (step 11). Written for attorneys; keep it accurate to the code and
+  update it together with any change to the legal principles or data handling.
 - `docs/STATUS.md` — current state and next steps (read first).
 - `docs/DECISIONS.md` — decisions and why.
 - `docs/LOG.md` — step-by-step history with commit hashes.

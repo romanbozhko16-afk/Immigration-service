@@ -173,7 +173,7 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
   One of my tests asserted nothing (`or True`); rewritten. 19 lawyer-mode tests;
   1000 tests in total; 5 mutation checks fail as expected.
 
-## Step 10 — API and web page (see `git log` for the hash, 2026-10-18)
+## Step 10 — `ffa3045` API and web page (2026-10-18)
 
 - Owner approved step 9 and chose option A (two role tokens in `.env`).
 - Added FastAPI, uvicorn, httpx (tests). `api/auth.py`, `api/app.py`, `web/static/*`;
@@ -185,3 +185,16 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
 - Own mistake: `pkill -f` with a pattern that also matched my own shell command killed the
   shell twice; fixed by running kill in a separate call with a bracketed pattern.
 - 30 API tests; 1030 in total; 6 mutation checks fail as expected.
+
+## Step 11 — Final README (see `git log` for the hash, 2026-10-18)
+
+- Owner approved step 10. Rewrote `README.md` for attorneys: 10 Legal Principles (draft for
+  attorney review), a table mapping each principle to its mechanism and tests, data
+  protection, 8 questions for attorney review, known limitations, the real module map and
+  API roles, how to run.
+- Checked each statement against the code. Found while checking: the old README and my
+  first draft listed case creation, flags, deletion and chat as applicant-only; in the code
+  they accept either role (only answering the interview is applicant-only). Corrected.
+- Tried to re-check the text of 8 CFR 1.2: ecfr.gov and govinfo.gov are blocked from the
+  sandbox and a web search did not return the text, so the README does not quote it.
+- No code changes; 1030 tests pass.
