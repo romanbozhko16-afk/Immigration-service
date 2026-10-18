@@ -30,6 +30,10 @@ class Settings(BaseSettings):
     # Master key that wraps the per-case keys (base64, 32 bytes).
     # Generate with: uv run python scripts/generate_master_key.py
     master_key: SecretStr | None = None
+    # One secret token per role. Sent as "Authorization: Bearer <token>". Each at least 24
+    # characters; generate with: uv run python scripts/generate_master_key.py
+    applicant_token: SecretStr | None = None
+    lawyer_token: SecretStr | None = None
 
 
 @lru_cache

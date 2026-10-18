@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>USCIS Form I-765 Assistant</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div id="strip" role="note">Not legal advice · Не юридична консультація · Не юридическая консультация</div>
+  <header id="disclaimer" role="note">
+    <p lang="en"><strong>This service is not a law firm and does not provide legal advice.</strong>
+      It helps you enter your own information into official USCIS forms. Using it does not create an attorney-client relationship.</p>
+    <p lang="ru"><strong>Этот сервис не является юридической фирмой и не даёт юридических консультаций.</strong>
+      Он помогает внести ваши данные в официальные формы USCIS. Использование сервиса не создаёт отношений адвокат–клиент.</p>
+    <p lang="uk"><strong>Цей сервіс не є юридичною фірмою і не надає юридичних консультацій.</strong>
+      Він допомагає внести ваші дані в офіційні форми USCIS. Користування сервісом не створює відносин адвокат–клієнт.</p>
+  </header>
+
+  <main>
+    <h1>USCIS Form I-765</h1>
+
+    <section id="login" class="card">
+      <label for="token">Access token / Токен доступу / Токен доступа</label>
+      <input id="token" type="password" autocomplete="off" spellcheck="false">
+      <button id="login-btn" type="button">OK</button>
+      <p id="login-msg" class="muted"></p>
+    </section>
+
+    <section id="app" class="card" hidden>
+      <div class="row">
+        <label for="language">Language / Мова / Язык</label>
+        <select id="language">
+          <option value="ru">Русский</option>
+          <option value="uk">Українська</option>
+          <option value="en">English</option>
+        </select>
+        <button id="logout-btn" type="button">Log out</button>
+      </div>
+
+      <nav id="tabs" role="tablist">
+        <button role="tab" data-tab="interview" aria-selected="true">Interview</button>
+        <button role="tab" data-tab="chat" aria-selected="false">Reference chat</button>
+        <button role="tab" data-tab="lawyer" aria-selected="false" id="lawyer-tab" hidden>Attorney</button>
+      </nav>
+
+      <div id="interview" class="panel">
+        <div class="row">
+          <button id="new-case" type="button">New case</button>
+          <span id="case-line" class="muted"></span>
+        </div>
+        <pre id="prompt" class="bubble" aria-live="polite"></pre>
+        <div class="row">
+          <input id="answer" type="text" maxlength="2000" autocomplete="off" aria-label="Answer">
+          <button id="send" type="button">Send</button>
+        </div>
+        <pre id="reply" class="bubble reply" aria-live="polite"></pre>
+        <button id="show-flags" type="button">Show checks</button>
+        <pre id="flags" class="bubble"></pre>
+        <button id="delete-case" type="button" class="danger">Delete my case</button>
+      </div>
+
+      <div id="chat" class="panel" hidden>
+        <p class="muted">General questions about the form, answered only with official USCIS text.
+          Questions about your own situation are declined.</p>
+        <div class="row">
+          <input id="chat-question" type="text" maxlength="2000" autocomplete="off" aria-label="Question">
+          <button id="chat-send" type="button">Ask</button>
+        </div>
+        <pre id="chat-answer" class="bubble" aria-live="polite"></pre>
+      </div>
+
+      <div id="lawyer" class="panel" hidden>
+        <div class="row">
+          <button id="lawyer-refresh" type="button">Cases</button>
+          <select id="lawyer-case" aria-label="Case"></select>
+          <button id="lawyer-open" type="button">Open</button>
+        </div>
+        <pre id="lawyer-summary" class="bubble"></pre>
+        <details><summary>Audit log</summary><pre id="lawyer-audit" class="bubble"></pre></details>
+        <fieldset>
+          <legend>Attorney data (interpreter, preparer, ...)</legend>
+          <div class="row">
+            <input id="att-path" type="text" placeholder="interpreter.name.family_name" aria-label="Path">
+            <input id="att-value" type="text" placeholder="value (true / false allowed)" aria-label="Value">
+            <button id="att-save" type="button">Save</button>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Decision on the interpreter / preparer question</legend>
+          <div class="row">
+            <select id="decision" aria-label="Decision">
+              <option value="complete">complete: data entered, fill these sections</option>
+              <option value="not_required">not_required: leave these sections blank</option>
+            </select>
+            <input id="decision-note" type="text" placeholder="note" aria-label="Note">
+            <button id="decision-save" type="button">Record</button>
+          </div>
+        </fieldset>
+        <div class="row">
+          <button id="fill" type="button">Fill PDF draft</button>
+          <a id="download" href="#" hidden>Download draft PDF</a>
+        </div>
+        <pre id="lawyer-msg" class="bubble"></pre>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

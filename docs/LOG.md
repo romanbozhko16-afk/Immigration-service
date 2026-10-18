@@ -163,7 +163,7 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
   16." into fragments; fixed and tested. Hyphenated identifiers were split ("I-94"); fixed.
 - 29 reference-chat tests; 981 in total; 4 mutation checks fail as expected.
 
-## Step 9 — Attorney mode (see `git log` for the hash, 2026-10-18)
+## Step 9 — `f705943` Attorney mode (2026-10-18)
 
 - Owner approved step 8. Added `lawyer/review.py`, `lawyer/render.py`, `lawyer/session.py`;
   `CaseStore.record_attorney_decision` and the `attorney_decision_recorded` event;
@@ -172,3 +172,16 @@ commit that adds a log entry is not itself listed (it appears in the next entry)
   replaced by "interview not finished, N questions, next item X" (`unanswered_items`).
   One of my tests asserted nothing (`or True`); rewritten. 19 lawyer-mode tests;
   1000 tests in total; 5 mutation checks fail as expected.
+
+## Step 10 — API and web page (see `git log` for the hash, 2026-10-18)
+
+- Owner approved step 9 and chose option A (two role tokens in `.env`).
+- Added FastAPI, uvicorn, httpx (tests). `api/auth.py`, `api/app.py`, `web/static/*`;
+  `CaseStore.list_cases` (no personal data); `/api/me`; settings for the tokens.
+- Checked against a REAL server with curl and Chromium (phone and desktop width), not only
+  the test client. Found by looking: the three-language disclaimer pinned to the top took a
+  third of a phone screen; now full text at the top plus a slim sticky strip. A favicon 404
+  removed. Linter pushed the role dependencies to the `Annotated` style.
+- Own mistake: `pkill -f` with a pattern that also matched my own shell command killed the
+  shell twice; fixed by running kill in a separate call with a bracketed pattern.
+- 30 API tests; 1030 in total; 6 mutation checks fail as expected.

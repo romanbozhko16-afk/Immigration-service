@@ -54,6 +54,18 @@ class CaseDeleted(Exception):
     pass
 
 
+class CaseSummary(BaseModel):
+    """What the case list shows: no personal data."""
+
+    model_config = ConfigDict(frozen=True)
+
+    id: str
+    form: str
+    edition: str
+    status: str
+    created_at: datetime
+
+
 class AnswerRecord(BaseModel):
     model_config = ConfigDict(frozen=True)
 
@@ -226,6 +238,20 @@ class CaseStore:
         if case is None:
             raise CaseNotFound(case_id)
         return case.status
+
+    def list_cases(self) -> list[CaseSummary]:
+        with Session(self._engine) as session:
+            rows = session.scalars(select(Case).order_by(Case.created_at.desc())).all()
+        return [
+            CaseSummary(
+                id=r.id,
+                form=r.form,
+                edition=r.edition,
+                status=r.status,
+                created_at=_as_utc(r.created_at),
+            )
+            for r in rows
+        ]
 
     # --- answers ---------------------------------------------------------------------------
 

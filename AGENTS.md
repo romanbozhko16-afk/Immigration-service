@@ -95,7 +95,11 @@ retention). Config rejects anything else.
 - `src/uscis_assistant/reference/` — done (step 8). Reference chat: shows only verbatim cited
   sentences from the official instructions; never the model's own wording.
 - `src/uscis_assistant/lawyer/` — done (step 9). Attorney review: summary, audit log,
-  decisions, draft PDF. Only `ActorRole.LAWYER` may open it; step 10 must set the role.
+  decisions, draft PDF. Only `ActorRole.LAWYER` may open it.
+- `src/uscis_assistant/api/` + `src/uscis_assistant/web/static/` — done (step 10). Role comes
+  only from the bearer token. Never log request bodies; never echo user input in errors; no
+  inline scripts or HTML insertion in the web page (tested). Run: `uv run uvicorn --factory
+  uscis_assistant.api.app:app_factory`.
 - Planned modules: see the Architecture table in `README.md`.
 - `docs/STATUS.md` — current state and next steps (read first).
 - `docs/DECISIONS.md` — decisions and why.

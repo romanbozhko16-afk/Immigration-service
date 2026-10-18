@@ -15,7 +15,7 @@ Audiences:
 - **Individuals (B2C):** self-preparation of the form, with optional paid review by a
   partner attorney.
 
-**Status:** under construction. Steps 0-9 of 11 are done (skeleton; form edition registry and PDF field list; data schema and PDF field map; validation; encrypted storage; PDF filling; interview; AI safeguards and translation; reference chat; attorney review mode).
+**Status:** under construction. Steps 0-10 of 11 are done (everything except the final README).
 
 ---
 
@@ -154,6 +154,8 @@ Implemented so far:
   own answer; "I don't know" sends the case to an attorney.
 - `llm/` and `interview/guard.py`: the AI layer and the advice guard described in the
   Legal Principles above.
+- `api/` and `web/`: the HTTP API and a minimal web page (interview, reference chat,
+  attorney tab). The disclaimer is shown in Russian, Ukrainian and English on every page.
 - `lawyer/`: attorney review mode. One page per case in English: open points, all flags with
   their official source, the applicant's original answers next to the English text that goes
   on the form (and how it was produced), declined requests for advice, and the full audit
@@ -173,8 +175,18 @@ Implemented so far:
 Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-cp .env.example .env      # then fill in ANTHROPIC_API_KEY
+cp .env.example .env      # then fill in MASTER_KEY, APPLICANT_TOKEN, LAWYER_TOKEN, ANTHROPIC_API_KEY
 uv sync                   # install dependencies
 uv run pytest             # run tests
 uv run ruff check .       # lint
 ```
+
+Generate each secret with `uv run python scripts/generate_master_key.py`. Start the server:
+
+```bash
+uv run uvicorn --factory uscis_assistant.api.app:app_factory --host 127.0.0.1 --port 8000
+```
+
+Open http://127.0.0.1:8000 and enter the applicant token (interview and reference chat) or
+the lawyer token (also opens the attorney tab). Without `ANTHROPIC_API_KEY` the AI features
+run in their safe fallback mode. This is a demo setup: serve it only behind HTTPS.

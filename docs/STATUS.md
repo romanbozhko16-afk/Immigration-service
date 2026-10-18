@@ -1,6 +1,6 @@
 # Project status
 
-*Last updated: 2026-10-18, after step 9 (awaiting owner approval).*
+*Last updated: 2026-10-18, after step 10 (awaiting owner approval).*
 
 ## Where we stopped
 
@@ -17,21 +17,49 @@
   eval (`scripts/eval_advice_classifier.py`) has NOT been run yet: no API key in the
   sandbox; it costs money; run it with the owner's key and approval.
 - **Step 8 is done and approved** (reference chat, `src/uscis_assistant/reference/`).
-- **Step 9 is done and awaiting the owner's approval** (1000 tests pass): attorney mode in
-  `src/uscis_assistant/lawyer/` (`review.py`, `render.py`, `session.py`).
+- **Step 9 is done and approved** (attorney mode, `src/uscis_assistant/lawyer/`).
+- **Step 10 is done and awaiting the owner's approval** (1030 tests pass): HTTP API and web
+  page in `src/uscis_assistant/api/` and `src/uscis_assistant/web/static/`.
 - The owner works from a phone and may continue in Codex or Claude Code. This file is the
   handoff: read it, then continue with "Next action".
 
 ## Next action
 
-1. Wait for the owner to approve step 9.
-2. Then step 10: FastAPI + minimal web page with the disclaimer (recommended: Sonnet 5.5,
-   effort medium). Endpoints: create case, interview (prompt/submit), reference chat, lawyer
-   summary/audit/decision/fill/download, delete case. Two roles; authentication is needed
-   (decide with the owner: simplest for the MVP is one API token per role from `.env`).
-   The API layer must set the actor role (the data layer only checks `ActorRole.LAWYER`) and
-   must never log request bodies. Serve the PDF only to the lawyer role.
-3. Step 11: final README for lawyers.
+1. Wait for the owner to approve step 10.
+2. Then step 11 (last): the final README for lawyers (recommended: Opus 5.5, effort high):
+   professional "Legal principles of the product" section, architecture, how to run, data
+   protection, limitations, open questions for attorneys (collected in "Blockers" above).
+   It must be accurate to the code and honest about what is not done or not verified.
+
+## Step 10 summary
+
+- Run (from the repo root, with `.env` filled: `MASTER_KEY`, `APPLICANT_TOKEN`,
+  `LAWYER_TOKEN`, optionally `ANTHROPIC_API_KEY`):
+  `uv run uvicorn --factory uscis_assistant.api.app:app_factory --host 127.0.0.1 --port 8000`
+  then open http://127.0.0.1:8000. Without an API key the model features run in their safe
+  fallback mode (no translation proposals, chat "unavailable").
+- Access (owner chose option A): two secret tokens in `.env`, sent as
+  `Authorization: Bearer <token>`. The app refuses to start if either is missing, shorter
+  than 24 characters, or if both are equal. A token identifies a ROLE, not a person; an
+  applicant case is reached with the applicant token plus its 128-bit random case id.
+- Endpoints: `GET /api/health`, `GET /api/me`, `POST /api/cases`, `GET|POST
+  /api/cases/{id}/interview`, `GET /api/cases/{id}/flags`, `DELETE /api/cases/{id}`,
+  `POST /api/chat`, and for attorneys `GET /api/lawyer/cases`, `GET
+  /api/lawyer/cases/{id}/review`, `POST .../attorney-data`, `POST .../decision`, `POST
+  .../fill`, `GET .../documents/{doc}`. Only the applicant role answers the interview; only
+  the attorney role sees review data or downloads the PDF.
+- Privacy/security: role comes only from the token; unknown request fields are rejected;
+  messages are limited to 2000 characters; errors never echo user input; unexpected errors
+  log only the exception type; API responses are `Cache-Control: no-store`; CSP, nosniff,
+  frame deny; no inline scripts and no HTML insertion in the page's JavaScript (tested);
+  no OpenAPI/docs pages. Verified with a real server: its log has only paths and codes.
+- Web page: disclaimer in RU/UK/EN at the top plus a slim sticky strip, language switcher,
+  interview, reference chat, attorney tab (cases, summary, audit log, attorney data,
+  decision, fill and download draft). Checked in Chromium at phone and desktop width.
+- Not done (decisions or work for later): applicants cannot download the filled PDF (the
+  attorney-decision items are held back; whether B2C users get a draft is a product/legal
+  decision for the owner); no rate limiting; no HTTPS (put it behind a TLS proxy); no
+  per-person accounts; the attorney summary is shown as Markdown text, not rendered.
 
 ## Step 9 summary
 
@@ -271,6 +299,8 @@
   2026-10-17 (see `DECISIONS.md`). If USCIS publishes or starts accepting another edition,
   add it to `forms/i765/editions.json`, generate its field list, and write a new map.
 - **Lawyer questions (owner will ask their attorney):**
+  - Whether individual (B2C) users may receive the filled PDF draft directly, given that the
+    interpreter/preparer items stay blank until an attorney decides (currently attorney-only).
   - Whether "(if any)" questions the person has no answer for should print "N/A" (the
     instructions' general rule, p.17) or stay empty (current behavior, except the A-Number,
     where the instructions say "N/A" explicitly).
@@ -300,8 +330,8 @@ not a rule from any documentation.
 | 6 | Interview engine (no LLM decides questions), RU/UK/EN texts | Opus 5.5 | high | done |
 | 7 | LLM layer: parse answers, translate, advice-request refusal, adversarial test phrases | Opus 5.5 | xhigh | done |
 | 8 | RAG over official docs + Citations API; reference chat | Opus 5.5 | high | done |
-| 9 | Lawyer mode: English summary, flags, audit log export | Sonnet 5.5 | high | done, awaiting owner approval |
-| 10 | FastAPI + minimal web page with disclaimer | Sonnet 5.5 | medium | todo |
+| 9 | Lawyer mode: English summary, flags, audit log export | Sonnet 5.5 | high | done |
+| 10 | FastAPI + minimal web page with disclaimer | Sonnet 5.5 | medium | done, awaiting owner approval |
 | 11 | Final README for lawyers | Opus 5.5 | high | todo |
 
 Notes on design (details in `docs/DECISIONS.md`):

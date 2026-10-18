@@ -137,3 +137,13 @@ Format: date — decision — why. Newest last. Owner = the product owner.
   through attorney mode.
 - **2026-10-18 — The filled PDF from attorney mode is a draft** (`filled_i765_draft`), stored
   encrypted; signatures remain to be made in ink.
+- **2026-10-18 — Access control for the MVP: one secret token per role (owner's option A).**
+  Tokens identify roles, not people; case ids (128 random bits) act as the applicant's
+  capability. Real accounts are required before a public launch.
+- **2026-10-18 — Only attorneys can download the filled PDF.** Open product/legal question
+  for B2C (see STATUS, lawyer questions).
+- **2026-10-18 — The API never exposes OpenAPI/docs pages and never echoes user input in
+  errors.**
+- **2026-10-18 — The web page ships no inline scripts and never inserts server text as HTML**
+  (strict CSP); the disclaimer is shown in all three languages at the top and as a sticky
+  strip.
